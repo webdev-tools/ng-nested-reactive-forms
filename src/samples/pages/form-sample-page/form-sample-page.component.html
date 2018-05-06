@@ -1,0 +1,28 @@
+<section fxFlex fxLayout="column">
+  <h2>Using custom nested input components with Angular Forms</h2>
+
+  <main fxFlex fxLayout="row">
+    <form fxFlex rfForm (rfSubmit)="handleSubmit($event)" [rfModelData]="testEntity">
+
+      <div fxFlex fxLayout="column">
+        <app-custom-input placeholder="First Name" modelName="testEntity.name"></app-custom-input>
+        <app-custom-input placeholder="Last Name" modelName="testEntity.lastName"></app-custom-input>
+      </div>
+
+      <p>
+        <button mat-raised-button color="primary" type="submit">Submit</button>
+      </p>
+    </form>
+  </main>
+
+  <mat-divider></mat-divider>
+
+  <div fxFlex fxLayout="column">
+    <p>
+      <b>Model Result:</b>
+    </p>
+<pre>
+{{ testEntity | json }}
+</pre>
+  </div>
+</section>
