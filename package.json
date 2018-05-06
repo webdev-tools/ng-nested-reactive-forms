@@ -11,7 +11,7 @@
     "lib:build": "ng build ng-rforms --prod",
     "lib:publish": "cd dist/ng-rforms && npm publish --access public",
     "lib:test": "ng test ng-rforms",
-    "lib:test-watch": "npm run lib:test --watch",
+    "lib:test-watch": "npm run lib:test -- --watch",
     "postversion": "git push && git push --tags && npm run lib:publish"
   },
   "private": true,

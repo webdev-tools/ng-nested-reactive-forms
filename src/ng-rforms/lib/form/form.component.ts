@@ -37,7 +37,7 @@ export class NgRFFormComponent implements OnInit {
   /**
    * Represents an Entity Model that comes from Database
    */
-  @Input() entity: any;
+  @Input() rfModelData: any;
 
   /**
    * Form group will hold all inputs within this form.
@@ -58,11 +58,11 @@ export class NgRFFormComponent implements OnInit {
 
 
   /**
-   * Init an empty entity, in case none where provided.
+   * Init an empty rfModelData, in case none where provided.
    */
   ngOnInit() {
-    if (!this.entity) {
-      this.entity = {};
+    if (!this.rfModelData) {
+      this.rfModelData = {};
     }
   }
 
