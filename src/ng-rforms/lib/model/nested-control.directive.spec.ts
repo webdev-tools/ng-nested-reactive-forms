@@ -2,7 +2,7 @@ import { Component, DebugElement } from '@angular/core';
 import { async, ComponentFixture, fakeAsync, TestBed, tick } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 
-import { NgRFModelDirective } from './model.directive';
+import { NgRFNestedControlContext, NgRFNestedControlDirective } from './nested-control.directive';
 import { NgRFFormModule } from '../form';
 import { NgRFModelModule } from './index';
 
@@ -28,7 +28,9 @@ class TestComponent {
 @Component({
   selector: 'test-input',
   template: `
-    <input rfModel="testEntity.user.firstName" />
+    <div *rfNestedControl="'testEntity.user.firstName'; let control=formControl">
+      <input [formControl]="control" />
+    </div>
   `,
 })
 class TestInputComponent {
@@ -36,12 +38,11 @@ class TestInputComponent {
 }
 
 
-describe('NgRFModelDirective', () => {
+describe('NgRFNestedControlDirective', () => {
   let testComponent: TestComponent;
-  let modelEl: DebugElement;
-  let modelDirective: NgRFModelDirective;
   let fixture: ComponentFixture<TestComponent>;
   let inputEl: DebugElement;
+  let context: NgRFNestedControlContext;
 
   beforeEach(async(() => {
     TestBed
@@ -80,17 +81,17 @@ describe('NgRFModelDirective', () => {
     generateComponent();
     tick();
 
-    expect(modelDirective.formControl.value).toEqual(testComponent.testEntity.user.firstName);
+    expect(context.formControl.value).toEqual(testComponent.testEntity.user.firstName);
     expect(inputEl.nativeElement.value).toEqual(testComponent.testEntity.user.firstName);
   }));
 
   function generateComponent() {
     fixture = TestBed.createComponent(TestComponent);
     testComponent = fixture.componentInstance;
-    modelEl = fixture.debugElement.query(By.directive(NgRFModelDirective));
-    modelDirective = modelEl.injector.get(NgRFModelDirective);
-    inputEl = fixture.debugElement.query(By.css('input'));
 
     fixture.detectChanges();
+
+    inputEl = fixture.debugElement.query(By.css('input'));
+    context = inputEl.context;
   }
 });

@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 
-import { NgRFModelDirective } from './model.directive';
+import { NgRFNestedControlDirective } from './nested-control.directive';
 import { NgRFModelSetterService } from './model-setter.service';
 
 /**
@@ -13,10 +13,10 @@ import { NgRFModelSetterService } from './model-setter.service';
     NgRFModelSetterService,
   ],
   declarations: [
-    NgRFModelDirective,
+    NgRFNestedControlDirective,
   ],
   exports: [
-    NgRFModelDirective,
+    NgRFNestedControlDirective,
   ],
 })
 export class NgRFModelModule {

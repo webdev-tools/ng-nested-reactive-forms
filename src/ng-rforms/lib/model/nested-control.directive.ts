@@ -1,8 +1,21 @@
-import { Directive, ElementRef, HostListener, Input, OnDestroy, OnInit, Optional } from '@angular/core';
+import { Directive, ElementRef, HostListener, Input, OnDestroy, OnInit, Optional, TemplateRef, ViewContainerRef } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
 
 import { NgRFModelSetterService } from './model-setter.service';
 import { NgRFFormDirective } from '../form/form.directive';
+
+export class NgRFNestedControlContext {
+  $implicit: FormControl;
+
+  constructor(
+    public formControl: FormControl,
+    public formGroup: FormGroup,
+    public rfNestedControl: NgRFNestedControlDirective,
+  ) {
+    this.$implicit = formControl;
+  }
+
+}
 
 /**
  * This directive control nested inputs and sets values on the Original Model set at {@link NgRFFormDirective#rfModelData}
@@ -33,15 +46,16 @@ import { NgRFFormDirective } from '../form/form.directive';
  * ```
  */
 @Directive({
-  selector: '[rfModel]',
+  selector: '[rfNestedControl]',
+  exportAs: 'rfNestedControl',
 })
-export class NgRFModelDirective implements OnInit, OnDestroy {
+export class NgRFNestedControlDirective implements OnInit, OnDestroy {
 
   /**
    * The dot notation full name of the rfModelData
    */
     // tslint:disable-next-line:no-input-rename
-  @Input('rfModel') rfModelName: string;
+  @Input('rfNestedControl') rfModelName: string;
 
 
   private isRegisteredToFormControl = false;
@@ -55,6 +69,8 @@ export class NgRFModelDirective implements OnInit, OnDestroy {
   constructor(
     private modelSetter: NgRFModelSetterService,
     @Optional() private rfForm: NgRFFormDirective,
+    private templateRef: TemplateRef<any>,
+    private viewContainerRef: ViewContainerRef,
     { nativeElement }: ElementRef,
   ) {
     this.inputEl = nativeElement;
@@ -70,6 +86,7 @@ export class NgRFModelDirective implements OnInit, OnDestroy {
     this.modelPath = this.getModelPathWithoutFirstPart();
     this.registerToFormGroup();
     this.subscribeToValueChanges();
+    this.showViewContent();
   }
 
 
@@ -77,6 +94,17 @@ export class NgRFModelDirective implements OnInit, OnDestroy {
     if (this.parentFormGroup) {
       this.parentFormGroup.removeControl(this.rfModelName);
     }
+  }
+
+
+  private showViewContent() {
+    const context = new NgRFNestedControlContext(
+      this.formControl,
+      this.parentFormGroup,
+      this,
+    );
+
+    this.viewContainerRef.createEmbeddedView(this.templateRef, context);
   }
 
 
@@ -171,7 +199,7 @@ export class NgRFModelDirective implements OnInit, OnDestroy {
    * Set the value to the [rfModelData]{@link NgRFFormDirective#rfModelData}
    */
   private setModelValue(newValue: any) {
-    return this.modelSetter.setValue(this.modelPath, newValue || null, this.rfForm.rfModelData);
+    return this.modelSetter.setValue(this.modelPath, newValue || '', this.rfForm.rfModelData);
   }
 
 

@@ -1,3 +1,11 @@
-<mat-form-field fxFlex fxLayout="column">
-  <input matInput [placeholder]="placeholder" [rfModel]="modelName" />
+<mat-form-field
+  fxFlex
+  fxLayout="column"
+  *rfNestedControl="modelName; let control=formControl"
+>
+  <input
+    matInput
+    [placeholder]="placeholder"
+    [formControl]="control"
+  />
 </mat-form-field>

@@ -13,12 +13,13 @@ import { NgRFFormDirective } from './form.directive';
     ReactiveFormsModule,
   ],
   exports: [
+    FormsModule,
+    ReactiveFormsModule,
     NgRFFormDirective,
   ],
   declarations: [
     NgRFFormDirective,
   ],
-  providers: [],
 })
 export class NgRFFormModule {
 

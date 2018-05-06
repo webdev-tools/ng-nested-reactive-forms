@@ -20,6 +20,7 @@ export interface NgRFSubmitData {
  */
 @Directive({
   selector: 'form[rfForm]',
+  exportAs: 'rfForm',
 })
 export class NgRFFormDirective implements OnInit, OnDestroy {
 
