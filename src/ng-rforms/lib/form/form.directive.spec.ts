@@ -1,28 +1,27 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { async, ComponentFixture, fakeAsync, TestBed, tick } from '@angular/core/testing';
 
-import { NgRFFormComponent } from './form.component';
-import { of as ObservableOf } from 'rxjs';
+import { NgRFFormDirective } from './form.directive';
 import { Component, DebugElement } from '@angular/core';
 import { By } from '@angular/platform-browser';
 
 
 @Component({
   template: `
-    <rf-form [onSubmit]="handleSubmit()">
-      <button type="submit"></button>
-    </rf-form>
+    <form rfForm (rfSubmit)="handleSubmit()">
+      <button type="submit">Submit</button>
+    </form>
   `,
 })
 class TestComponent {
 
-  handleSubmit = jasmine.createSpy('handleSubmit', () => ObservableOf(true));
+  handleSubmit = jasmine.createSpy('handleSubmit');
 
 }
 
 
-describe('NgRFFormComponent', () => {
+describe('NgRFFormDirective', () => {
   let testComponent: TestComponent;
-  let component: NgRFFormComponent;
+  let component: NgRFFormDirective;
   let fixture: ComponentFixture<TestComponent>;
   let formEl: DebugElement;
   let submitEl: DebugElement;
@@ -30,7 +29,7 @@ describe('NgRFFormComponent', () => {
   beforeEach(async(() => {
     TestBed
       .configureTestingModule({
-        declarations: [TestComponent, NgRFFormComponent],
+        declarations: [TestComponent, NgRFFormDirective],
       })
       .compileComponents();
   }));
@@ -39,7 +38,7 @@ describe('NgRFFormComponent', () => {
     fixture = TestBed.createComponent(TestComponent);
     testComponent = fixture.componentInstance;
     formEl = fixture.debugElement.query(By.css('form'));
-    component = formEl.componentInstance;
+    component = formEl.injector.get(NgRFFormDirective);
     submitEl = formEl.query(By.css('button'));
 
     fixture.detectChanges();
@@ -47,18 +46,15 @@ describe('NgRFFormComponent', () => {
 
   it('should render a form', () => {
     expect(component).toBeTruthy();
-    component.formName = 'FormTest';
-
-    fixture.detectChanges();
-
-    expect(formEl.nativeElement.name).toEqual(component.formName);
   });
 
-  it('should call the onSubmit handler', () => {
-    submitEl.triggerEventHandler('click', null);
+  it('should call the onSubmit handler', fakeAsync(() => {
+    // submitEl.triggerEventHandler('click', null);
+    submitEl.nativeElement.click();
 
     fixture.detectChanges();
+    tick();
 
     expect(testComponent.handleSubmit).toHaveBeenCalled();
-  });
+  }));
 });

@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
-import { NgRFFormComponent } from './form.component';
+import { NgRFFormDirective } from './form.directive';
 
 /**
  * This module only handle form Abstraction and submit handler
@@ -8,15 +9,16 @@ import { NgRFFormComponent } from './form.component';
  */
 @NgModule({
   imports: [
+    FormsModule,
+    ReactiveFormsModule,
   ],
   exports: [
-    NgRFFormComponent,
+    NgRFFormDirective,
   ],
   declarations: [
-    NgRFFormComponent,
+    NgRFFormDirective,
   ],
-  providers: [
-  ],
+  providers: [],
 })
 export class NgRFFormModule {
 

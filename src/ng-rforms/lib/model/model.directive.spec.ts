@@ -11,9 +11,9 @@ let mockTestEntity = {};
 
 @Component({
   template: `
-    <rf-form [rfModelData]="testEntity">
+    <form rfForm [rfModelData]="testEntity">
       <test-input></test-input>
-    </rf-form>
+    </form>
   `,
 })
 class TestComponent {
@@ -28,7 +28,7 @@ class TestComponent {
 @Component({
   selector: 'test-input',
   template: `
-    <input rfModel="testEntity.user.firstName" name="firstName" />
+    <input rfModel="testEntity.user.firstName" />
   `,
 })
 class TestInputComponent {

@@ -2,10 +2,10 @@ import { Directive, ElementRef, HostListener, Input, OnDestroy, OnInit, Optional
 import { FormControl, FormGroup } from '@angular/forms';
 
 import { NgRFModelSetterService } from './model-setter.service';
-import { NgRFFormComponent } from '../form/form.component';
+import { NgRFFormDirective } from '../form/form.directive';
 
 /**
- * This directive control nested inputs and sets values on the Original Model set at {@link NgRFFormComponent#rfModelData}
+ * This directive control nested inputs and sets values on the Original Model set at {@link NgRFFormDirective#rfModelData}
  *
  * #### Given an rfModelData rfModelData on the controller:
  * ```typescript
@@ -54,7 +54,7 @@ export class NgRFModelDirective implements OnInit, OnDestroy {
 
   constructor(
     private modelSetter: NgRFModelSetterService,
-    @Optional() private rfForm: NgRFFormComponent,
+    @Optional() private rfForm: NgRFFormDirective,
     { nativeElement }: ElementRef,
   ) {
     this.inputEl = nativeElement;
@@ -104,7 +104,7 @@ export class NgRFModelDirective implements OnInit, OnDestroy {
 
 
   /**
-   * Verify if this input is inside a [NgRFFormComponent]{@link NgRFFormComponent}
+   * Verify if this input is inside a [NgRFFormDirective]{@link NgRFFormDirective}
    * and return its [FormGroup]{@link https://angular.io/api/forms/FormGroup}
    *
    * Otherwise a new empty [FormGroup]{@link https://angular.io/api/forms/FormGroup}
@@ -160,7 +160,7 @@ export class NgRFModelDirective implements OnInit, OnDestroy {
 
 
   /**
-   * Get the value from the [rfModelData]{@link NgRFFormComponent#rfModelData}
+   * Get the value from the [rfModelData]{@link NgRFFormDirective#rfModelData}
    */
   private getModelValue(): any | null {
     return this.modelSetter.getValue(this.modelPath, this.rfForm.rfModelData);
@@ -168,7 +168,7 @@ export class NgRFModelDirective implements OnInit, OnDestroy {
 
 
   /**
-   * Set the value to the [rfModelData]{@link NgRFFormComponent#rfModelData}
+   * Set the value to the [rfModelData]{@link NgRFFormDirective#rfModelData}
    */
   private setModelValue(newValue: any) {
     return this.modelSetter.setValue(this.modelPath, newValue || null, this.rfForm.rfModelData);
