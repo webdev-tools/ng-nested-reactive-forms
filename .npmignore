@@ -1,0 +1,14 @@
+.idea/
+e2e/
+node_modules/
+src/
+.angular-cli.json
+.editorconfig
+.gitattributes
+.gitignore
+.npmignore
+*.iml
+karma.conf.js
+protractor.conf.js
+tsconfig.json
+tslint.json
