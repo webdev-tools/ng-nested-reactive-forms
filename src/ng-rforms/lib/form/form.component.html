@@ -1,0 +1,10 @@
+<form
+  novalidate
+  [name]="formName"
+  (ngSubmit)="formSubmitWrapper()"
+  (keydown.enter)="$event.preventDefault()"
+>
+
+  <ng-content></ng-content>
+
+</form>

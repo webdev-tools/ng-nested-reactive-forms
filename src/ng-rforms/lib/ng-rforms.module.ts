@@ -1,10 +1,12 @@
 import { NgModule } from '@angular/core';
-import { NgRformsComponent } from './ng-rforms.component';
+
+import { NgRFFormModule } from './form';
 
 @NgModule({
-  imports: [
-  ],
-  declarations: [NgRformsComponent],
-  exports: [NgRformsComponent]
+  imports: [],
+  declarations: [],
+  exports: [
+    NgRFFormModule,
+  ]
 })
-export class NgRformsModule { }
+export class NgRFormsModule { }
