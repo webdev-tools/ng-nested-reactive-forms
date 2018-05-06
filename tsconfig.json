@@ -15,6 +15,11 @@
     "lib": [
       "es2017",
       "dom"
-    ]
+    ],
+    "paths": {
+      "@webdev-tools/ng-rforms": [
+        "src/ng-rforms/public_api.ts"
+      ]
+    }
   }
 }
