@@ -1,5 +1,5 @@
 {
-  "name": "ng-rforms",
+  "name": "@webdev-tools/ng-rforms",
   "version": "0.0.0",
   "scripts": {
     "ng": "ng",
