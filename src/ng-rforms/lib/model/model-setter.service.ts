@@ -96,12 +96,19 @@ export class NgRFModelSetterService {
    * This will be the property that will receive the new value
    */
   private getTargetPropToSet = (obj: any, key: string, i: number, pathPieces: any): any[]|any => {
+    let nextKey = pathPieces[i + 1];
+    const isLast = nextKey == null;
+
+    nextKey = nextKey || pathPieces['finalKey'];
+
+    const isArrayKey = this.isArrayKey(nextKey);
     let prop = obj[key];
 
     if (!prop) {
-      const nextKey = pathPieces[i + 1] || pathPieces['finalKey'];
-
-      prop = (nextKey != null && this.isArrayKey(nextKey)) ? [] : {};
+      prop = isArrayKey ? [] : {};
+      obj[key] = prop;
+    } else if (isLast) {
+      prop = isArrayKey ? [...prop] : { ...prop };
       obj[key] = prop;
     }
 
