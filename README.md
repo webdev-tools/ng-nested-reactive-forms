@@ -56,7 +56,7 @@ Only two directives are mandatory:
 | Property   | type               | Description                                          |
 |------------|--------------------|------------------------------------------------------|
 | entity     | Object             | A reference to the original `Entity` passed to the form tag |
-| formData   | Object             | An Object containing only the values of the inputs rendered inside the form |
+| formData   | Object             | An Object containing all Entity's properties and changes made by the user |
 | formGroup  | FormGroup          | The form FormGroup instance, used to validate fields |
 | nrfForm    | nNgRFFormDirective | The nrfForm directive instance                       |
 | event      | Event              | The original HTML event from the form submit         |

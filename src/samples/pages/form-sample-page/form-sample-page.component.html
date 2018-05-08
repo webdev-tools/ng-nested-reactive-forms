@@ -2,11 +2,12 @@
   <h2>Using custom nested input components with Angular Forms</h2>
 
   <main fxFlex fxLayout="row">
-    <form fxFlex nrfForm (nrfSubmit)="handleSubmit($event)" [nrfEntity]="testEntity">
+    <form fxFlex nrfForm #myForm="nrfForm" (nrfSubmit)="handleSubmit($event)" [nrfEntity]="testEntity">
 
       <div fxFlex fxLayout="column">
         <app-custom-input placeholder="First Name" modelName="testEntity.name"></app-custom-input>
         <app-custom-input placeholder="Last Name" modelName="testEntity.lastName"></app-custom-input>
+        <app-custom-input placeholder="Address" modelName="testEntity.address"></app-custom-input>
       </div>
 
       <p>
@@ -21,8 +22,13 @@
     <p>
       <b>Model Result:</b>
     </p>
-<pre>
-{{ testEntity | json }}
-</pre>
+    <pre>{{ myForm.formData | json }}</pre>
+  </div>
+
+  <div fxFlex fxLayout="column">
+    <p>
+      <b>Original Entity: (Never Changed)</b>
+    </p>
+    <pre>{{ myForm.nrfEntity | json }}</pre>
   </div>
 </section>

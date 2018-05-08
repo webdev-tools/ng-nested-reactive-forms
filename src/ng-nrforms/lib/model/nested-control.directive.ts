@@ -3,6 +3,7 @@ import { FormControl, FormGroup } from '@angular/forms';
 
 import { NrfModelSetterService } from './model-setter.service';
 import { NrfFormDirective } from '../form/form.directive';
+import { takeWhile } from 'rxjs/internal/operators';
 
 export class NrfNestedControlContext {
   $implicit: FormControl;
@@ -59,6 +60,7 @@ export class NrfNestedControlDirective implements OnInit, OnDestroy {
 
 
   private isRegisteredToFormControl = false;
+  private isDestroyed = false;
 
   parentFormGroup: FormGroup;
   formControl: FormControl;
@@ -91,6 +93,8 @@ export class NrfNestedControlDirective implements OnInit, OnDestroy {
 
 
   ngOnDestroy() {
+    this.isDestroyed = true;
+
     if (this.parentFormGroup) {
       this.parentFormGroup.removeControl(this.nrfModelName);
     }
@@ -166,7 +170,6 @@ export class NrfNestedControlDirective implements OnInit, OnDestroy {
    */
   protected getNewFormControl(): FormControl {
     const initialValue = this.getInitialValue();
-    this.setModelValue(initialValue);
     return new FormControl(initialValue || null);
   }
 
@@ -175,7 +178,9 @@ export class NrfNestedControlDirective implements OnInit, OnDestroy {
    * Subscribe to [valueChanges]{@link https://angular.io/api/forms/AbstractControl#valueChanges} and update the Entity value
    */
   private subscribeToValueChanges() {
-    this.formControl.valueChanges.subscribe(newValue => this.setModelValue(newValue));
+    this.formControl.valueChanges
+      .pipe(takeWhile(() => !this.isDestroyed))
+      .subscribe(newValue => this.setModelValue(newValue));
   }
 
 

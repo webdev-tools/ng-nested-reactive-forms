@@ -1,5 +1,6 @@
 import { Directive, EventEmitter, HostListener, Input, OnDestroy, OnInit, Output } from '@angular/core';
 import { FormGroup } from '@angular/forms';
+import * as cloneDeep from 'lodash.clonedeep';
 
 export interface NrfSubmitData {
   nrfForm: NrfFormDirective;
@@ -48,7 +49,7 @@ export class NrfFormDirective implements OnInit, OnDestroy {
   /**
    * The form data representing all inputs
    */
-  formData: any = {};
+  formData: any;
 
 
   /**
@@ -66,6 +67,8 @@ export class NrfFormDirective implements OnInit, OnDestroy {
     if (!this.nrfEntity) {
       this.nrfEntity = {};
     }
+
+    this.formData = cloneDeep(this.nrfEntity);
   }
 
   ngOnDestroy() {
