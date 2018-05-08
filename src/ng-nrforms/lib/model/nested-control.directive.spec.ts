@@ -4,6 +4,7 @@ import { By } from '@angular/platform-browser';
 
 import { NrfNestedControlContext, NrfNestedControlDirective } from './nested-control.directive';
 import { NrfFormModule } from '../form';
+import { NrfFormDirective } from '../form/form.directive';
 import { NrfModelModule } from './index';
 
 
@@ -41,6 +42,8 @@ class TestInputComponent {
 describe('NrfNestedControlDirective', () => {
   let testComponent: TestComponent;
   let fixture: ComponentFixture<TestComponent>;
+  let formEl: DebugElement;
+  let formComponent: NrfFormDirective;
   let inputEl: DebugElement;
   let context: NrfNestedControlContext;
 
@@ -58,6 +61,8 @@ describe('NrfNestedControlDirective', () => {
     generateComponent();
     const name = 'John';
     const testEntity: any = testComponent.testEntity;
+    const formData = formComponent.formData;
+
     expect(testEntity && testEntity.user && testEntity.user.firstName).toBeFalsy();
 
     const input: HTMLInputElement = inputEl.nativeElement;
@@ -67,22 +72,26 @@ describe('NrfNestedControlDirective', () => {
     fixture.detectChanges();
     tick();
 
-    expect(testEntity && testEntity.user && testEntity.user.firstName).toEqual(name);
+    expect(testEntity && testEntity.user && testEntity.user.firstName).toBeFalsy();
+    expect(formData.user.firstName).toEqual(name);
     expect(input.value).toEqual(name);
   }));
 
   it('Should instantiate the input with the initial value on the nrfEntity', fakeAsync(() => {
+    const firstName = 'Jane';
+
     mockTestEntity = {
       user: {
-        firstName: 'Jane',
+        firstName,
       },
     };
 
     generateComponent();
     tick();
 
-    expect(context.formControl.value).toEqual(testComponent.testEntity.user.firstName);
-    expect(inputEl.nativeElement.value).toEqual(testComponent.testEntity.user.firstName);
+    expect(context.formControl.value).toEqual(firstName);
+    expect(inputEl.nativeElement.value).toEqual(firstName);
+    expect(formComponent.formData.user.firstName).toEqual(firstName);
   }));
 
   function generateComponent() {
@@ -90,6 +99,9 @@ describe('NrfNestedControlDirective', () => {
     testComponent = fixture.componentInstance;
 
     fixture.detectChanges();
+
+    formEl = fixture.debugElement.query(By.css('form'));
+    formComponent = formEl.injector.get(NrfFormDirective);
 
     inputEl = fixture.debugElement.query(By.css('input'));
     context = inputEl.context;

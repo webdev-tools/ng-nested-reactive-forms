@@ -3,7 +3,8 @@ import { FormGroup } from '@angular/forms';
 
 export interface NrfSubmitData {
   nrfForm: NrfFormDirective;
-  modelData: any;
+  formData: any;
+  entity: any;
   formGroup: FormGroup;
   event: Event;
 }
@@ -44,6 +45,11 @@ export class NrfFormDirective implements OnInit, OnDestroy {
    */
   formGroup: FormGroup;
 
+  /**
+   * The form data representing all inputs
+   */
+  formData: any = {};
+
 
   /**
    * @ignore
@@ -81,7 +87,8 @@ export class NrfFormDirective implements OnInit, OnDestroy {
 
     this.nrfSubmit.emit({
       nrfForm: this,
-      modelData: this.nrfEntity,
+      formData: this.formData,
+      entity: this.nrfEntity,
       formGroup: this.formGroup,
       event: $event,
     });

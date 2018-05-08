@@ -13,15 +13,15 @@ Enforce the usage of an `Entity`, also know as `Model`, to share data between th
 
 Use two-way data-binding as [AngularJS 1.x](https://docs.angularjs.org/tutorial/step_06) does.
 
-Mutate the `Entity` properties when user make changes to inputs.
+**Do not** mutate the original `Entity` when user make changes to inputs.
 
 Define the data-binding using dot-notation e.g.: `user.addresses[1].streetName`
 
-It is not necessary to pass the `entity` through all nested components,  
+It is not necessary to pass the `Entity` through all nested components,  
 **forms** and **inputs** will communicate with each other
 no matter how deep the nested components are.
 
-Submit event will only be triggered on [Valid Forms](https://angular.io/guide/form-validation).
+Submit event will only be triggered if all inputs are [Valid](https://angular.io/guide/form-validation).
 
 
 # Usage
@@ -38,7 +38,7 @@ Only two directives are mandatory:
 <form
   nrfForm
   (nrfSubmit)="handleSubmit($event)"
-  [nrfModelData]="testEntity"
+  [nrfEntity]="anyObject"
 >
 <!-- All components and inputs -->
 </form>
@@ -55,9 +55,10 @@ Only two directives are mandatory:
 
 | Property   | type               | Description                                          |
 |------------|--------------------|------------------------------------------------------|
-| modelData  | Object             | A reference to the initial `Entity`                  |
+| entity     | Object             | A reference to the original `Entity` passed to the form tag |
+| formData   | Object             | An Object containing only the values of the inputs rendered inside the form |
 | formGroup  | FormGroup          | The form FormGroup instance, used to validate fields |
-| nrfForm    | nNgRFFormDirective | The nrfForm directive instance                        |
+| nrfForm    | nNgRFFormDirective | The nrfForm directive instance                       |
 | event      | Event              | The original HTML event from the form submit         |
 
 

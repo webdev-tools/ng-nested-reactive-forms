@@ -165,7 +165,8 @@ export class NrfNestedControlDirective implements OnInit, OnDestroy {
    * Instantiate a new [FormControl]{@link https://angular.io/api/forms/FormControl} and return it
    */
   protected getNewFormControl(): FormControl {
-    const initialValue = this.getModelValue();
+    const initialValue = this.getInitialValue();
+    this.setModelValue(initialValue);
     return new FormControl(initialValue || null);
   }
 
@@ -188,18 +189,18 @@ export class NrfNestedControlDirective implements OnInit, OnDestroy {
 
 
   /**
-   * Get the value from the [rfModelData]{@link NrfFormDirective#nrfEntity}
+   * Get the value from the [nrfEntity]{@link NrfFormDirective#nrfEntity}
    */
-  private getModelValue(): any | null {
+  private getInitialValue(): any | null {
     return this.modelSetter.getValue(this.modelPath, this.nrfForm.nrfEntity);
   }
 
 
   /**
-   * Set the value to the [nrfEntity]{@link NrfFormDirective#nrfEntity}
+   * Set the value to the [formData]{@link NrfFormDirective#formData}
    */
   private setModelValue(newValue: any) {
-    return this.modelSetter.setValue(this.modelPath, newValue || '', this.nrfForm.nrfEntity);
+    return this.modelSetter.setValue(this.modelPath, newValue || '', this.nrfForm.formData);
   }
 
 
