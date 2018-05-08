@@ -1,5 +1,5 @@
 {
-  "name": "@webdev-tools/ng-rforms",
+  "name": "@webdev-tools/ng-nested-reactive-forms",
   "version": "0.0.1",
   "scripts": {
     "ng": "ng",
@@ -8,9 +8,9 @@
     "test": "ng test",
     "lint": "ng lint",
     "e2e": "ng e2e",
-    "lib:build": "ng build ng-rforms --prod",
-    "lib:publish": "cd dist/ng-rforms && npm publish --access public",
-    "lib:test": "ng test ng-rforms",
+    "lib:build": "ng build ng-nrforms --prod",
+    "lib:publish": "cd dist/ng-nrforms && npm publish --access public",
+    "lib:test": "ng test ng-nrforms",
     "lib:test-watch": "npm run lib:test -- --watch",
     "postversion": "git push && git push --tags && npm run lib:publish"
   },

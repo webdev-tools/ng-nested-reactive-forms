@@ -1,7 +1,7 @@
-import { NgRFModelSetterService } from './model-setter.service';
+import { NrfModelSetterService } from './model-setter.service';
 
-describe('NgRFModelSetterService', () => {
-  let nestedProps: NgRFModelSetterService;
+describe('NrfModelSetterService', () => {
+  let nestedProps: NrfModelSetterService;
   const model = {
     address: {
       street: 'Lombard Street',
@@ -14,7 +14,7 @@ describe('NgRFModelSetterService', () => {
   };
 
   beforeEach(() => {
-    nestedProps = new NgRFModelSetterService();
+    nestedProps = new NrfModelSetterService();
   });
 
   it('get deep nested property value', () => {

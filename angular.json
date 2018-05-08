@@ -18,7 +18,7 @@
         "build": {
           "builder": "@angular-devkit/build-angular:browser",
           "options": {
-            "outputPath": "dist/ng-rforms-samples",
+            "outputPath": "dist/ng-nrforms-samples",
             "index": "src/samples/index.html",
             "main": "src/samples/main.ts",
             "polyfills": "src/samples/polyfills.ts",
@@ -102,7 +102,7 @@
         }
       }
     },
-    "ng-rforms-e2e": {
+    "ng-nrforms-e2e": {
       "root": "e2e/",
       "projectType": "application",
       "architect": {
@@ -124,38 +124,38 @@
         }
       }
     },
-    "ng-rforms": {
-      "root": "src/ng-rforms",
-      "sourceRoot": "src/ng-rforms",
+    "ng-nrforms": {
+      "root": "src/ng-nrforms",
+      "sourceRoot": "src/ng-nrforms",
       "projectType": "library",
       "prefix": "rf",
       "architect": {
         "build": {
           "builder": "@angular-devkit/build-ng-packagr:build",
           "options": {
-            "tsConfig": "src/ng-rforms/tsconfig.lib.json",
-            "project": "src/ng-rforms/ng-package.json"
+            "tsConfig": "src/ng-nrforms/tsconfig.lib.json",
+            "project": "src/ng-nrforms/ng-package.json"
           },
           "configurations": {
             "production": {
-              "project": "src/ng-rforms/ng-package.prod.json"
+              "project": "src/ng-nrforms/ng-package.prod.json"
             }
           }
         },
         "test": {
           "builder": "@angular-devkit/build-angular:karma",
           "options": {
-            "main": "src/ng-rforms/test.ts",
-            "tsConfig": "src/ng-rforms/tsconfig.spec.json",
-            "karmaConfig": "src/ng-rforms/karma.conf.js"
+            "main": "src/ng-nrforms/test.ts",
+            "tsConfig": "src/ng-nrforms/tsconfig.spec.json",
+            "karmaConfig": "src/ng-nrforms/karma.conf.js"
           }
         },
         "lint": {
           "builder": "@angular-devkit/build-angular:tslint",
           "options": {
             "tsConfig": [
-              "src/ng-rforms/tsconfig.lib.json",
-              "src/ng-rforms/tsconfig.spec.json"
+              "src/ng-nrforms/tsconfig.lib.json",
+              "src/ng-nrforms/tsconfig.spec.json"
             ],
             "exclude": [
               "**/node_modules/**"

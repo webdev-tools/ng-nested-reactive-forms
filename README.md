@@ -1,4 +1,4 @@
-# ng-rforms
+# ng-nested-reactive-forms
 
 Implement Nested FormControl for Angular Reactive Forms.
 
@@ -28,58 +28,58 @@ Submit event will only be triggered on [Valid Forms](https://angular.io/guide/fo
 
 Only two directives are mandatory:
 
-1. `rfForm` on the `<form>` tag
-2. `*rfNestedControl` on a parent of a given `input`, `textarea`, `select`, or even a [custom component](https://angular.io/api/forms/DefaultValueAccessor).
+1. `nrfForm` on the `<form>` tag
+2. `*nrfNestedControl` on a parent of a given `input`, `textarea`, `select`, or even a [custom component](https://angular.io/api/forms/DefaultValueAccessor).
 
 
 ## The Reactive `Form` tag
 
 ```html
 <form
-  rfForm
-  (rfSubmit)="handleSubmit($event)"
-  [rfModelData]="testEntity"
+  nrfForm
+  (nrfSubmit)="handleSubmit($event)"
+  [nrfModelData]="testEntity"
 >
 <!-- All components and inputs -->
 </form>
 ```
 
-| Property      | type            | Description                                                                        |
-|---------------|-----------------|------------------------------------------------------------------------------------|
-| rfForm        | --              | **Required** The main directive that enables communication with the nested inputs. |
-| (rfSubmit)    | function        | This `@Output` only will be called if all the inputs inside this form are valid.   |
-| [rfModelData] | Object \| Array | The `Entity` that will be handled by this form. If not empty, inputs will be pre-filled using its data |
+| Property       | type            | Description                                                                        |
+|----------------|-----------------|------------------------------------------------------------------------------------|
+| nrfForm        | --              | **Required** The main directive that enables communication with the nested inputs. |
+| (nrfSubmit)    | function        | This `@Output` only will be called if all the inputs inside this form are valid.   |
+| [nrfModelData] | Object \| Array | The `Entity` that will be handled by this form. If not empty, inputs will be pre-filled using its data |
 
 
 ### Submit `$event` properties
 
-| Property  | type              | Description                                          |
-|-----------|-------------------|------------------------------------------------------|
-| modelData | Object            | A reference to the initial `Entity`                  |
-| formGroup | FormGroup         | The form FormGroup instance, used to validate fields |
-| rfForm    | NgRFFormDirective | The rfForm directive instance                        |
-| event     | Event             | The original HTML event from the form submit         |
+| Property   | type               | Description                                          |
+|------------|--------------------|------------------------------------------------------|
+| modelData  | Object             | A reference to the initial `Entity`                  |
+| formGroup  | FormGroup          | The form FormGroup instance, used to validate fields |
+| nrfForm    | nNgRFFormDirective | The nrfForm directive instance                        |
+| event      | Event              | The original HTML event from the form submit         |
 
 
 
 ## The Reactive `input` tag
 
-You have to put `*rfNestedControl` on an input parent tag.  
+You have to put `*nrfNestedControl` on an input parent tag.  
 And use `[formControl]` directly on the `input` tag, as described on
 [Angular Reactive Forms](https://angular.io/guide/reactive-forms#create-the-template).
 
 ```html
-<div *rfNestedControl="modelName; let control=formControl">
+<div *nrfNestedControl="modelName; let control=formControl">
   <input [formControl]="control" />
 </div>
 ```
 
 ### Variables available in the context
-| Name            | Description                                    |
-|-----------------|------------------------------------------------|
-| formControl     | It is **mandatory** to use this on the given input, otherwise no data-binding or validation will be applied  |
-| formGroup       | A reference to the form formGroup              |
-| rfNestedControl | The NestedControl instance                     |
+| Name             | Description                                    |
+|------------------|------------------------------------------------|
+| formControl      | It is **mandatory** to use this on the given input, otherwise no data-binding or validation will be applied  |
+| formGroup        | A reference to the form formGroup              |
+| nrfNestedControl | The NestedControl instance                     |
 
 
 

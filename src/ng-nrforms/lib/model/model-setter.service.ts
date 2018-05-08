@@ -6,7 +6,7 @@ import { Injectable } from '@angular/core';
  *
  */
 @Injectable()
-export class NgRFModelSetterService {
+export class NrfModelSetterService {
 
   /**
    * Get a value using a dot-notation string to find the nested property
@@ -16,15 +16,15 @@ export class NgRFModelSetterService {
    * @param separator An optional param to specify a different separator, default '.'
    *
    * ```typescript
-   * const rfModelData = {
+   * const nrfEntity = {
    *    user: {
    *        name: 'John Doe'
    *    }
    * };
-   * nestedProps.getValue('user.name', rfModelData);
+   * nestedProps.getValue('user.name', nrfEntity);
    * // => 'John Doe'
    *
-   * nestedProps.getValue('user.email', rfModelData);
+   * nestedProps.getValue('user.email', nrfEntity);
    * // => null
    * ```
    */

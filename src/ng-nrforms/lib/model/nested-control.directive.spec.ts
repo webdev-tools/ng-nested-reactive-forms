@@ -2,16 +2,16 @@ import { Component, DebugElement } from '@angular/core';
 import { async, ComponentFixture, fakeAsync, TestBed, tick } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 
-import { NgRFNestedControlContext, NgRFNestedControlDirective } from './nested-control.directive';
-import { NgRFFormModule } from '../form';
-import { NgRFModelModule } from './index';
+import { NrfNestedControlContext, NrfNestedControlDirective } from './nested-control.directive';
+import { NrfFormModule } from '../form';
+import { NrfModelModule } from './index';
 
 
 let mockTestEntity = {};
 
 @Component({
   template: `
-    <form rfForm [rfModelData]="testEntity">
+    <form nrfForm [nrfEntity]="testEntity">
       <test-input></test-input>
     </form>
   `,
@@ -28,7 +28,7 @@ class TestComponent {
 @Component({
   selector: 'test-input',
   template: `
-    <div *rfNestedControl="'testEntity.user.firstName'; let control=formControl">
+    <div *nrfNestedControl="'testEntity.user.firstName'; let control=formControl">
       <input [formControl]="control" />
     </div>
   `,
@@ -38,23 +38,23 @@ class TestInputComponent {
 }
 
 
-describe('NgRFNestedControlDirective', () => {
+describe('NrfNestedControlDirective', () => {
   let testComponent: TestComponent;
   let fixture: ComponentFixture<TestComponent>;
   let inputEl: DebugElement;
-  let context: NgRFNestedControlContext;
+  let context: NrfNestedControlContext;
 
   beforeEach(async(() => {
     TestBed
       .configureTestingModule({
-        imports: [NgRFFormModule, NgRFModelModule],
+        imports: [NrfFormModule, NrfModelModule],
         declarations: [TestComponent, TestInputComponent],
         providers: [],
       })
       .compileComponents();
   }));
 
-  it('Should set rfModelData value on input changes', fakeAsync(() => {
+  it('Should set nrfEntity value on input changes', fakeAsync(() => {
     generateComponent();
     const name = 'John';
     const testEntity: any = testComponent.testEntity;
@@ -71,7 +71,7 @@ describe('NgRFNestedControlDirective', () => {
     expect(input.value).toEqual(name);
   }));
 
-  it('Should instantiate the input with the initial value on the rfModelData', fakeAsync(() => {
+  it('Should instantiate the input with the initial value on the nrfEntity', fakeAsync(() => {
     mockTestEntity = {
       user: {
         firstName: 'Jane',

@@ -1,16 +1,16 @@
 import { Directive, ElementRef, HostListener, Input, OnDestroy, OnInit, Optional, TemplateRef, ViewContainerRef } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
 
-import { NgRFModelSetterService } from './model-setter.service';
-import { NgRFFormDirective } from '../form/form.directive';
+import { NrfModelSetterService } from './model-setter.service';
+import { NrfFormDirective } from '../form/form.directive';
 
-export class NgRFNestedControlContext {
+export class NrfNestedControlContext {
   $implicit: FormControl;
 
   constructor(
     public formControl: FormControl,
     public formGroup: FormGroup,
-    public rfNestedControl: NgRFNestedControlDirective,
+    public nrfNestedControl: NrfNestedControlDirective,
   ) {
     this.$implicit = formControl;
   }
@@ -18,9 +18,9 @@ export class NgRFNestedControlContext {
 }
 
 /**
- * This directive control nested inputs and sets values on the Original Model set at {@link NgRFFormDirective#rfModelData}
+ * This directive control nested inputs and sets values on the Original Model set at {@link NrfFormDirective#nrfEntity}
  *
- * #### Given an rfModelData rfModelData on the controller:
+ * #### Given an nrfEntity on the controller:
  * ```typescript
  * this.userModel = {
  *    firstName: 'John',
@@ -32,30 +32,30 @@ export class NgRFNestedControlContext {
  *
  * #### Use it on the form
  * ```html
- * <form [rfModelData]="userModel">
+ * <form [nrfEntity]="userModel">
  *   <div class="form-group">
  *      <label for="name">Name:</label>
  *
  *      <input
  *        id="name"
  *        class="form-control"
- *        rfModel="userModel.name"
+ *        nrfModel="userModel.name" // TODO fix this example
  *      />
  *   </div>
  * </form>
  * ```
  */
 @Directive({
-  selector: '[rfNestedControl]',
-  exportAs: 'rfNestedControl',
+  selector: '[nrfNestedControl]',
+  exportAs: 'nrfNestedControl',
 })
-export class NgRFNestedControlDirective implements OnInit, OnDestroy {
+export class NrfNestedControlDirective implements OnInit, OnDestroy {
 
   /**
-   * The dot notation full name of the rfModelData
+   * The dot notation full name of the nrfEntity
    */
     // tslint:disable-next-line:no-input-rename
-  @Input('rfNestedControl') rfModelName: string;
+  @Input('nrfNestedControl') nrfModelName: string;
 
 
   private isRegisteredToFormControl = false;
@@ -67,8 +67,8 @@ export class NgRFNestedControlDirective implements OnInit, OnDestroy {
 
 
   constructor(
-    private modelSetter: NgRFModelSetterService,
-    @Optional() private rfForm: NgRFFormDirective,
+    private modelSetter: NrfModelSetterService,
+    @Optional() private nrfForm: NrfFormDirective,
     private templateRef: TemplateRef<any>,
     private viewContainerRef: ViewContainerRef,
     { nativeElement }: ElementRef,
@@ -92,13 +92,13 @@ export class NgRFNestedControlDirective implements OnInit, OnDestroy {
 
   ngOnDestroy() {
     if (this.parentFormGroup) {
-      this.parentFormGroup.removeControl(this.rfModelName);
+      this.parentFormGroup.removeControl(this.nrfModelName);
     }
   }
 
 
   private showViewContent() {
-    const context = new NgRFNestedControlContext(
+    const context = new NrfNestedControlContext(
       this.formControl,
       this.parentFormGroup,
       this,
@@ -126,20 +126,20 @@ export class NgRFNestedControlDirective implements OnInit, OnDestroy {
     if (formGroup) {
       this.isRegisteredToFormControl = true;
       this.parentFormGroup = formGroup;
-      formGroup.addControl(this.rfModelName, formControl);
+      formGroup.addControl(this.nrfModelName, formControl);
     }
   }
 
 
   /**
-   * Verify if this input is inside a [NgRFFormDirective]{@link NgRFFormDirective}
+   * Verify if this input is inside a [NrfFormDirective]{@link NrfFormDirective}
    * and return its [FormGroup]{@link https://angular.io/api/forms/FormGroup}
    *
    * Otherwise a new empty [FormGroup]{@link https://angular.io/api/forms/FormGroup}
    */
   private getFormGroup() {
-    if (this.rfForm) {
-      return this.rfForm.formGroup;
+    if (this.nrfForm) {
+      return this.nrfForm.formGroup;
     }
 
     return new FormGroup({});
@@ -151,7 +151,7 @@ export class NgRFNestedControlDirective implements OnInit, OnDestroy {
    * Otherwise return a new [FormControl]{@link https://angular.io/api/forms/FormControl}
    */
   protected getFormControl(formGroup: FormGroup): FormControl {
-    let formControl = formGroup && <FormControl>formGroup.get(this.rfModelName);
+    let formControl = formGroup && <FormControl>formGroup.get(this.nrfModelName);
 
     if (!formControl) {
       formControl = this.getNewFormControl();
@@ -179,27 +179,27 @@ export class NgRFNestedControlDirective implements OnInit, OnDestroy {
 
 
   /**
-   * Return the dot notation path of the rfModelData, without the first part,
+   * Return the dot notation path of the nrfModelData, without the first part,
    * because it is the rfModelData itself.
    */
   private getModelPathWithoutFirstPart(): string {
-    return this.rfModelName.substr(this.rfModelName.indexOf('.') + 1);
+    return this.nrfModelName.substr(this.nrfModelName.indexOf('.') + 1);
   }
 
 
   /**
-   * Get the value from the [rfModelData]{@link NgRFFormDirective#rfModelData}
+   * Get the value from the [rfModelData]{@link NrfFormDirective#nrfEntity}
    */
   private getModelValue(): any | null {
-    return this.modelSetter.getValue(this.modelPath, this.rfForm.rfModelData);
+    return this.modelSetter.getValue(this.modelPath, this.nrfForm.nrfEntity);
   }
 
 
   /**
-   * Set the value to the [rfModelData]{@link NgRFFormDirective#rfModelData}
+   * Set the value to the [nrfEntity]{@link NrfFormDirective#nrfEntity}
    */
   private setModelValue(newValue: any) {
-    return this.modelSetter.setValue(this.modelPath, newValue || '', this.rfForm.rfModelData);
+    return this.modelSetter.setValue(this.modelPath, newValue || '', this.nrfForm.nrfEntity);
   }
 
 

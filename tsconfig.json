@@ -17,8 +17,8 @@
       "dom"
     ],
     "paths": {
-      "@webdev-tools/ng-rforms": [
-        "src/ng-rforms/public_api.ts"
+      "@webdev-tools/ng-nested-reactive-forms": [
+        "src/ng-nrforms/public_api.ts"
       ]
     }
   }

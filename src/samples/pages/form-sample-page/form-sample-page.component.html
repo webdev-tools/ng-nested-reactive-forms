@@ -2,7 +2,7 @@
   <h2>Using custom nested input components with Angular Forms</h2>
 
   <main fxFlex fxLayout="row">
-    <form fxFlex rfForm (rfSubmit)="handleSubmit($event)" [rfModelData]="testEntity">
+    <form fxFlex nrfForm (nrfSubmit)="handleSubmit($event)" [nrfEntity]="testEntity">
 
       <div fxFlex fxLayout="column">
         <app-custom-input placeholder="First Name" modelName="testEntity.name"></app-custom-input>

@@ -1,13 +1,13 @@
 import { async, ComponentFixture, fakeAsync, TestBed, tick } from '@angular/core/testing';
 
-import { NgRFFormDirective } from './form.directive';
+import { NrfFormDirective } from './form.directive';
 import { Component, DebugElement } from '@angular/core';
 import { By } from '@angular/platform-browser';
 
 
 @Component({
   template: `
-    <form rfForm (rfSubmit)="handleSubmit()">
+    <form nrfForm (nrfSubmit)="handleSubmit()">
       <button type="submit">Submit</button>
     </form>
   `,
@@ -19,9 +19,9 @@ class TestComponent {
 }
 
 
-describe('NgRFFormDirective', () => {
+describe('NrfFormDirective', () => {
   let testComponent: TestComponent;
-  let component: NgRFFormDirective;
+  let component: NrfFormDirective;
   let fixture: ComponentFixture<TestComponent>;
   let formEl: DebugElement;
   let submitEl: DebugElement;
@@ -29,7 +29,7 @@ describe('NgRFFormDirective', () => {
   beforeEach(async(() => {
     TestBed
       .configureTestingModule({
-        declarations: [TestComponent, NgRFFormDirective],
+        declarations: [TestComponent, NrfFormDirective],
       })
       .compileComponents();
   }));
@@ -38,7 +38,7 @@ describe('NgRFFormDirective', () => {
     fixture = TestBed.createComponent(TestComponent);
     testComponent = fixture.componentInstance;
     formEl = fixture.debugElement.query(By.css('form'));
-    component = formEl.injector.get(NgRFFormDirective);
+    component = formEl.injector.get(NrfFormDirective);
     submitEl = formEl.query(By.css('button'));
 
     fixture.detectChanges();

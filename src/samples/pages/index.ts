@@ -2,7 +2,7 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { MatFormFieldModule, MatInputModule, MatButtonModule, MatDividerModule } from '@angular/material';
-import { NgRFormsModule } from '@webdev-tools/ng-rforms';
+import { NrFormsModule } from '@webdev-tools/ng-nested-reactive-forms';
 
 import { FormSamplePageComponent } from './form-sample-page/form-sample-page.component';
 import { CustomInputComponent } from './form-sample-page/custom-input.component';
@@ -16,7 +16,7 @@ import { CustomInputComponent } from './form-sample-page/custom-input.component'
     MatInputModule,
     MatButtonModule,
     MatDividerModule,
-    NgRFormsModule,
+    NrFormsModule,
   ],
   declarations: [
     FormSamplePageComponent,

@@ -1,8 +1,8 @@
 import { Directive, EventEmitter, HostListener, Input, OnDestroy, OnInit, Output } from '@angular/core';
 import { FormGroup } from '@angular/forms';
 
-export interface NgRFSubmitData {
-  rfForm: NgRFFormDirective;
+export interface NrfSubmitData {
+  nrfForm: NrfFormDirective;
   modelData: any;
   formGroup: FormGroup;
   event: Event;
@@ -14,26 +14,26 @@ export interface NgRFSubmitData {
  * It holds the validation and the submit logic
  *
  * @example
- * <form rfForm (rfSubmit)="aCallback($event)">
+ * <form nrfForm (nrfSubmit)="aCallback($event)">
  *  // Inputs
  * </form>
  */
 @Directive({
-  selector: 'form[rfForm]',
-  exportAs: 'rfForm',
+  selector: 'form[nrfForm]',
+  exportAs: 'nrfForm',
 })
-export class NgRFFormDirective implements OnInit, OnDestroy {
+export class NrfFormDirective implements OnInit, OnDestroy {
 
   /**
    * Represents an Entity Model that comes from Database
    */
-  @Input() rfModelData: any;
+  @Input() nrfEntity: any;
 
   /**
    * A function that will be called when the form is valid and a submit event is triggered
    * by a button click or programmatically.
    */
-  @Output() rfSubmit = new EventEmitter<NgRFSubmitData>();
+  @Output() nrfSubmit = new EventEmitter<NrfSubmitData>();
 
   /**
    * Form group will hold all inputs within this form.
@@ -54,22 +54,22 @@ export class NgRFFormDirective implements OnInit, OnDestroy {
 
 
   /**
-   * Init an empty rfModelData, in case none where provided.
+   * Init an empty nrfEntity, in case none where provided.
    */
   ngOnInit() {
-    if (!this.rfModelData) {
-      this.rfModelData = {};
+    if (!this.nrfEntity) {
+      this.nrfEntity = {};
     }
   }
 
   ngOnDestroy() {
-    this.rfSubmit.complete();
+    this.nrfSubmit.complete();
   }
 
 
   /**
    * # Should not be called directly!
-   * This method wraps the form validation and call [onSubmit]{@link NgRFFormDirective#onSubmit}
+   * This method wraps the form validation and call [onSubmit]{@link NrfFormDirective#nrfSubmit}
    */
   @HostListener('submit', ['$event'])
   formSubmitWrapper($event: Event) {
@@ -79,9 +79,9 @@ export class NgRFFormDirective implements OnInit, OnDestroy {
       return;
     }
 
-    this.rfSubmit.emit({
-      rfForm: this,
-      modelData: this.rfModelData,
+    this.nrfSubmit.emit({
+      nrfForm: this,
+      modelData: this.nrfEntity,
       formGroup: this.formGroup,
       event: $event,
     });
