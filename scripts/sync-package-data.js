@@ -10,10 +10,12 @@ const mainPackageJsonPath = path.join(rootFolder, 'package.json');
 const libPackageJsonPath = path.join(rootFolder, 'src/ng-nrforms/package.json');
 
 const mainPackageJson = require(mainPackageJsonPath);
-
 const libPackageJson = require(libPackageJsonPath);
 
-libPackageJson.version = mainPackageJson.version;
+
+['name', 'version', 'license', 'description', 'repository', 'bugs', 'homepage'].forEach((key) => {
+  libPackageJson[key] = mainPackageJson[key];
+});
 
 
 const libPackageJsonContent = JSON.stringify(libPackageJson, null, 2) + '\n';
