@@ -37,11 +37,9 @@ export class NrfNestedControlContext {
  *   <div class="form-group">
  *      <label for="name">Name:</label>
  *
- *      <input
- *        id="name"
- *        class="form-control"
- *        nrfModel="userModel.name" // TODO fix this example
- *      />
+ *      <div *nrfNestedControl="'userModel.firstName'; let control=formControl">
+ *        <input [formControl]="control" />
+ *      </div>
  *   </div>
  * </form>
  * ```
@@ -185,8 +183,8 @@ export class NrfNestedControlDirective implements OnInit, OnDestroy {
 
 
   /**
-   * Return the dot notation path of the nrfModelData, without the first part,
-   * because it is the rfModelData itself.
+   * Return the dot notation path of the Entity, without the first part,
+   * because it is the Entity itself.
    */
   private getModelPathWithoutFirstPart(): string {
     return this.nrfModelName.substr(this.nrfModelName.indexOf('.') + 1);

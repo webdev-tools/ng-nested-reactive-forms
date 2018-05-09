@@ -4,5 +4,5 @@
 
 export * from './lib';
 export * from './lib/form/form.directive';
-export * from './lib/model/nested-control.directive';
-export * from './lib/model/model-setter.service';
+export * from './lib/nested-control/nested-control.directive';
+export * from './lib/nested-control/model-setter.service';

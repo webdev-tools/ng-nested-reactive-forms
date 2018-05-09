@@ -70,7 +70,7 @@ And use `[formControl]` directly on the `input` tag, as described on
 [Angular Reactive Forms](https://angular.io/guide/reactive-forms#create-the-template).
 
 ```html
-<div *nrfNestedControl="modelName; let control=formControl">
+<div *nrfNestedControl="'userModel.firstName'; let control=formControl">
   <input [formControl]="control" />
 </div>
 ```
