@@ -44,11 +44,11 @@ Only two directives are mandatory:
 </form>
 ```
 
-| Property       | type            | Description                                                                        |
-|----------------|-----------------|------------------------------------------------------------------------------------|
-| nrfForm        | --              | **Required** The main directive that enables communication with the nested inputs. |
-| (nrfSubmit)    | function        | This `@Output` only will be called if all the inputs inside this form are valid.   |
-| [nrfModelData] | Object \| Array | The `Entity` that will be handled by this form. If not empty, inputs will be pre-filled using its data |
+| Property    | type     | Description                                                                        |
+|-------------|----------|------------------------------------------------------------------------------------|
+| nrfForm     | --       | **Required** The main directive that enables communication with the nested inputs. |
+| (nrfSubmit) | function | This `@Output` only will be called if all the inputs inside this form are valid.   |
+| [nrfEntity] | Object   | The `Entity` that will be handled by this form. If not empty, inputs will be pre-filled using its data |
 
 
 ### Submit `$event` properties
