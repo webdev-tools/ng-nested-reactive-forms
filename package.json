@@ -12,6 +12,7 @@
     "lib:publish": "cd dist/ng-nrforms && npm publish --access public",
     "lib:test": "ng test ng-nrforms",
     "lib:test-watch": "npm run lib:test -- --watch",
+    "version": "node scripts/sync-package-version.js",
     "preversion": "npm run lib:test && npm run lib:build",
     "postversion": "git push && git push --tags && npm run lib:publish"
   },
