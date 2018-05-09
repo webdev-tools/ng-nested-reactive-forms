@@ -1,9 +1,11 @@
 import { async, ComponentFixture, fakeAsync, TestBed, tick } from '@angular/core/testing';
-
-import { NrfFormDirective } from './form.directive';
 import { Component, DebugElement } from '@angular/core';
 import { By } from '@angular/platform-browser';
 
+import { NrfFormDirective } from './form.directive';
+import { NrfNestedFormService } from './nested-form.service';
+
+class OverrideNrfNestedFormService extends NrfNestedFormService {}
 
 @Component({
   template: `
@@ -11,6 +13,9 @@ import { By } from '@angular/platform-browser';
       <button type="submit">Submit</button>
     </form>
   `,
+  providers: [
+    { provide: NrfNestedFormService, useClass: OverrideNrfNestedFormService },
+  ],
 })
 class TestComponent {
 

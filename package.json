@@ -3,8 +3,8 @@
   "version": "1.2.0",
   "scripts": {
     "ng": "ng",
-    "start": "ng serve samples",
-    "build": "ng build",
+    "start": "ng serve --app samples",
+    "build": "ng build --prod",
     "test": "ng test",
     "lint": "ng lint",
     "e2e": "ng e2e",
@@ -20,6 +20,7 @@
   "private": true,
   "dependencies": {
     "@angular/animations": "5.2.10",
+    "@angular/cdk": "5.2.5",
     "@angular/common": "5.2.10",
     "@angular/core": "5.2.10",
     "@angular/flex-layout": "5.0.0-beta.14",
@@ -70,5 +71,9 @@
   "bugs": {
     "url": "https://github.com/webdev-tools/ng-rforms/issues"
   },
-  "homepage": "https://github.com/webdev-tools/ng-rforms#readme"
+  "homepage": "https://github.com/webdev-tools/ng-rforms#readme",
+  "browserslist": [
+    "> 2%",
+    "IE 11"
+  ]
 }

@@ -1,13 +1,20 @@
-import { Directive, EventEmitter, HostListener, Input, OnDestroy, OnInit, Output } from '@angular/core';
+import {
+  Directive,
+  ElementRef,
+  EventEmitter,
+  HostListener,
+  Input,
+  OnDestroy,
+  OnInit,
+  Optional,
+  Output,
+  Renderer2,
+  TemplateRef,
+  ViewContainerRef,
+} from '@angular/core';
 import { FormGroup } from '@angular/forms';
 
-export interface NrfSubmitData {
-  nrfForm: NrfFormDirective;
-  formData: any;
-  entity: any;
-  formGroup: FormGroup;
-  event: Event;
-}
+import { NrfNestedFormService, NrfSubmitData } from './nested-form.service';
 
 /**
  * A component to abstract the form implementation
@@ -20,7 +27,7 @@ export interface NrfSubmitData {
  * </form>
  */
 @Directive({
-  selector: 'form[nrfForm]',
+  selector: '[nrfForm]',
   exportAs: 'nrfForm',
 })
 export class NrfFormDirective implements OnInit, OnDestroy {
@@ -28,13 +35,33 @@ export class NrfFormDirective implements OnInit, OnDestroy {
   /**
    * Represents an Entity Model that comes from Database
    */
-  @Input() nrfEntity: any;
+  @Input()
+  set nrfEntity(entity: any) {
+    if (this.nestedFormService.entity !== entity) {
+      this.nestedFormService.entity = entity;
+    }
+  }
+
+
+  get nrfEntity(): any {
+    return this.nestedFormService.entity;
+  }
+
+
+  get formData(): any {
+    return this.nestedFormService.formData;
+  }
+
 
   /**
    * A function that will be called when the form is valid and a submit event is triggered
    * by a button click or programmatically.
    */
-  @Output() nrfSubmit = new EventEmitter<NrfSubmitData>();
+  @Output()
+  get nrfSubmit(): EventEmitter<NrfSubmitData> {
+    return this.nestedFormService.submit$;
+  }
+
 
   /**
    * Form group will hold all inputs within this form.
@@ -43,19 +70,24 @@ export class NrfFormDirective implements OnInit, OnDestroy {
    *
    * The data in this form group will not be sent to backend, just form validations and input management.
    */
-  formGroup: FormGroup;
-
-  /**
-   * The form data representing all inputs
-   */
-  formData: any;
+  get formGroup(): FormGroup {
+    return this.nestedFormService.formGroup;
+  }
 
 
   /**
    * @ignore
    */
-  constructor() {
-    this.formGroup = new FormGroup({});
+  constructor(
+    @Optional() private readonly nestedFormService: NrfNestedFormService,
+    @Optional() private templateRef: TemplateRef<any>,
+    @Optional() private viewContainerRef: ViewContainerRef,
+    private el: ElementRef,
+    private renderer: Renderer2,
+  ) {
+    if (!this.nestedFormService) {
+      this.nestedFormService = new NrfNestedFormService();
+    }
   }
 
 
@@ -67,17 +99,28 @@ export class NrfFormDirective implements OnInit, OnDestroy {
       this.nrfEntity = {};
     }
 
-    this.formData = this.cloneDeep(this.nrfEntity);
+    this.renderView();
   }
 
+
   ngOnDestroy() {
+    this.nrfSubmit.next();
     this.nrfSubmit.complete();
+  }
+
+
+  private renderView() {
+    if (this.templateRef && this.viewContainerRef) {
+      const embeddedViewRef = this.viewContainerRef.createEmbeddedView(this.templateRef);
+      const formNative = embeddedViewRef.rootNodes[0];
+      this.renderer.listen(formNative, 'submit', (event) => this.formSubmitWrapper(event));
+    }
   }
 
 
   /**
    * # Should not be called directly!
-   * This method wraps the form validation and call [onSubmit]{@link NrfFormDirective#nrfSubmit}
+   * This method wraps the form validation and call [nrfSubmit]{@link NrfFormDirective#nrfSubmit}
    */
   @HostListener('submit', ['$event'])
   formSubmitWrapper($event: Event) {
@@ -94,21 +137,6 @@ export class NrfFormDirective implements OnInit, OnDestroy {
       formGroup: this.formGroup,
       event: $event,
     });
-  }
-
-  cloneDeep(target: any|any[]): any {
-    if (!target || typeof target !== 'object') {
-      return target;
-    }
-
-    if (Array.isArray(target)) {
-      return target.map(this.cloneDeep);
-    }
-
-    return Object.keys(target).reduce((props, key) => {
-      props[key] = this.cloneDeep(target[key]);
-      return props;
-    }, {});
   }
 
 }

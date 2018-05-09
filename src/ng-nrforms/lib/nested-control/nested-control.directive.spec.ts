@@ -9,7 +9,7 @@ import { NrfModelModule } from './index';
 
 
 let mockTestEntity = {};
-
+/* tslint:disable component-selector */
 @Component({
   template: `
     <form nrfForm [nrfEntity]="testEntity">
