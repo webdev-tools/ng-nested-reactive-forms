@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 
-import { NrfFormModule } from './form';
-import { NrfModelModule } from './nested-control';
+import { NrfFormModule } from './form/index';
+import { NrfModelModule } from './nested-control/index';
 
 @NgModule({
   exports: [

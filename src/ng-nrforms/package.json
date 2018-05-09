@@ -15,5 +15,8 @@
   "bugs": {
     "url": "https://github.com/webdev-tools/ng-rforms/issues"
   },
-  "homepage": "https://github.com/webdev-tools/ng-rforms#readme"
+  "homepage": "https://github.com/webdev-tools/ng-rforms#readme",
+  "lib": {
+    "entryFile": "./src/ng-nrforms/public_api.ts"
+  }
 }

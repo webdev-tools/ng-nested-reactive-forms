@@ -3,7 +3,7 @@ import { FormControl, FormGroup } from '@angular/forms';
 
 import { NrfModelSetterService } from './model-setter.service';
 import { NrfFormDirective } from '../form/form.directive';
-import { takeWhile } from 'rxjs/internal/operators';
+import { takeWhile } from 'rxjs/operators';
 
 export class NrfNestedControlContext {
   $implicit: FormControl;
