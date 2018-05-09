@@ -139,3 +139,13 @@ Think about Reusability:
   ....
 </user-details-page>
 ```
+
+## Versioning
+
+```
++----- Major version is synchronize with Angular's major version.
+| +--- Minor version has BREAKING CHANGE and features.
+| | +- Patch version has fixes and features, but no breaking changes.
+| | |
+0.0.0
+```
