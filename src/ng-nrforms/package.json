@@ -2,9 +2,9 @@
   "name": "@webdev-tools/ng-nested-reactive-forms",
   "version": "5.0.1",
   "peerDependencies": {
-    "@angular/common": "^6.0.0",
-    "@angular/core": "^6.0.0",
-    "@angular/forms": "^6.0.0"
+    "@angular/common": "^5.2.10",
+    "@angular/core": "^5.2.10",
+    "@angular/forms": "^5.2.10"
   },
   "license": "Apache-2.0",
   "description": "Implement Nested FormControl for Angular Reactive Forms.",
