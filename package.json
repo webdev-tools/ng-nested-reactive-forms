@@ -11,7 +11,7 @@
     "lib:build": "ng-packagr -p src/ng-nrforms/package.json",
     "postlib:build": "copyfiles README.md LICENSE dist/ng-nrforms",
     "lib:publish": "cd dist/ng-nrforms && npm publish --access public",
-    "lib:test": "ng test --app ng-nrforms --code-coverage",
+    "lib:test": "ng test --app ng-nrforms --code-coverage --progress false",
     "lib:test-watch": "ng test --app ng-nrforms --watch --single-run=false --browsers Chromium",
     "sync-lib-version": "node scripts/sync-package-data.js",
     "version": "npm run sync-lib-version && git add . && npm run lib:test && npm run lib:build",
