@@ -8,8 +8,11 @@ cache:
 
 install:
   - npm install
+  - npm i --no-save codecov
 
 script:
   - npm run lib:test
   - npm run lib:build
 
+after_success:
+  - npm run codecov
