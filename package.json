@@ -67,12 +67,12 @@
   "description": "Implement Nested FormControl for Angular Reactive Forms.",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/webdev-tools/ng-rforms.git"
+    "url": "git+https://github.com/webdev-tools/ng-nested-reactive-forms.git"
   },
   "bugs": {
-    "url": "https://github.com/webdev-tools/ng-rforms/issues"
+    "url": "https://github.com/webdev-tools/ng-nested-reactive-forms/issues"
   },
-  "homepage": "https://github.com/webdev-tools/ng-rforms#readme",
+  "homepage": "https://github.com/webdev-tools/ng-nested-reactive-forms#readme",
   "browserslist": [
     "> 2%",
     "IE 11"

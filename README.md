@@ -1,7 +1,9 @@
 # ng-nested-reactive-forms
 
 ![travis build](https://api.travis-ci.org/webdev-tools/ng-nested-reactive-forms.svg?branch=master)
-
+![NPM version](https://img.shields.io/npm/v/@webdev-tools/ng-nested-reactive-forms.svg)
+![Downloads](https://img.shields.io/npm/dy/webdev-tools/ng-nested-reactive-forms.svg)
+![Downloads](https://img.shields.io/npm/l/@webdev-tools/ng-nested-reactive-forms.svg)
 
 Implement Nested FormControl for Angular Reactive Forms.
 
