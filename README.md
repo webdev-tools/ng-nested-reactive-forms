@@ -1,5 +1,8 @@
 # ng-nested-reactive-forms
 
+![travis build](https://api.travis-ci.org/webdev-tools/ng-nested-reactive-forms.svg?branch=master)
+
+
 Implement Nested FormControl for Angular Reactive Forms.
 
 Split your forms as much as you need,
