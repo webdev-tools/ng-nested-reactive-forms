@@ -1,10 +1,10 @@
 {
   "name": "@webdev-tools/ng-nested-reactive-forms",
-  "version": "1.2.0",
+  "version": "5.0.2",
   "peerDependencies": {
-    "@angular/common": "^6.0.0",
-    "@angular/core": "^6.0.0",
-    "@angular/forms": "^6.0.0"
+    "@angular/common": "^5.2.10",
+    "@angular/core": "^5.2.10",
+    "@angular/forms": "^5.2.10"
   },
   "license": "Apache-2.0",
   "description": "Implement Nested FormControl for Angular Reactive Forms.",
@@ -15,5 +15,8 @@
   "bugs": {
     "url": "https://github.com/webdev-tools/ng-rforms/issues"
   },
-  "homepage": "https://github.com/webdev-tools/ng-rforms#readme"
+  "homepage": "https://github.com/webdev-tools/ng-rforms#readme",
+  "lib": {
+    "entryFile": "./src/ng-nrforms/public_api.ts"
+  }
 }

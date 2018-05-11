@@ -1,9 +1,9 @@
-import { Directive, ElementRef, HostListener, Input, OnDestroy, OnInit, Optional, TemplateRef, ViewContainerRef } from '@angular/core';
+import { Directive, ElementRef, Input, OnDestroy, OnInit, Optional, TemplateRef, ViewContainerRef } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
 
 import { NrfModelSetterService } from './model-setter.service';
-import { NrfFormDirective } from '../form/form.directive';
-import { takeWhile } from 'rxjs/internal/operators';
+import { takeWhile } from 'rxjs/operators';
+import { NrfNestedFormService } from '../form/nested-form.service';
 
 export class NrfNestedControlContext {
   $implicit: FormControl;
@@ -68,7 +68,7 @@ export class NrfNestedControlDirective implements OnInit, OnDestroy {
 
   constructor(
     private modelSetter: NrfModelSetterService,
-    @Optional() private nrfForm: NrfFormDirective,
+    @Optional() private readonly nestedFormService: NrfNestedFormService,
     private templateRef: TemplateRef<any>,
     private viewContainerRef: ViewContainerRef,
     { nativeElement }: ElementRef,
@@ -140,8 +140,8 @@ export class NrfNestedControlDirective implements OnInit, OnDestroy {
    * Otherwise a new empty [FormGroup]{@link https://angular.io/api/forms/FormGroup}
    */
   private getFormGroup() {
-    if (this.nrfForm) {
-      return this.nrfForm.formGroup;
+    if (this.nestedFormService) {
+      return this.nestedFormService.formGroup;
     }
 
     return new FormGroup({});
@@ -195,7 +195,11 @@ export class NrfNestedControlDirective implements OnInit, OnDestroy {
    * Get the value from the [nrfEntity]{@link NrfFormDirective#nrfEntity}
    */
   private getInitialValue(): any | null {
-    return this.modelSetter.getValue(this.modelPath, this.nrfForm.nrfEntity);
+    if (this.nestedFormService) {
+      return this.modelSetter.getValue(this.modelPath, this.nestedFormService.entity);
+    }
+
+    return null;
   }
 
 
@@ -203,13 +207,9 @@ export class NrfNestedControlDirective implements OnInit, OnDestroy {
    * Set the value to the [formData]{@link NrfFormDirective#formData}
    */
   private setModelValue(newValue: any) {
-    return this.modelSetter.setValue(this.modelPath, newValue || '', this.nrfForm.formData);
-  }
-
-
-  @HostListener('input', ['$event.target'])
-  onModelChange(input: HTMLInputElement) {
-    this.formControl.setValue(input.value, { emitModelToViewChange: false });
+    if (this.nestedFormService) {
+      return this.modelSetter.setValue(this.modelPath, newValue || '', this.nestedFormService.formData);
+    }
   }
 
 }

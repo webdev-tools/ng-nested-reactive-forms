@@ -1,5 +1,8 @@
 # ng-nested-reactive-forms
 
+![travis build](https://api.travis-ci.org/webdev-tools/ng-nested-reactive-forms.svg?branch=master)
+
+
 Implement Nested FormControl for Angular Reactive Forms.
 
 Split your forms as much as you need,
@@ -138,4 +141,14 @@ Think about Reusability:
   </modal-abstraction>
   ....
 </user-details-page>
+```
+
+## Versioning
+
+```
++----- Major version is synchronize with Angular's major version.
+| +--- Minor version has BREAKING CHANGE and features.
+| | +- Patch version has fixes and features, but no breaking changes.
+| | |
+0.0.0
 ```
