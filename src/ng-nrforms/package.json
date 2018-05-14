@@ -1,7 +1,7 @@
 {
   "$schema": "../../node_modules/ng-packagr/ng-package.schema.json",
   "name": "@webdev-tools/ng-nested-reactive-forms",
-  "version": "5.0.3",
+  "version": "5.0.4",
   "peerDependencies": {
     "@angular/common": "^5.2.10",
     "@angular/core": "^5.2.10",
