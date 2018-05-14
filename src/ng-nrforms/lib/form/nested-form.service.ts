@@ -39,6 +39,10 @@ export class NrfNestedFormService {
       return target;
     }
 
+    if (target instanceof Date) {
+      return new Date(target);
+    }
+
     if (Array.isArray(target)) {
       return target.map((value) => this.cloneDeep(value));
     }

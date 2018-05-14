@@ -69,8 +69,8 @@ export class NrfNestedControlDirective implements OnInit, OnDestroy {
 
 
   constructor(
-    private modelSetter: NrfModelSetterService,
-    @Optional() private readonly nestedFormService: NrfNestedFormService,
+    private readonly modelSetter: NrfModelSetterService,
+    @Optional() public readonly nestedFormService: NrfNestedFormService,
     private templateRef: TemplateRef<any>,
     private viewContainerRef: ViewContainerRef,
   ) {
@@ -207,7 +207,7 @@ export class NrfNestedControlDirective implements OnInit, OnDestroy {
   /**
    * Set the value to the [formData]{@link NrfFormDirective#formData}
    */
-  private setModelValue(newValue: any) {
+  setModelValue(newValue: any) {
     if (this.nestedFormService) {
       return this.modelSetter.setValue(this.modelPath, newValue || '', this.nestedFormService.formData);
     }

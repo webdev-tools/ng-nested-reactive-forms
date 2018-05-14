@@ -24,4 +24,16 @@ describe('NrfNestedFormService', () => {
 
     expect(nestedFormService.formData.name).toEqual(entity.name);
   });
+
+  it('should clone a Date object', () => {
+    const entity = {
+      date: new Date(),
+    };
+
+    nestedFormService.entity = entity;
+    const date: any = nestedFormService.formData.date;
+
+    expect(date).not.toBe(entity.date);
+    expect(date instanceof Date).toBeTruthy();
+  });
 });
