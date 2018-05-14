@@ -104,7 +104,6 @@ export class NrfFormDirective implements OnInit, OnDestroy {
 
 
   ngOnDestroy() {
-    this.nrfSubmit.next();
     this.nrfSubmit.complete();
   }
 

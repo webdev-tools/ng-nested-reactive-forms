@@ -93,6 +93,14 @@ describe('NrfNestedControlDirective', () => {
     expect(formComponent.formData.user.firstName).toEqual(firstName);
   }));
 
+  it('should emit ready$ event', () => {
+    const emitSpy = spyOn(NrfNestedControlDirective.prototype, 'emitReadyState');
+
+    generateComponent();
+
+    expect(emitSpy).toHaveBeenCalled();
+  });
+
   function generateComponent() {
     fixture = TestBed.createComponent(TestComponent);
     testComponent = fixture.componentInstance;
