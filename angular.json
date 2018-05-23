@@ -134,13 +134,13 @@
           "builder": "@angular-devkit/build-ng-packagr:build",
           "options": {
             "tsConfig": "projects/ng-nrforms/tsconfig.lib.json",
-            "project": "projects/ng-nrforms/ng-package.json",
-            "progress": false,
-            "aot": true
+            "project": "projects/ng-nrforms/ng-package.json"
           },
           "configurations": {
             "production": {
-              "project": "projects/ng-nrforms/ng-package.prod.json"
+              "project": "projects/ng-nrforms/ng-package.prod.json",
+              "progress": false,
+              "aot": true
             }
           }
         },
