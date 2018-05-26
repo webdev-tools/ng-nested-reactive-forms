@@ -1,6 +1,5 @@
 import {
   Directive,
-  ElementRef,
   EventEmitter,
   HostListener,
   Input,
@@ -82,7 +81,6 @@ export class NrfFormDirective implements OnInit, OnDestroy {
     @Optional() private readonly nestedFormService: NrfNestedFormService,
     @Optional() private templateRef: TemplateRef<any>,
     @Optional() private viewContainerRef: ViewContainerRef,
-    private el: ElementRef,
     private renderer: Renderer2,
   ) {
     if (!this.nestedFormService) {
@@ -112,7 +110,7 @@ export class NrfFormDirective implements OnInit, OnDestroy {
     if (this.templateRef && this.viewContainerRef) {
       const embeddedViewRef = this.viewContainerRef.createEmbeddedView(this.templateRef);
       const formNative = embeddedViewRef.rootNodes[0];
-      this.renderer.listen(formNative, 'submit', (event) => this.formSubmitWrapper(event));
+      this.renderer.listen(formNative, 'submit', event => this.formSubmitWrapper(event));
     }
   }
 

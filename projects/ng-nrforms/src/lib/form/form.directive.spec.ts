@@ -1,10 +1,9 @@
-import { async, ComponentFixture, fakeAsync, TestBed, tick } from '@angular/core/testing';
 import { Component, DebugElement } from '@angular/core';
+import { async, ComponentFixture, fakeAsync, TestBed, tick } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 
-import { NrfFormDirective } from './form.directive';
+import { NrFormsModule } from '..';
 import { NrfNestedFormService } from './nested-form.service';
-import { NrFormsModule } from '../index';
 
 @Component({
   template: `
@@ -92,5 +91,4 @@ describe('NrfFormDirective', () => {
 
     expect(testComponent.handleSubmit).toHaveBeenCalled();
   }));
-
 });

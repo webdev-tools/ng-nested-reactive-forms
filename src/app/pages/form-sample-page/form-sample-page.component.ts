@@ -1,4 +1,5 @@
 import { Component, ViewChild } from '@angular/core';
+
 import { NrfFormDirective, NrfSubmitData } from '@webdev-tools/ng-nested-reactive-forms';
 
 @Component({
@@ -7,8 +8,9 @@ import { NrfFormDirective, NrfSubmitData } from '@webdev-tools/ng-nested-reactiv
 })
 
 export class FormSamplePageComponent {
+
   testEntity = {
-    address: 'Carnaby Street'
+    address: 'Carnaby Street',
   };
 
   @ViewChild(NrfFormDirective) nrfForm;
@@ -16,4 +18,5 @@ export class FormSamplePageComponent {
   handleSubmit($event: NrfSubmitData) {
     console.log('submitted', $event);
   }
+
 }

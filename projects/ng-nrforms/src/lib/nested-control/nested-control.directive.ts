@@ -1,11 +1,22 @@
-import { Directive, EventEmitter, Input, OnDestroy, OnInit, Optional, Output, TemplateRef, ViewContainerRef } from '@angular/core';
+import {
+  Directive,
+  EventEmitter,
+  Input,
+  OnDestroy,
+  OnInit,
+  Optional,
+  Output,
+  TemplateRef,
+  ViewContainerRef,
+} from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
-
-import { NrfModelSetterService } from './model-setter.service';
 import { takeWhile } from 'rxjs/operators';
+
 import { NrfNestedFormService } from '../form/nested-form.service';
+import { NrfModelSetterService } from './model-setter.service';
 
 export class NrfNestedControlContext {
+
   $implicit: FormControl;
 
 

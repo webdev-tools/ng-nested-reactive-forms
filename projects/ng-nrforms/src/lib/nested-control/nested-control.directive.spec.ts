@@ -18,11 +18,13 @@ let mockTestEntity = {};
   `,
 })
 class TestComponent {
+
   testEntity: any;
 
   constructor() {
     this.testEntity = mockTestEntity;
   }
+
 }
 
 @Component({

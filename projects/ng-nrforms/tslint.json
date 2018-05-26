@@ -12,6 +12,7 @@
             "element",
             "nrf",
             "kebab-case"
-        ]
+        ],
+        "no-implicit-dependencies": false
     }
 }

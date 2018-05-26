@@ -1,6 +1,7 @@
 // Created by Carlos Gomes on 2018-05-09
 import { EventEmitter, Injectable } from '@angular/core';
 import { FormGroup } from '@angular/forms';
+
 import { NrfFormDirective } from './form.directive';
 
 export interface NrfSubmitData {
@@ -44,12 +45,16 @@ export class NrfNestedFormService {
     }
 
     if (Array.isArray(target)) {
-      return target.map((value) => this.cloneDeep(value));
+      return target.map(value => this.cloneDeep(value));
     }
 
-    return Object.keys(target).reduce((props, key) => {
-      props[key] = this.cloneDeep(target[key]);
-      return props;
-    }, {});
+    return Object.keys(target).reduce(
+      (props, key) => {
+        props[key] = this.cloneDeep(target[key]);
+        return props;
+      },
+      {},
+    );
   }
+
 }

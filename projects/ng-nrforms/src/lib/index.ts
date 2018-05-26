@@ -11,6 +11,6 @@ import { NrfNestedFormService } from './form/nested-form.service';
   ],
   providers: [
     NrfNestedFormService,
-  ]
+  ],
 })
 export class NrFormsModule { }

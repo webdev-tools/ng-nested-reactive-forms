@@ -21,5 +21,4 @@ import { SamplesPagesModule } from './pages';
   providers: [],
   bootstrap: [AppComponent],
 })
-export class AppModule {
-}
+export class AppModule {}
