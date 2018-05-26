@@ -32,5 +32,23 @@
     "title-require": false
   },
   "tslint.jsEnable": true,
-  "html.suggest.angular1": false
+  "html.suggest.angular1": false,
+  "vsicons.associations.folders": [
+    {
+      "icon": "app",
+      "extensions": [
+        "projects"
+      ],
+      "format": "svg"
+    },
+    {
+      "icon": "component",
+      "extensions": [
+        "ng-nrforms"
+      ],
+      "format": "svg"
+    }
+  ],
+  "scss.showErrors": true,
+  "vsicons.presets.angular": true,
 }

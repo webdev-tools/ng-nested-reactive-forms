@@ -81,5 +81,10 @@
   "browserslist": [
     "> 2%",
     "IE 11"
+  ],
+  "keywords": [
+    "Angular",
+    "Forms",
+    "Reactive"
   ]
 }
