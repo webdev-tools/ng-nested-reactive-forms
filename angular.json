@@ -1,45 +1,38 @@
 {
   "$schema": "./node_modules/@angular/cli/lib/config/schema.json",
   "version": 1,
-  "newProjectRoot": "src",
+  "newProjectRoot": "projects",
   "defaultProject": "samples",
   "projects": {
     "samples": {
       "root": "",
-      "sourceRoot": "src/samples",
+      "sourceRoot": "src",
       "projectType": "application",
       "prefix": "app",
-      "schematics": {
-        "@schematics/angular:component": {
-          "styleext": "scss"
-        }
-      },
       "architect": {
         "build": {
           "builder": "@angular-devkit/build-angular:browser",
           "options": {
             "outputPath": "dist/ng-nrforms-samples",
-            "index": "src/samples/index.html",
-            "main": "src/samples/main.ts",
-            "polyfills": "src/samples/polyfills.ts",
-            "tsConfig": "src/samples/tsconfig.app.json",
+            "index": "src/index.html",
+            "main": "src/main.ts",
+            "tsConfig": "src/tsconfig.app.json",
+            "polyfills": "src/polyfills.ts",
             "assets": [
-              "src/samples/favicon.ico",
-              "src/samples/assets"
+              "src/assets",
+              "src/favicon.ico"
             ],
             "styles": [
-              "src/samples/styles.scss"
+              "src/styles.scss"
             ],
-            "scripts": []
+            "scripts": [],
+            "progress": false,
+            "aot": true,
+            "sourceMap": true,
+            "namedChunks": true
           },
           "configurations": {
             "production": {
-              "fileReplacements": [
-                {
-                  "replace": "src/samples/environments/environment.ts",
-                  "with": "src/samples/environments/environment.prod.ts"
-                }
-              ],
               "optimization": true,
               "outputHashing": "all",
               "sourceMap": false,
@@ -48,16 +41,20 @@
               "aot": true,
               "extractLicenses": true,
               "vendorChunk": false,
-              "buildOptimizer": true
+              "buildOptimizer": true,
+              "fileReplacements": [
+                {
+                  "replace": "src/environments/environment.ts",
+                  "with": "src/environments/environment.prod.ts"
+                }
+              ]
             }
           }
         },
         "serve": {
           "builder": "@angular-devkit/build-angular:dev-server",
           "options": {
-            "browserTarget": "samples:build",
-            "aot": true,
-            "progress": true
+            "browserTarget": "samples:build"
           },
           "configurations": {
             "production": {
@@ -74,17 +71,17 @@
         "test": {
           "builder": "@angular-devkit/build-angular:karma",
           "options": {
-            "main": "src/samples/test.ts",
-            "polyfills": "src/samples/polyfills.ts",
-            "tsConfig": "src/samples/tsconfig.spec.json",
-            "karmaConfig": "src/samples/karma.conf.js",
-            "styles": [
-              "src/samples/styles.scss"
-            ],
+            "main": "src/test.ts",
+            "karmaConfig": "src/karma.conf.js",
+            "polyfills": "src/polyfills.ts",
+            "tsConfig": "src/tsconfig.spec.json",
             "scripts": [],
+            "styles": [
+              "src/styles.scss"
+            ],
             "assets": [
-              "src/samples/favicon.ico",
-              "src/samples/assets"
+              "src/assets",
+              "src/favicon.ico"
             ]
           }
         },
@@ -92,8 +89,8 @@
           "builder": "@angular-devkit/build-angular:tslint",
           "options": {
             "tsConfig": [
-              "src/samples/tsconfig.app.json",
-              "src/samples/tsconfig.spec.json"
+              "src/tsconfig.app.json",
+              "src/tsconfig.spec.json"
             ],
             "exclude": [
               "**/node_modules/**"
@@ -102,21 +99,24 @@
         }
       }
     },
-    "ng-nrforms-e2e": {
-      "root": "e2e/",
+    "samples-e2e": {
+      "root": "",
+      "sourceRoot": "",
       "projectType": "application",
       "architect": {
         "e2e": {
           "builder": "@angular-devkit/build-angular:protractor",
           "options": {
-            "protractorConfig": "e2e/protractor.conf.js",
+            "protractorConfig": "./protractor.conf.js",
             "devServerTarget": "samples:serve"
           }
         },
         "lint": {
           "builder": "@angular-devkit/build-angular:tslint",
           "options": {
-            "tsConfig": "e2e/tsconfig.e2e.json",
+            "tsConfig": [
+              "e2e/tsconfig.e2e.json"
+            ],
             "exclude": [
               "**/node_modules/**"
             ]
@@ -125,37 +125,41 @@
       }
     },
     "ng-nrforms": {
-      "root": "src/ng-nrforms",
-      "sourceRoot": "src/ng-nrforms",
+      "root": "projects/ng-nrforms",
+      "sourceRoot": "projects/ng-nrforms/src",
       "projectType": "library",
-      "prefix": "rf",
+      "prefix": "nrf",
       "architect": {
         "build": {
           "builder": "@angular-devkit/build-ng-packagr:build",
           "options": {
-            "tsConfig": "src/ng-nrforms/tsconfig.lib.json",
-            "project": "src/ng-nrforms/ng-package.json"
+            "tsConfig": "projects/ng-nrforms/tsconfig.lib.json",
+            "project": "projects/ng-nrforms/ng-package.json"
           },
           "configurations": {
             "production": {
-              "project": "src/ng-nrforms/ng-package.prod.json"
+              "project": "projects/ng-nrforms/ng-package.prod.json",
+              "progress": false,
+              "aot": true
             }
           }
         },
         "test": {
           "builder": "@angular-devkit/build-angular:karma",
           "options": {
-            "main": "src/ng-nrforms/test.ts",
-            "tsConfig": "src/ng-nrforms/tsconfig.spec.json",
-            "karmaConfig": "src/ng-nrforms/karma.conf.js"
+            "main": "projects/ng-nrforms/src/test.ts",
+            "tsConfig": "projects/ng-nrforms/tsconfig.spec.json",
+            "karmaConfig": "projects/ng-nrforms/karma.conf.js",
+            "progress": false,
+            "codeCoverage": true
           }
         },
         "lint": {
           "builder": "@angular-devkit/build-angular:tslint",
           "options": {
             "tsConfig": [
-              "src/ng-nrforms/tsconfig.lib.json",
-              "src/ng-nrforms/tsconfig.spec.json"
+              "projects/ng-nrforms/tsconfig.lib.json",
+              "projects/ng-nrforms/tsconfig.spec.json"
             ],
             "exclude": [
               "**/node_modules/**"
@@ -163,6 +167,13 @@
           }
         }
       }
+    }
+  },
+  "schematics": {
+    "@schematics/angular:component": {
+      "styleext": "scss"
+    },
+    "@schematics/angular:directive": {
     }
   }
 }

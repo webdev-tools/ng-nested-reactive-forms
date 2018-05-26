@@ -18,7 +18,7 @@
     ],
     "paths": {
       "@webdev-tools/ng-nested-reactive-forms": [
-        "src/ng-nrforms/public_api.ts"
+        "projects/ng-nrforms/src/public_api.ts"
       ]
     }
   }
