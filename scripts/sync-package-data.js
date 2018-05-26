@@ -7,13 +7,13 @@ const { writeFileSync } = require('fs');
 
 const rootFolder = path.resolve(__dirname, '../');
 const mainPackageJsonPath = path.join(rootFolder, 'package.json');
-const libPackageJsonPath = path.join(rootFolder, 'src/ng-nrforms/package.json');
+const libPackageJsonPath = path.join(rootFolder, 'projects/ng-nrforms/package.json');
 
 const mainPackageJson = require(mainPackageJsonPath);
 const libPackageJson = require(libPackageJsonPath);
 
 
-['name', 'version', 'license', 'description', 'repository', 'bugs', 'homepage'].forEach((key) => {
+['name', 'version', 'license', 'description', 'repository', 'bugs', 'homepage', 'keywords'].forEach((key) => {
   libPackageJson[key] = mainPackageJson[key];
 });
 
