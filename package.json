@@ -13,10 +13,37 @@
     "lib:publish": "cd dist/ng-nrforms && npm publish --access public",
     "lib:test": "ng test ng-nrforms",
     "lib:test-watch": "ng test ng-nrforms --watch --single-run false --browsers Chromium",
+    "lib:lint": "ng lint ng-nrforms",
     "sync-lib-version": "node scripts/sync-package-data.js",
-    "version": "npm run sync-lib-version && git add . && npm run lib:test && npm run lib:build",
+    "preversion": "npm run lib:lint && npm run lib:test",
+    "version": "npm run sync-lib-version && npm run lib:build && conventional-changelog -i CHANGELOG.md -s && git add .",
     "postversion": "npm run lib:publish && git push && git push --tags",
-    "codecov": "codecov"
+    "codecov": "codecov --token=$CODECOV_TOKEN",
+    "commit": "git-cz",
+    "precommit": "lint-staged",
+    "commitmsg": "validate-commit-msg",
+    "prepush": "npm run lib:build",
+    "postinstall": "npm run enable-git-hooks",
+    "enable-git-hooks": "node node_modules/husky/bin/install.js"
+  },
+  "lint-staged": {
+    "src/**/*.ts": [
+      "tslint --config src/tslint.json --fix",
+      "git add"
+    ],
+    "projects/ng-nrforms/**/*.ts": [
+      "tslint --config projects/ng-nrforms/tslint.json --fix",
+      "git add"
+    ]
+  },
+  "config": {
+    "commitizen": {
+      "path": "node_modules/cz-conventional-changelog"
+    },
+    "validate-commit-msg": {
+      "types": "conventional-commit-types",
+      "helpMessage": "Use \"npm run commit\" instead, we use conventional-changelog format :) (https://github.com/commitizen/cz-cli)"
+    }
   },
   "private": true,
   "dependencies": {
@@ -51,7 +78,11 @@
     "@types/node": "~8.9.4",
     "@webdev-tools/tslint-airbnb-styleguide": "^1.1.1",
     "codelyzer": "~4.2.1",
+    "commitizen": "^2.10.1",
+    "conventional-changelog-cli": "^1.3.22",
     "copyfiles": "^2.0.0",
+    "cz-conventional-changelog": "^2.1.0",
+    "husky": "^0.14.3",
     "jasmine-core": "~2.99.1",
     "jasmine-spec-reporter": "~4.2.1",
     "karma": "~1.7.1",
@@ -59,14 +90,17 @@
     "karma-coverage-istanbul-reporter": "^1.4.3",
     "karma-jasmine": "~1.1.1",
     "karma-jasmine-html-reporter": "^0.2.2",
+    "lint-staged": "^7.1.2",
     "ng-packagr": "^3.0.0-rc.2",
+    "prompt": "^1.0.0",
     "protractor": "^5.3.2",
     "puppeteer": "1.4.0",
     "ts-node": "~5.0.1",
     "tsickle": ">=0.25.5",
     "tslib": "^1.7.1",
     "tslint": "~5.9.1",
-    "typescript": "2.7.2"
+    "typescript": "2.7.2",
+    "validate-commit-msg": "^2.14.0"
   },
   "author": "webdev-tools",
   "license": "Apache-2.0",
