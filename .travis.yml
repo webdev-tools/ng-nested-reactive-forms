@@ -4,7 +4,11 @@ node_js:
 
 cache:
   directories:
+    - ~/.npm
     - "node_modules"
+
+notifications:
+  email: false
 
 install:
   - npm install
