@@ -2,19 +2,19 @@
   "extends": "../../tsconfig.json",
   "compilerOptions": {
     "outDir": "../../out-tsc/lib",
-    "target": "es2016",
+    "target": "es5",
     "module": "es2015",
     "moduleResolution": "node",
     "declaration": true,
     "sourceMap": true,
-    "inlineSources": true,
+    "inlineSources": false,
     "emitDecoratorMetadata": true,
     "experimentalDecorators": true,
     "importHelpers": true,
     "types": [],
     "lib": [
       "dom",
-      "es2016"
+      "esnext"
     ]
   },
   "angularCompilerOptions": {

@@ -138,9 +138,7 @@
           },
           "configurations": {
             "production": {
-              "project": "projects/ng-nrforms/ng-package.prod.json",
-              "progress": false,
-              "aot": true
+              "project": "projects/ng-nrforms/ng-package.prod.json"
             }
           }
         },
