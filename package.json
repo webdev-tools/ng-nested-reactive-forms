@@ -17,7 +17,7 @@
     "sync-lib-version": "node scripts/sync-package-data.js",
     "preversion": "npm run lib:lint && npm run lib:test",
     "version": "npm run sync-lib-version && npm run lib:build && conventional-changelog -i CHANGELOG.md -s && git add .",
-    "postversion": "npm run lib:publish && git push && git push --tags",
+    "postversion": "npm run lib:publish && git push --follow-tags",
     "codecov": "codecov --token=$CODECOV_TOKEN",
     "commit": "git-cz",
     "precommit": "lint-staged",
