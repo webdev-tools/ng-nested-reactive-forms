@@ -1,3 +1,13 @@
+<a name="6.0.1"></a>
+## <small>6.0.1 (2018-05-29)</small>
+
+* fix: Downgrade to ES5 because angular-optimizations do not work with greater ([656df6b](https://github.com/webdev-tools/ng-nested-reactive-forms/commit/656df6b))
+* docs(changelog): Added CHANGELOG includding all previous commits ([f04c912](https://github.com/webdev-tools/ng-nested-reactive-forms/commit/f04c912))
+* build: Setup conventional-changelog and validation on commit messages ([0a95b4e](https://github.com/webdev-tools/ng-nested-reactive-forms/commit/0a95b4e))
+* Migrated to Airbnb Style-Guide ([9009971](https://github.com/webdev-tools/ng-nested-reactive-forms/commit/9009971))
+
+
+
 <a name="6.0.0"></a>
 ## 6.0.0 (2018-05-26)
 
