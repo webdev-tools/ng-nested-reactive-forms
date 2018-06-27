@@ -13,7 +13,7 @@ const mainPackageJson = require(mainPackageJsonPath);
 const libPackageJson = require(libPackageJsonPath);
 
 
-['name', 'version', 'license', 'description', 'repository', 'bugs', 'homepage'].forEach((key) => {
+['name', 'version', 'license', 'description', 'repository', 'bugs', 'homepage', 'keywords'].forEach((key) => {
   libPackageJson[key] = mainPackageJson[key];
 });
 

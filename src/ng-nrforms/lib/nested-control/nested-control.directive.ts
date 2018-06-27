@@ -1,4 +1,4 @@
-import { Directive, ElementRef, Input, OnDestroy, OnInit, Optional, TemplateRef, ViewContainerRef } from '@angular/core';
+import { Directive, EventEmitter, Input, OnDestroy, OnInit, Optional, Output, TemplateRef, ViewContainerRef } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
 
 import { NrfModelSetterService } from './model-setter.service';
@@ -7,6 +7,7 @@ import { NrfNestedFormService } from '../form/nested-form.service';
 
 export class NrfNestedControlContext {
   $implicit: FormControl;
+
 
   constructor(
     public formControl: FormControl,
@@ -56,24 +57,23 @@ export class NrfNestedControlDirective implements OnInit, OnDestroy {
     // tslint:disable-next-line:no-input-rename
   @Input('nrfNestedControl') nrfModelName: string;
 
+  @Output() ready$ = new EventEmitter<boolean>();
+
 
   private isRegisteredToFormControl = false;
-  private isDestroyed = false;
+  isDestroyed = false;
 
   parentFormGroup: FormGroup;
   formControl: FormControl;
   modelPath: string;
-  inputEl: HTMLInputElement;
 
 
   constructor(
-    private modelSetter: NrfModelSetterService,
-    @Optional() private readonly nestedFormService: NrfNestedFormService,
+    private readonly modelSetter: NrfModelSetterService,
+    @Optional() public readonly nestedFormService: NrfNestedFormService,
     private templateRef: TemplateRef<any>,
     private viewContainerRef: ViewContainerRef,
-    { nativeElement }: ElementRef,
   ) {
-    this.inputEl = nativeElement;
   }
 
 
@@ -87,11 +87,13 @@ export class NrfNestedControlDirective implements OnInit, OnDestroy {
     this.registerToFormGroup();
     this.subscribeToValueChanges();
     this.showViewContent();
+    this.emitReadyState();
   }
 
 
   ngOnDestroy() {
     this.isDestroyed = true;
+    this.ready$.complete();
 
     if (this.parentFormGroup) {
       this.parentFormGroup.removeControl(this.nrfModelName);
@@ -123,7 +125,6 @@ export class NrfNestedControlDirective implements OnInit, OnDestroy {
     const formControl = this.getFormControl(formGroup);
 
     this.formControl = formControl;
-    this.inputEl.value = formControl.value || '';
 
     if (formGroup) {
       this.isRegisteredToFormControl = true;
@@ -196,7 +197,7 @@ export class NrfNestedControlDirective implements OnInit, OnDestroy {
    */
   private getInitialValue(): any | null {
     if (this.nestedFormService) {
-      return this.modelSetter.getValue(this.modelPath, this.nestedFormService.entity);
+      return this.modelSetter.getValue(this.modelPath, this.nestedFormService.formData);
     }
 
     return null;
@@ -206,10 +207,14 @@ export class NrfNestedControlDirective implements OnInit, OnDestroy {
   /**
    * Set the value to the [formData]{@link NrfFormDirective#formData}
    */
-  private setModelValue(newValue: any) {
+  setModelValue(newValue: any) {
     if (this.nestedFormService) {
       return this.modelSetter.setValue(this.modelPath, newValue || '', this.nestedFormService.formData);
     }
+  }
+
+  emitReadyState() {
+    this.ready$.emit(true);
   }
 
 }

@@ -14,6 +14,11 @@ export interface NrfSubmitData {
 @Injectable()
 export class NrfNestedFormService {
 
+  constructor() {
+    this.formGroup = new FormGroup({});
+  }
+
+
   private entityInternal: any;
 
   formGroup: FormGroup;
@@ -28,18 +33,18 @@ export class NrfNestedFormService {
     return this.entityInternal;
   }
 
-  constructor() {
-    this.formGroup = new FormGroup({});
-  }
-
 
   cloneDeep(target: any | any[]): any {
     if (!target || typeof target !== 'object') {
       return target;
     }
 
+    if (target instanceof Date) {
+      return new Date(target);
+    }
+
     if (Array.isArray(target)) {
-      return target.map(this.cloneDeep);
+      return target.map((value) => this.cloneDeep(value));
     }
 
     return Object.keys(target).reduce((props, key) => {

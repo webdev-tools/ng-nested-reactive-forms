@@ -1,6 +1,6 @@
 {
   "name": "@webdev-tools/ng-nested-reactive-forms",
-  "version": "5.0.2",
+  "version": "5.0.5",
   "scripts": {
     "ng": "ng",
     "start": "ng serve --app samples",
@@ -11,11 +11,12 @@
     "lib:build": "ng-packagr -p src/ng-nrforms/package.json",
     "postlib:build": "copyfiles README.md LICENSE dist/ng-nrforms",
     "lib:publish": "cd dist/ng-nrforms && npm publish --access public",
-    "lib:test": "ng test --app ng-nrforms",
-    "lib:test-watch": "npm run lib:test -- --watch --single-run=false --browsers Chromium",
+    "lib:test": "ng test --app ng-nrforms --code-coverage --progress false",
+    "lib:test-watch": "ng test --app ng-nrforms --watch --single-run=false --browsers Chromium",
     "sync-lib-version": "node scripts/sync-package-data.js",
     "version": "npm run sync-lib-version && git add . && npm run lib:test && npm run lib:build",
-    "postversion": "npm run lib:publish && git push && git push --tags"
+    "postversion": "npm run lib:publish && git push && git push --tags",
+    "codecov": "codecov"
   },
   "private": true,
   "dependencies": {
@@ -67,12 +68,12 @@
   "description": "Implement Nested FormControl for Angular Reactive Forms.",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/webdev-tools/ng-rforms.git"
+    "url": "git+https://github.com/webdev-tools/ng-nested-reactive-forms.git"
   },
   "bugs": {
-    "url": "https://github.com/webdev-tools/ng-rforms/issues"
+    "url": "https://github.com/webdev-tools/ng-nested-reactive-forms/issues"
   },
-  "homepage": "https://github.com/webdev-tools/ng-rforms#readme",
+  "homepage": "https://github.com/webdev-tools/ng-nested-reactive-forms#readme",
   "browserslist": [
     "> 2%",
     "IE 11"
