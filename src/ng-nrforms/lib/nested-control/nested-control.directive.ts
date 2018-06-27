@@ -129,7 +129,9 @@ export class NrfNestedControlDirective implements OnInit, OnDestroy {
     if (formGroup) {
       this.isRegisteredToFormControl = true;
       this.parentFormGroup = formGroup;
-      formGroup.addControl(this.nrfModelName, formControl);
+      setTimeout(() => {
+        formGroup.addControl(this.nrfModelName, formControl);
+      });
     }
   }
 
