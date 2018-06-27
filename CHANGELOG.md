@@ -1,3 +1,12 @@
+<a name="6.0.2"></a>
+## <small>6.0.2 (2018-06-27)</small>
+
+* fix(nested-control): Added replay feature to control's ready$ event ([6e3668a](https://github.com/webdev-tools/ng-nested-reactive-forms/commit/6e3668a))
+* build: Changed post-version script to only push once and build once ([1471360](https://github.com/webdev-tools/ng-nested-reactive-forms/commit/1471360))
+* build: Removed travis email notifications ([eb49c9f](https://github.com/webdev-tools/ng-nested-reactive-forms/commit/eb49c9f))
+
+
+
 <a name="6.0.1"></a>
 ## <small>6.0.1 (2018-05-29)</small>
 
