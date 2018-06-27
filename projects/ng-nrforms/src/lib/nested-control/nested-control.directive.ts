@@ -10,7 +10,7 @@ import {
   ViewContainerRef,
 } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
-import { takeWhile } from 'rxjs/operators';
+import { shareReplay, takeWhile } from 'rxjs/operators';
 
 import { NrfNestedFormService } from '../form/nested-form.service';
 import { NrfModelSetterService } from './model-setter.service';
@@ -68,7 +68,8 @@ export class NrfNestedControlDirective implements OnInit, OnDestroy {
     // tslint:disable-next-line:no-input-rename
   @Input('nrfNestedControl') nrfModelName: string;
 
-  @Output() ready$ = new EventEmitter<boolean>();
+  private readyEmitter$ = new EventEmitter<boolean>();
+  @Output() ready$;
 
 
   private isRegisteredToFormControl = false;
@@ -85,6 +86,7 @@ export class NrfNestedControlDirective implements OnInit, OnDestroy {
     private templateRef: TemplateRef<any>,
     private viewContainerRef: ViewContainerRef,
   ) {
+    this.ready$ = this.readyEmitter$.pipe(shareReplay(1));
   }
 
 
@@ -104,7 +106,7 @@ export class NrfNestedControlDirective implements OnInit, OnDestroy {
 
   ngOnDestroy() {
     this.isDestroyed = true;
-    this.ready$.complete();
+    this.readyEmitter$.complete();
 
     if (this.parentFormGroup) {
       this.parentFormGroup.removeControl(this.nrfModelName);
@@ -140,7 +142,7 @@ export class NrfNestedControlDirective implements OnInit, OnDestroy {
     if (formGroup) {
       this.isRegisteredToFormControl = true;
       this.parentFormGroup = formGroup;
-      formGroup.addControl(this.nrfModelName, formControl);
+      setTimeout(() => formGroup.addControl(this.nrfModelName, formControl));
     }
   }
 
@@ -225,7 +227,7 @@ export class NrfNestedControlDirective implements OnInit, OnDestroy {
   }
 
   emitReadyState() {
-    this.ready$.emit(true);
+    this.readyEmitter$.emit(true);
   }
 
 }
