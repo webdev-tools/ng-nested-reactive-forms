@@ -103,15 +103,16 @@ describe('NrfNestedControlDirective', () => {
     expect(emitSpy).toHaveBeenCalled();
   });
 
-  it('should receive ready$ event even late', fakeAsync((done) => {
+  it('should receive ready$ event even late', (done) => {
     generateComponent();
-    tick();
 
     context.nrfNestedControl.ready$.subscribe((value: boolean) => {
       expect(value).toBeTruthy();
       done();
     });
-  }));
+
+    fixture.detectChanges();
+  });
 
   function generateComponent() {
     fixture = TestBed.createComponent(TestComponent);
