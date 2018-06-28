@@ -1,3 +1,10 @@
+<a name="6.0.3"></a>
+## <small>6.0.3 (2018-06-28)</small>
+
+* fix(nested-control): Fix replay feature on control's ready$ event ([eb7021b](https://github.com/webdev-tools/ng-nested-reactive-forms/commit/eb7021b))
+
+
+
 <a name="6.0.2"></a>
 ## <small>6.0.2 (2018-06-27)</small>
 
