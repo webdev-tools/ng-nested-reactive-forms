@@ -14,6 +14,11 @@ import {
 import { FormGroup } from '@angular/forms';
 
 import { cloneDeep } from '../utils/clone-deep';
+import { NrfSubmitData } from './form-submit-data.class';
+import { NrfFormContext } from './form-context.class';
+
+
+export { NrfSubmitData, NrfFormContext };
 
 
 /**
@@ -107,7 +112,7 @@ export class NrfFormDirective implements OnInit, OnDestroy {
 
   private renderView() {
     if (this.templateRef && this.viewContainerRef) {
-      const embeddedViewRef = this.viewContainerRef.createEmbeddedView(this.templateRef);
+      const embeddedViewRef = this.viewContainerRef.createEmbeddedView(this.templateRef, new NrfFormContext(this));
       const formNative = embeddedViewRef.rootNodes[0];
       this.renderer.listen(formNative, 'submit', event => this.formSubmitWrapper(event));
     }
@@ -127,24 +132,6 @@ export class NrfFormDirective implements OnInit, OnDestroy {
     }
 
     this.nrfSubmit.emit(new NrfSubmitData(this, $event));
-  }
-
-}
-
-export class NrfSubmitData {
-
-  nrfForm: NrfFormDirective;
-  formData: any;
-  entity: any;
-  formGroup: FormGroup;
-  event: Event;
-
-  constructor(nrfForm: NrfFormDirective, $event: Event) {
-    this.nrfForm = nrfForm;
-    this.event = $event;
-    this.formData = nrfForm.formData;
-    this.entity = nrfForm.nrfEntity;
-    this.formGroup = nrfForm.formGroup;
   }
 
 }

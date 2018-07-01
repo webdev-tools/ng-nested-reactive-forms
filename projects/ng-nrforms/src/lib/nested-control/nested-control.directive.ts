@@ -5,21 +5,11 @@ import { ReplaySubject } from 'rxjs/internal/ReplaySubject';
 
 import { NrfModelSetterService } from './model-setter.service';
 import { NrfFormDirective } from '../form/form.directive';
-
-export class NrfNestedControlContext {
-
-  $implicit: FormControl;
+import { NrfNestedControlContext } from './nested-control-context.class';
 
 
-  constructor(
-    public formControl: FormControl,
-    public formGroup: FormGroup,
-    public nrfNestedControl: NrfNestedControlDirective,
-  ) {
-    this.$implicit = formControl;
-  }
+export { NrfNestedControlContext };
 
-}
 
 /**
  * This directive control nested inputs and sets values on the Original Model set at {@link NrfFormDirective#nrfEntity}

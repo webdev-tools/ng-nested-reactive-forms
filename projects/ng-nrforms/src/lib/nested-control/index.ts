@@ -7,8 +7,6 @@ import { NrfModelSetterService } from './model-setter.service';
  * Holds the nrfModel directive implementation
  */
 @NgModule({
-  imports: [
-  ],
   providers: [
     NrfModelSetterService,
   ],
