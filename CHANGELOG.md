@@ -1,3 +1,19 @@
+<a name="6.1.0"></a>
+## 6.1.0 (2018-07-01)
+
+* build: Removed wrong installed dependencies from package.json ([e24ef5c](https://github.com/webdev-tools/ng-nested-reactive-forms/commit/e24ef5c))
+* build(husky): Added --no-verify on post-version to avoid build twice while publishing ([a577b60](https://github.com/webdev-tools/ng-nested-reactive-forms/commit/a577b60))
+* build(husky): Updeated husky to avoid run hooks twice ([9baad37](https://github.com/webdev-tools/ng-nested-reactive-forms/commit/9baad37))
+* test: Fix unit tests and moved helper classes to individual files ([839464a](https://github.com/webdev-tools/ng-nested-reactive-forms/commit/839464a))
+* fix: Removed nested-form-service in order to inprove inputs and form interaction ([a7b816d](https://github.com/webdev-tools/ng-nested-reactive-forms/commit/a7b816d))
+
+
+### BREAKING CHANGE
+
+* NrfNestedFormService were removed and should be replaced by NrfFormDirective that
+has the same signatures
+
+
 <a name="6.0.3"></a>
 ## <small>6.0.3 (2018-06-28)</small>
 
