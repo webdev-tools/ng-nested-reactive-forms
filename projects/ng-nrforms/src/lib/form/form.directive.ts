@@ -13,7 +13,8 @@ import {
 } from '@angular/core';
 import { FormGroup } from '@angular/forms';
 
-import { NrfNestedFormService, NrfSubmitData } from './nested-form.service';
+import { cloneDeep } from '../utils/clone-deep';
+
 
 /**
  * A component to abstract the form implementation
@@ -32,23 +33,48 @@ import { NrfNestedFormService, NrfSubmitData } from './nested-form.service';
 export class NrfFormDirective implements OnInit, OnDestroy {
 
   /**
+   * @ignore
+   */
+  constructor(
+    @Optional() private templateRef: TemplateRef<any>,
+    @Optional() private viewContainerRef: ViewContainerRef,
+    private renderer: Renderer2,
+  ) {}
+
+
+  /**
+   * Internal emitter to handle form submit
+   */
+  private submit$ = new EventEmitter<NrfSubmitData>();
+
+  private entityInternal: any;
+
+  /**
+   * Form group will hold all inputs within this form.
+   *
+   * Every input should register itself to this form group.
+   *
+   * The data in this form group will not be sent to backend, just form validations and input management.
+   */
+  formGroup: FormGroup = new FormGroup({});
+
+  /**
+   * Represents the data inputted by the user on the fields
+   */
+  formData: any;
+
+  /**
    * Represents an Entity Model that comes from Database
    */
   @Input()
   set nrfEntity(entity: any) {
-    if (this.nestedFormService.entity !== entity) {
-      this.nestedFormService.entity = entity;
+    if (this.entityInternal !== entity) {
+      this.entityInternal = entity;
+      this.formData = cloneDeep(entity); // TODO merge with existent formData
     }
   }
-
-
   get nrfEntity(): any {
-    return this.nestedFormService.entity;
-  }
-
-
-  get formData(): any {
-    return this.nestedFormService.formData;
+    return this.entityInternal;
   }
 
 
@@ -58,34 +84,7 @@ export class NrfFormDirective implements OnInit, OnDestroy {
    */
   @Output()
   get nrfSubmit(): EventEmitter<NrfSubmitData> {
-    return this.nestedFormService.submit$;
-  }
-
-
-  /**
-   * Form group will hold all inputs within this form.
-   *
-   * Every input should register itself to this form group.
-   *
-   * The data in this form group will not be sent to backend, just form validations and input management.
-   */
-  get formGroup(): FormGroup {
-    return this.nestedFormService.formGroup;
-  }
-
-
-  /**
-   * @ignore
-   */
-  constructor(
-    @Optional() private readonly nestedFormService: NrfNestedFormService,
-    @Optional() private templateRef: TemplateRef<any>,
-    @Optional() private viewContainerRef: ViewContainerRef,
-    private renderer: Renderer2,
-  ) {
-    if (!this.nestedFormService) {
-      this.nestedFormService = new NrfNestedFormService();
-    }
+    return this.submit$;
   }
 
 
@@ -127,13 +126,25 @@ export class NrfFormDirective implements OnInit, OnDestroy {
       return;
     }
 
-    this.nrfSubmit.emit({
-      nrfForm: this,
-      formData: this.formData,
-      entity: this.nrfEntity,
-      formGroup: this.formGroup,
-      event: $event,
-    });
+    this.nrfSubmit.emit(new NrfSubmitData(this, $event));
+  }
+
+}
+
+export class NrfSubmitData {
+
+  nrfForm: NrfFormDirective;
+  formData: any;
+  entity: any;
+  formGroup: FormGroup;
+  event: Event;
+
+  constructor(nrfForm: NrfFormDirective, $event: Event) {
+    this.nrfForm = nrfForm;
+    this.event = $event;
+    this.formData = nrfForm.formData;
+    this.entity = nrfForm.nrfEntity;
+    this.formGroup = nrfForm.formGroup;
   }
 
 }

@@ -1,10 +1,10 @@
 import { Directive, Input, OnDestroy, OnInit, Optional, Output, TemplateRef, ViewContainerRef } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
 import { takeWhile } from 'rxjs/operators';
-
-import { NrfNestedFormService } from '../form/nested-form.service';
-import { NrfModelSetterService } from './model-setter.service';
 import { ReplaySubject } from 'rxjs/internal/ReplaySubject';
+
+import { NrfModelSetterService } from './model-setter.service';
+import { NrfFormDirective } from '../form/form.directive';
 
 export class NrfNestedControlContext {
 
@@ -62,21 +62,24 @@ export class NrfNestedControlDirective implements OnInit, OnDestroy {
   @Output() ready$ = new ReplaySubject(1);
 
 
-  private isRegisteredToFormControl = false;
+  private isRegisteredToFormGroup = false;
   isDestroyed = false;
 
   parentFormGroup: FormGroup;
   formControl: FormControl;
+
+  /**
+   * Used to set and get value on the entity model
+   */
   modelPath: string;
 
 
   constructor(
     private readonly modelSetter: NrfModelSetterService,
-    @Optional() public readonly nestedFormService: NrfNestedFormService,
     private templateRef: TemplateRef<any>,
     private viewContainerRef: ViewContainerRef,
-  ) {
-  }
+    @Optional() private nrfForm: NrfFormDirective,
+  ) {}
 
 
   /**
@@ -86,8 +89,9 @@ export class NrfNestedControlDirective implements OnInit, OnDestroy {
    */
   ngOnInit() {
     this.modelPath = this.getModelPathWithoutFirstPart();
+    this.formControl = this.getFormControl();
     this.registerToFormGroup();
-    this.subscribeToValueChanges();
+    this.subscribeToUpdateEntityValue();
     this.showViewContent();
     this.emitReadyState();
   }
@@ -119,19 +123,16 @@ export class NrfNestedControlDirective implements OnInit, OnDestroy {
    * to enable validations and data manipulation
    */
   private registerToFormGroup() {
-    if (this.isRegisteredToFormControl) {
+    if (this.isRegisteredToFormGroup) {
       return;
     }
 
     const formGroup = this.getFormGroup();
-    const formControl = this.getFormControl(formGroup);
-
-    this.formControl = formControl;
 
     if (formGroup) {
-      this.isRegisteredToFormControl = true;
+      this.isRegisteredToFormGroup = true;
       this.parentFormGroup = formGroup;
-      setTimeout(() => formGroup.addControl(this.nrfModelName, formControl));
+      setTimeout(() => formGroup.addControl(this.nrfModelName, this.formControl));
     }
   }
 
@@ -142,12 +143,12 @@ export class NrfNestedControlDirective implements OnInit, OnDestroy {
    *
    * Otherwise a new empty [FormGroup]{@link https://angular.io/api/forms/FormGroup}
    */
-  private getFormGroup() {
-    if (this.nestedFormService) {
-      return this.nestedFormService.formGroup;
+  private getFormGroup(): FormGroup {
+    if (this.nrfForm) {
+      return this.nrfForm.formGroup;
     }
 
-    return new FormGroup({});
+    return null;
   }
 
 
@@ -155,7 +156,8 @@ export class NrfNestedControlDirective implements OnInit, OnDestroy {
    * Verify if the [FormGroup]{@link https://angular.io/api/forms/FormGroup} has an control with the current name and return it.
    * Otherwise return a new [FormControl]{@link https://angular.io/api/forms/FormControl}
    */
-  protected getFormControl(formGroup: FormGroup): FormControl {
+  protected getFormControl(): FormControl {
+    const formGroup = this.getFormGroup();
     let formControl = formGroup && <FormControl>formGroup.get(this.nrfModelName);
 
     if (!formControl) {
@@ -178,7 +180,7 @@ export class NrfNestedControlDirective implements OnInit, OnDestroy {
   /**
    * Subscribe to [valueChanges]{@link https://angular.io/api/forms/AbstractControl#valueChanges} and update the Entity value
    */
-  private subscribeToValueChanges() {
+  private subscribeToUpdateEntityValue() {
     this.formControl.valueChanges
       .pipe(takeWhile(() => !this.isDestroyed))
       .subscribe(newValue => this.setModelValue(newValue));
@@ -198,8 +200,8 @@ export class NrfNestedControlDirective implements OnInit, OnDestroy {
    * Get the value from the [nrfEntity]{@link NrfFormDirective#nrfEntity}
    */
   private getInitialValue(): any | null {
-    if (this.nestedFormService) {
-      return this.modelSetter.getValue(this.modelPath, this.nestedFormService.formData);
+    if (this.nrfForm && this.modelPath) {
+      return this.modelSetter.getValue(this.modelPath, this.nrfForm.formData);
     }
 
     return null;
@@ -210,8 +212,8 @@ export class NrfNestedControlDirective implements OnInit, OnDestroy {
    * Set the value to the [formData]{@link NrfFormDirective#formData}
    */
   setModelValue(newValue: any) {
-    if (this.nestedFormService) {
-      return this.modelSetter.setValue(this.modelPath, newValue || '', this.nestedFormService.formData);
+    if (this.nrfForm && this.modelPath) {
+      return this.modelSetter.setValue(this.modelPath, newValue || '', this.nrfForm.formData);
     }
   }
 

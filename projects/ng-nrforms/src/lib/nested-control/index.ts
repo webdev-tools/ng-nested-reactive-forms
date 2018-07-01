@@ -2,7 +2,6 @@ import { NgModule } from '@angular/core';
 
 import { NrfNestedControlDirective } from './nested-control.directive';
 import { NrfModelSetterService } from './model-setter.service';
-import { NrfNestedFormService } from '../form/nested-form.service';
 
 /**
  * Holds the nrfModel directive implementation
@@ -12,7 +11,6 @@ import { NrfNestedFormService } from '../form/nested-form.service';
   ],
   providers: [
     NrfModelSetterService,
-    NrfNestedFormService,
   ],
   declarations: [
     NrfNestedControlDirective,
