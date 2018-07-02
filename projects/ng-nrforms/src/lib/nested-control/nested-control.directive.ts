@@ -51,10 +51,7 @@ export class NrfNestedControlDirective implements OnInit, OnDestroy {
 
   @Output() ready$ = new ReplaySubject(1);
 
-
-  private isRegisteredToFormGroup = false;
   isDestroyed = false;
-
   parentFormGroup: FormGroup;
   formControl: FormControl;
 
@@ -113,16 +110,14 @@ export class NrfNestedControlDirective implements OnInit, OnDestroy {
    * to enable validations and data manipulation
    */
   private registerToFormGroup() {
-    if (this.isRegisteredToFormGroup) {
+    if (this.parentFormGroup) {
       return;
     }
 
-    const formGroup = this.getFormGroup();
+    this.parentFormGroup = this.getParentFormGroup();
 
-    if (formGroup) {
-      this.isRegisteredToFormGroup = true;
-      this.parentFormGroup = formGroup;
-      setTimeout(() => formGroup.addControl(this.nrfModelName, this.formControl));
+    if (this.parentFormGroup && this.nrfModelName) {
+      setTimeout(() => this.parentFormGroup.addControl(this.nrfModelName, this.formControl));
     }
   }
 
@@ -133,7 +128,7 @@ export class NrfNestedControlDirective implements OnInit, OnDestroy {
    *
    * Otherwise a new empty [FormGroup]{@link https://angular.io/api/forms/FormGroup}
    */
-  private getFormGroup(): FormGroup {
+  private getParentFormGroup(): FormGroup {
     if (this.nrfForm) {
       return this.nrfForm.formGroup;
     }
@@ -147,8 +142,8 @@ export class NrfNestedControlDirective implements OnInit, OnDestroy {
    * Otherwise return a new [FormControl]{@link https://angular.io/api/forms/FormControl}
    */
   protected getFormControl(): FormControl {
-    const formGroup = this.getFormGroup();
-    let formControl = formGroup && <FormControl>formGroup.get(this.nrfModelName);
+    const formGroup = this.getParentFormGroup();
+    let formControl = formGroup && this.nrfModelName && <FormControl>formGroup.get(this.nrfModelName);
 
     if (!formControl) {
       formControl = this.getNewFormControl();
@@ -182,7 +177,8 @@ export class NrfNestedControlDirective implements OnInit, OnDestroy {
    * because it is the Entity itself.
    */
   private getModelPathWithoutFirstPart(): string {
-    return this.nrfModelName.substr(this.nrfModelName.indexOf('.') + 1);
+    const modelName = this.nrfModelName;
+    return modelName && modelName.substr(modelName.indexOf('.') + 1);
   }
 
 

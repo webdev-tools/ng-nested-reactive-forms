@@ -9,6 +9,8 @@ import { NrfModelModule } from './index';
 
 
 let mockTestEntity = {};
+let modelPath = 'testEntity.user.firstName';
+
 /* tslint:disable component-selector */
 @Component({
   template: `
@@ -30,12 +32,18 @@ class TestComponent {
 @Component({
   selector: 'test-input',
   template: `
-    <div *nrfNestedControl="'testEntity.user.firstName'; let control=formControl">
+    <div *nrfNestedControl="modelPath; let control=formControl">
       <input [formControl]="control" />
     </div>
   `,
 })
 class TestInputComponent {
+
+  modelPath: string;
+
+  constructor() {
+    this.modelPath = modelPath;
+  }
 
 }
 
@@ -49,6 +57,9 @@ describe('NrfNestedControlDirective', () => {
   let context: NrfNestedControlContext;
 
   beforeEach(async(() => {
+    mockTestEntity = {};
+    modelPath = 'testEntity.user.firstName';
+
     TestBed
       .configureTestingModule({
         imports: [NrfFormModule, NrfModelModule],
@@ -113,6 +124,20 @@ describe('NrfNestedControlDirective', () => {
 
     fixture.detectChanges();
   });
+
+  it('Should work without model path and outside a form and nrfForm', fakeAsync(() => {
+    modelPath = null;
+    const testInputFixture = TestBed.createComponent<TestInputComponent>(TestInputComponent);
+    testInputFixture.detectChanges();
+    tick();
+
+    inputEl = testInputFixture.debugElement.query(By.css('input'));
+    const inputContext: NrfNestedControlContext = inputEl.context;
+
+    expect(inputContext.formControl).toBeTruthy();
+    expect(inputContext.formGroup).toBeFalsy();
+    expect(inputContext.nrfNestedControl.modelPath).toBeFalsy();
+  }));
 
   function generateComponent() {
     fixture = TestBed.createComponent(TestComponent);
