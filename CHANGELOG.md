@@ -1,3 +1,10 @@
+<a name="6.2.0"></a>
+## 6.2.0 (2018-07-02)
+
+* fix: Enabled nested-control to work without a model-path ([1d820fd](https://github.com/webdev-tools/ng-nested-reactive-forms/commit/1d820fd))
+
+
+
 <a name="6.1.0"></a>
 ## 6.1.0 (2018-07-01)
 
