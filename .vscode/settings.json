@@ -5,7 +5,8 @@
     "copyfiles",
     "nrforms",
     "polyfills",
-    "styleext"
+    "styleext",
+    "validators"
   ],
   "htmlhint.options": {
     "alt-require": false,
@@ -86,4 +87,5 @@
   "typescript.format.placeOpenBraceOnNewLineForControlBlocks": false,
   "typescript.format.placeOpenBraceOnNewLineForFunctions": false,
   "html.format.preserveNewLines": true,
+  "typescriptHero.imports.removeTrailingIndex": false
 }

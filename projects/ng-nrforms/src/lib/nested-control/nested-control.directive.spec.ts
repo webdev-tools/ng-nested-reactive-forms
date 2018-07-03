@@ -2,10 +2,11 @@ import { Component, DebugElement } from '@angular/core';
 import { async, ComponentFixture, fakeAsync, TestBed, tick } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 
-import { NrfNestedControlContext, NrfNestedControlDirective } from './nested-control.directive';
+import { NrfModelModule } from '.';
 import { NrfFormModule } from '../form';
 import { NrfFormDirective } from '../form/form.directive';
-import { NrfModelModule } from './index';
+import { NrfNestedControlContext } from './nested-control-context.class';
+import { NrfNestedControlDirective } from './nested-control.directive';
 
 
 let mockTestEntity = {};

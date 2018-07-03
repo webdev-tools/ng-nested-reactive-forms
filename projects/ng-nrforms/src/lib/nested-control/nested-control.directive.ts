@@ -1,14 +1,11 @@
 import { Directive, Input, OnDestroy, OnInit, Optional, Output, TemplateRef, ViewContainerRef } from '@angular/core';
-import { FormControl, FormGroup } from '@angular/forms';
-import { takeWhile } from 'rxjs/operators';
+import { FormControl, FormGroup, ValidatorFn } from '@angular/forms';
 import { ReplaySubject } from 'rxjs/internal/ReplaySubject';
+import { takeWhile } from 'rxjs/operators';
 
-import { NrfModelSetterService } from './model-setter.service';
 import { NrfFormDirective } from '../form/form.directive';
+import { NrfModelSetterService } from './model-setter.service';
 import { NrfNestedControlContext } from './nested-control-context.class';
-
-
-export { NrfNestedControlContext };
 
 
 /**
@@ -43,12 +40,23 @@ export { NrfNestedControlContext };
 })
 export class NrfNestedControlDirective implements OnInit, OnDestroy {
 
+  // tslint:disable no-input-rename
   /**
    * The dot notation full name of the nrfEntity
    */
-    // tslint:disable-next-line:no-input-rename
   @Input('nrfNestedControl') nrfModelName: string;
 
+  /**
+   * [AbstractControlOptions]{@link https://angular.io/api/forms/AbstractControlOptions}
+   * containing the validators list and the update-on strategy
+   *
+   * It will be set on the formControl while initiating a new one.
+   */
+  @Input('nrfNestedControlControlOptions') controlOptions: ValidatorFn[];
+
+  /**
+   * Emit right after the view were rendered and the component and its variables ara available.
+   */
   @Output() ready$ = new ReplaySubject(1);
 
   isDestroyed = false;
@@ -93,6 +101,35 @@ export class NrfNestedControlDirective implements OnInit, OnDestroy {
     }
   }
 
+   /**
+   * Return the dot notation path of the Entity, without the first part,
+   * because it is the Entity itself.
+   */
+  private getModelPathWithoutFirstPart(): string {
+    const modelName = this.nrfModelName;
+    return modelName && modelName.substr(modelName.indexOf('.') + 1);
+  }
+
+  /**
+   * Instantiate a new [FormControl]{@link https://angular.io/api/forms/FormControl} and return it
+   */
+  protected getNewFormControl(): FormControl {
+    return new FormControl(
+      this.getInitialValue(),
+      this.controlOptions,
+    );
+  }
+
+  /**
+   * Get the value from the [nrfEntity]{@link NrfFormDirective#nrfEntity}
+   */
+  protected getInitialValue(): any | null {
+    if (this.nrfForm && this.modelPath) {
+      return this.modelSetter.getValue(this.modelPath, this.nrfForm.formData);
+    }
+
+    return null;
+  }
 
   private showViewContent() {
     const context = new NrfNestedControlContext(
@@ -154,43 +191,12 @@ export class NrfNestedControlDirective implements OnInit, OnDestroy {
 
 
   /**
-   * Instantiate a new [FormControl]{@link https://angular.io/api/forms/FormControl} and return it
-   */
-  protected getNewFormControl(): FormControl {
-    const initialValue = this.getInitialValue();
-    return new FormControl(initialValue || null);
-  }
-
-
-  /**
    * Subscribe to [valueChanges]{@link https://angular.io/api/forms/AbstractControl#valueChanges} and update the Entity value
    */
   private subscribeToUpdateEntityValue() {
     this.formControl.valueChanges
       .pipe(takeWhile(() => !this.isDestroyed))
       .subscribe(newValue => this.setModelValue(newValue));
-  }
-
-
-  /**
-   * Return the dot notation path of the Entity, without the first part,
-   * because it is the Entity itself.
-   */
-  private getModelPathWithoutFirstPart(): string {
-    const modelName = this.nrfModelName;
-    return modelName && modelName.substr(modelName.indexOf('.') + 1);
-  }
-
-
-  /**
-   * Get the value from the [nrfEntity]{@link NrfFormDirective#nrfEntity}
-   */
-  private getInitialValue(): any | null {
-    if (this.nrfForm && this.modelPath) {
-      return this.modelSetter.getValue(this.modelPath, this.nrfForm.formData);
-    }
-
-    return null;
   }
 
 

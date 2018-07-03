@@ -18,9 +18,6 @@ import { NrfSubmitData } from './form-submit-data.class';
 import { NrfFormContext } from './form-context.class';
 
 
-export { NrfSubmitData, NrfFormContext };
-
-
 /**
  * A component to abstract the form implementation
  *

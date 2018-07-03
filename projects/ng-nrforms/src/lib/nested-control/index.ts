@@ -2,6 +2,15 @@ import { NgModule } from '@angular/core';
 
 import { NrfNestedControlDirective } from './nested-control.directive';
 import { NrfModelSetterService } from './model-setter.service';
+import { NrfControlOptionsComponent } from './control-options.component';
+
+
+export {
+  NrfNestedControlDirective,
+  NrfModelSetterService,
+  NrfControlOptionsComponent,
+};
+
 
 /**
  * Holds the nrfModel directive implementation
@@ -17,6 +26,4 @@ import { NrfModelSetterService } from './model-setter.service';
     NrfNestedControlDirective,
   ],
 })
-export class NrfModelModule {
-
-}
+export class NrfModelModule {}
