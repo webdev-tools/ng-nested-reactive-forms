@@ -6,6 +6,7 @@ import { takeWhile } from 'rxjs/operators';
 import { NrfFormDirective } from '../form/form.directive';
 import { NrfModelSetterService } from './model-setter.service';
 import { NrfNestedControlContext } from './nested-control-context.class';
+import { NrfControlOptions } from './control-options.component';
 
 
 /**
@@ -52,7 +53,7 @@ export class NrfNestedControlDirective implements OnInit, OnDestroy {
    *
    * It will be set on the formControl while initiating a new one.
    */
-  @Input('nrfNestedControlControlOptions') controlOptions: ValidatorFn[];
+  @Input('nrfNestedControlControlOptions') controlOptions: NrfControlOptions;
 
   /**
    * Emit right after the view were rendered and the component and its variables ara available.
@@ -114,10 +115,10 @@ export class NrfNestedControlDirective implements OnInit, OnDestroy {
    * Instantiate a new [FormControl]{@link https://angular.io/api/forms/FormControl} and return it
    */
   protected getNewFormControl(): FormControl {
-    return new FormControl(
-      this.getInitialValue(),
-      this.controlOptions,
-    );
+    const disabled = this.controlOptions && this.controlOptions.disabled;
+    const value = this.getInitialValue();
+
+    return new FormControl({ value, disabled }, this.controlOptions);
   }
 
   /**

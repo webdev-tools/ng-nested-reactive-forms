@@ -1,5 +1,9 @@
 import { Input, OnInit } from '@angular/core';
-import { FormControl, Validators, AbstractControlOptions } from '@angular/forms';
+import { AbstractControlOptions, Validators } from '@angular/forms';
+
+export interface NrfControlOptions extends AbstractControlOptions {
+  disabled: boolean;
+}
 
 /**
  * Input wrappers components should extends this class to pass constraints downwards
@@ -10,12 +14,7 @@ export abstract class NrfControlOptionsComponent implements OnInit {
   /**
    * A list of Validators to validate the input and the update-on strategy
    */
-  controlOptions: AbstractControlOptions;
-
-  /**
-   * Sets this input to readonly and block any changes
-   */
-  @Input('validatorReadonly') readonly: boolean = null;
+  controlOptions: NrfControlOptions;
 
   /**
    * Sets this input to readonly and block any changes
@@ -75,10 +74,11 @@ export abstract class NrfControlOptionsComponent implements OnInit {
   /**
    * Generate the control options based on the properties set in this component
    */
-  generateControlOptions(): AbstractControlOptions {
+  generateControlOptions(): NrfControlOptions {
     return {
       validators: Object.keys(Validators).filter(key => this[key]).map(key => Validators[key]),
       updateOn: this.updateOn,
+      disabled: this.disabled,
     };
   }
 
