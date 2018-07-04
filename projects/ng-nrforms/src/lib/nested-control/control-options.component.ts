@@ -19,49 +19,49 @@ export abstract class NrfControlOptionsComponent implements OnInit {
   /**
    * Sets this input to readonly and block any changes
    */
-  @Input('validatorDisabled') disabled: boolean = null;
+  @Input('disabled') disabled: boolean = null;
 
   /**
    * Define the lowest number value that this input should accept
    */
-  @Input('validatorMin') min: string | number = null;
+  @Input('min') min: string | number = null;
 
   /**
    * Define the maximum number value that this input should accept
    */
-  @Input('validatorMax') max: string | number = null;
+  @Input('max') max: string | number = null;
 
   /**
    * Set this input as required and fails when empty
    */
-  @Input('validatorRequired') required: boolean = null;
+  @Input('required') required: boolean = null;
 
-  // @Input('validatorRequiredTrue') requiredTrue: string = null;
+  // @Input('RequiredTrue') requiredTrue: string = null;
 
   /**
    * Set this input as an e-mail and validates the e-mail patter
    */
-  @Input('validatorEmail') email: boolean = null;
+  @Input('email') email: boolean = null;
 
   /**
    * Define the minimum characters quantity this input should accept
    */
-  @Input('validatorMinLength') minLength: string | number = null;
+  @Input('minLength') minLength: string | number = null;
 
   /**
    * Define the maximum characters quantity this input should accept
    */
-  @Input('validatorMaxLength') maxLength: string | number = null;
+  @Input('maxLength') maxLength: string | number = null;
 
   /**
    * Set a Regular Expression to match the input value against and fails if not match
    */
-  @Input('validatorPattern') pattern: string | RegExp = null;
+  @Input('pattern') pattern: string | RegExp = null;
 
   /**
    * The event name for control to update upon.
    */
-  @Input('validatorUpdateOn') updateOn: 'change' | 'blur' | 'submit' = null;
+  @Input('updateOn') updateOn: 'change' | 'blur' | 'submit' = null;
 
 
   /**

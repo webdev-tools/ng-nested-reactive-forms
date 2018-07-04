@@ -1,12 +1,12 @@
 import { Directive, Input, OnDestroy, OnInit, Optional, Output, TemplateRef, ViewContainerRef } from '@angular/core';
-import { FormControl, FormGroup, ValidatorFn } from '@angular/forms';
+import { FormControl, FormGroup } from '@angular/forms';
 import { ReplaySubject } from 'rxjs/internal/ReplaySubject';
 import { takeWhile } from 'rxjs/operators';
 
 import { NrfFormDirective } from '../form/form.directive';
+import { NrfControlOptions } from './control-options.component';
 import { NrfModelSetterService } from './model-setter.service';
 import { NrfNestedControlContext } from './nested-control-context.class';
-import { NrfControlOptions } from './control-options.component';
 
 
 /**

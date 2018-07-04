@@ -1,11 +1,11 @@
 import { Component, DebugElement } from '@angular/core';
-import { async, ComponentFixture, fakeAsync, TestBed, tick } from '@angular/core/testing';
+import { async, fakeAsync, TestBed } from '@angular/core/testing';
+import { Validators } from '@angular/forms';
+import { By } from '@angular/platform-browser';
 
 import { NrfModelModule } from '.';
 import { NrfFormModule } from '../form';
 import { NrfControlOptionsComponent } from './control-options.component';
-import { By } from '@angular/platform-browser';
-import { Validators } from '@angular/forms';
 
 describe('control-options.component', () => {
   /* tslint:disable component-selector */
@@ -17,15 +17,15 @@ describe('control-options.component', () => {
 
   @Component({
     template: `<test-component
-      [validatorDisabled]="true"
-      [validatorMin]="1"
-      [validatorMax]="10"
-      [validatorRequired]="true"
-      [validatorEmail]="true"
-      [validatorMinLength]="2"
-      [validatorMaxLength]="2"
-      validatorPattern="myRegex"
-      validatorUpdateOn="submit"
+      [disabled]="true"
+      [min]="1"
+      [max]="10"
+      [required]="true"
+      [email]="true"
+      [minLength]="2"
+      [maxLength]="2"
+      pattern="myRegex"
+      updateOn="submit"
     ></test-component>`,
   })
   class WrapperComponent {}
