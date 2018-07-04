@@ -1,3 +1,12 @@
+<a name="6.2.1"></a>
+## <small>6.2.1 (2018-07-04)</small>
+
+* feat: Renamed control-options @Inputs to make it more seamless ([15ba0d9](https://github.com/webdev-tools/ng-nested-reactive-forms/commit/15ba0d9))
+* test(validator): Added unit tests to control-options-component ([941a202](https://github.com/webdev-tools/ng-nested-reactive-forms/commit/941a202))
+* fix: Created a control-options component to be extended of while wrapping inputs ([2b2197a](https://github.com/webdev-tools/ng-nested-reactive-forms/commit/2b2197a))
+
+
+
 <a name="6.2.0"></a>
 ## 6.2.0 (2018-07-02)
 
