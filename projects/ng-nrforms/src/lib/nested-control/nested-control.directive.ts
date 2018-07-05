@@ -3,7 +3,7 @@ import { FormControl, FormGroup } from '@angular/forms';
 import { ReplaySubject } from 'rxjs/internal/ReplaySubject';
 import { takeWhile } from 'rxjs/operators';
 
-import { NrfFormDirective } from '../form/form.directive';
+import { NrfFormDirective, NrfFormService } from '../form';
 import { NrfControlOptions } from './control-options.component';
 import { NrfModelSetterService } from './model-setter.service';
 import { NrfNestedControlContext } from './nested-control-context.class';
@@ -40,6 +40,31 @@ import { NrfNestedControlContext } from './nested-control-context.class';
   exportAs: 'nrfNestedControl',
 })
 export class NrfNestedControlDirective implements OnInit, OnDestroy {
+  isDestroyed = false;
+  parentFormGroup: FormGroup;
+  formControl: FormControl;
+
+  /**
+   * Used to set and get value on the entity model
+   */
+  modelPath: string;
+
+  /**
+   * Holds an instance of a NrfForm or a NrfService.
+   * If the form is wrapped inside a directive with ng-content, the NrfFormService MUST be provided.
+   * Otherwise the nrfForm will be used.
+   */
+  private formOrService: NrfFormDirective | NrfFormService;
+
+  constructor(
+    private readonly modelSetter: NrfModelSetterService,
+    private readonly templateRef: TemplateRef<any>,
+    private readonly viewContainerRef: ViewContainerRef,
+    @Optional() nrfForm: NrfFormDirective,
+    @Optional() nrfFormService: NrfFormService,
+  ) {
+    this.formOrService = nrfFormService || nrfForm;
+  }
 
   // tslint:disable no-input-rename
   /**
@@ -58,25 +83,7 @@ export class NrfNestedControlDirective implements OnInit, OnDestroy {
   /**
    * Emit right after the view were rendered and the component and its variables ara available.
    */
-  @Output() ready$ = new ReplaySubject(1);
-
-  isDestroyed = false;
-  parentFormGroup: FormGroup;
-  formControl: FormControl;
-
-  /**
-   * Used to set and get value on the entity model
-   */
-  modelPath: string;
-
-
-  constructor(
-    private readonly modelSetter: NrfModelSetterService,
-    private templateRef: TemplateRef<any>,
-    private viewContainerRef: ViewContainerRef,
-    @Optional() private nrfForm: NrfFormDirective,
-  ) {}
-
+  @Output() readonly ready$ = new ReplaySubject(1);
 
   /**
    * Register this input component to its parent form [FormGroup]{@link https://angular.io/api/forms/FormGroup}
@@ -125,8 +132,8 @@ export class NrfNestedControlDirective implements OnInit, OnDestroy {
    * Get the value from the [nrfEntity]{@link NrfFormDirective#nrfEntity}
    */
   protected getInitialValue(): any | null {
-    if (this.nrfForm && this.modelPath) {
-      return this.modelSetter.getValue(this.modelPath, this.nrfForm.formData);
+    if (this.formOrService && this.modelPath) {
+      return this.modelSetter.getValue(this.modelPath, this.formOrService.formData);
     }
 
     return null;
@@ -167,8 +174,8 @@ export class NrfNestedControlDirective implements OnInit, OnDestroy {
    * Otherwise a new empty [FormGroup]{@link https://angular.io/api/forms/FormGroup}
    */
   private getParentFormGroup(): FormGroup {
-    if (this.nrfForm) {
-      return this.nrfForm.formGroup;
+    if (this.formOrService) {
+      return this.formOrService.formGroup;
     }
 
     return null;
@@ -205,8 +212,8 @@ export class NrfNestedControlDirective implements OnInit, OnDestroy {
    * Set the value to the [formData]{@link NrfFormDirective#formData}
    */
   setModelValue(newValue: any) {
-    if (this.nrfForm && this.modelPath) {
-      return this.modelSetter.setValue(this.modelPath, newValue || '', this.nrfForm.formData);
+    if (this.formOrService && this.modelPath) {
+      return this.modelSetter.setValue(this.modelPath, newValue || '', this.formOrService.formData);
     }
   }
 

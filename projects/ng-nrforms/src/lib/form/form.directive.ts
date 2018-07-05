@@ -13,9 +13,9 @@ import {
 } from '@angular/core';
 import { FormGroup } from '@angular/forms';
 
-import { cloneDeep } from '../utils/clone-deep';
-import { NrfSubmitData } from './form-submit-data.class';
 import { NrfFormContext } from './form-context.class';
+import { NrfSubmitData } from './form-submit-data.class';
+import { NrfFormService } from './form.service';
 
 
 /**
@@ -38,47 +38,34 @@ export class NrfFormDirective implements OnInit, OnDestroy {
    * @ignore
    */
   constructor(
-    @Optional() private templateRef: TemplateRef<any>,
-    @Optional() private viewContainerRef: ViewContainerRef,
+    @Optional() private readonly templateRef: TemplateRef<any>,
+    @Optional() private readonly viewContainerRef: ViewContainerRef,
+    @Optional() private readonly formService: NrfFormService,
     private renderer: Renderer2,
-  ) {}
-
-
-  /**
-   * Internal emitter to handle form submit
-   */
-  private submit$ = new EventEmitter<NrfSubmitData>();
-
-  private entityInternal: any;
-
-  /**
-   * Form group will hold all inputs within this form.
-   *
-   * Every input should register itself to this form group.
-   *
-   * The data in this form group will not be sent to backend, just form validations and input management.
-   */
-  formGroup: FormGroup = new FormGroup({});
-
-  /**
-   * Represents the data inputted by the user on the fields
-   */
-  formData: any;
+  ) {
+    if (!formService) {
+      this.formService = new NrfFormService();
+    }
+  }
 
   /**
    * Represents an Entity Model that comes from Database
    */
   @Input()
   set nrfEntity(entity: any) {
-    if (this.entityInternal !== entity) {
-      this.entityInternal = entity;
-      this.formData = cloneDeep(entity); // TODO merge with existent formData
-    }
+    this.formService.entity = entity;
   }
   get nrfEntity(): any {
-    return this.entityInternal;
+    return this.formService.entity;
   }
 
+  get formData(): any {
+    return this.formService.formData;
+  }
+
+  get formGroup(): FormGroup {
+    return this.formService.formGroup;
+  }
 
   /**
    * A function that will be called when the form is valid and a submit event is triggered
@@ -86,7 +73,7 @@ export class NrfFormDirective implements OnInit, OnDestroy {
    */
   @Output()
   get nrfSubmit(): EventEmitter<NrfSubmitData> {
-    return this.submit$;
+    return this.formService.submit$;
   }
 
 

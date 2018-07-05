@@ -4,11 +4,14 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { NrfFormDirective } from './form.directive';
 import { NrfFormContext } from './form-context.class';
 import { NrfSubmitData } from './form-submit-data.class';
+import { NrfFormService, NRF_FORM_SERVICE_PROVIDER } from './form.service';
 
 export {
   NrfFormDirective,
   NrfFormContext,
   NrfSubmitData,
+  NrfFormService,
+  NRF_FORM_SERVICE_PROVIDER,
 };
 
 /**
