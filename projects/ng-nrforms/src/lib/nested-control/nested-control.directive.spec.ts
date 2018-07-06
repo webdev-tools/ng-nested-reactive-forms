@@ -2,8 +2,8 @@ import { Component, DebugElement } from '@angular/core';
 import { async, ComponentFixture, fakeAsync, TestBed, tick } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 
-import { NrfModelModule } from '.';
-import { NrfFormModule } from '../form';
+import { NrfModelModule } from './nested-control.module';
+import { NrfFormModule } from '../form/form.module';
 import { NrfFormDirective } from '../form/form.directive';
 import { NrfNestedControlContext } from './nested-control-context.class';
 import { NrfNestedControlDirective } from './nested-control.directive';

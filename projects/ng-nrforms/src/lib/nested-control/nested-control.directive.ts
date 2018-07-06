@@ -3,7 +3,8 @@ import { FormControl, FormGroup } from '@angular/forms';
 import { ReplaySubject } from 'rxjs/internal/ReplaySubject';
 import { takeWhile } from 'rxjs/operators';
 
-import { NrfFormDirective, NrfFormService } from '../form';
+import { NrfFormDirective } from '../form/form.directive';
+import { NrfFormService } from '../form/form.service';
 import { NrfControlOptions } from './control-options.component';
 import { NrfModelSetterService } from './model-setter.service';
 import { NrfNestedControlContext } from './nested-control-context.class';

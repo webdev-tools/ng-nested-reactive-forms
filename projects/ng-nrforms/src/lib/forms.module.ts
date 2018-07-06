@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 
-import { NrfFormModule } from './form/index';
-import { NrfModelModule } from './nested-control/index';
+import { NrfFormModule } from './form/form.module';
+import { NrfModelModule } from './nested-control/nested-control.module';
 
 export * from './utils/clone-deep';
 

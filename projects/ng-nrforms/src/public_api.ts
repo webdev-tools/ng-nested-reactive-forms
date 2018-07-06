@@ -2,6 +2,6 @@
  * Public API Surface of ng-nrforms
  */
 
-export * from './lib/index';
-export * from './lib/form/index';
-export * from './lib/nested-control/index';
+export * from './lib/forms.module';
+export * from './lib/form/form.module';
+export * from './lib/nested-control/nested-control.module';

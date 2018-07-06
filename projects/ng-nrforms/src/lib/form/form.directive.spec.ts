@@ -2,7 +2,7 @@ import { Component, DebugElement } from '@angular/core';
 import { async, ComponentFixture, fakeAsync, TestBed, tick } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 
-import { NrFormsModule } from '..';
+import { NrFormsModule } from '../forms.module';
 import { FormGroup } from '@angular/forms';
 import { NrfFormDirective } from './form.directive';
 

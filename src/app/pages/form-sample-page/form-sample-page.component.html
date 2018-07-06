@@ -5,9 +5,9 @@
     <form fxFlex nrfForm #myForm="nrfForm" (nrfSubmit)="handleSubmit($event)" [nrfEntity]="testEntity">
 
       <div fxFlex fxLayout="column">
-        <app-custom-input placeholder="First Name" [validatorRequired]="true" modelName="testEntity.name"></app-custom-input>
+        <app-custom-input placeholder="First Name" [required]="true" modelName="testEntity.name"></app-custom-input>
         <app-custom-input placeholder="Last Name" modelName="testEntity.lastName"></app-custom-input>
-        <app-custom-input placeholder="Address" modelName="testEntity.address" [validatorDisabled]="true"></app-custom-input>
+        <app-custom-input placeholder="Address" modelName="testEntity.address" [disabled]="true"></app-custom-input>
       </div>
 
       <p>

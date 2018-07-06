@@ -3,8 +3,8 @@ import { async, fakeAsync, TestBed } from '@angular/core/testing';
 import { Validators } from '@angular/forms';
 import { By } from '@angular/platform-browser';
 
-import { NrfModelModule } from '.';
-import { NrfFormModule } from '../form';
+import { NrfModelModule } from './nested-control.module';
+import { NrfFormModule } from '../form/form.module';
 import { NrfControlOptionsComponent } from './control-options.component';
 
 describe('control-options.component', () => {
