@@ -1,3 +1,15 @@
+<a name="6.2.2"></a>
+## <small>6.2.2 (2018-07-06)</small>
+
+* fix: Re-enabled form-service ([e6dcabc](https://github.com/webdev-tools/ng-nested-reactive-forms/commit/e6dcabc))
+* fix: Renamed barrel imports to full-names and fix imports without index ([6d7bc0a](https://github.com/webdev-tools/ng-nested-reactive-forms/commit/6d7bc0a))
+
+
+### BREAKING CHANGE
+
+* Form wrappers should provide NRF_FORM_SERVICE_PROVIDER
+
+
 <a name="6.2.1"></a>
 ## <small>6.2.1 (2018-07-04)</small>
 
