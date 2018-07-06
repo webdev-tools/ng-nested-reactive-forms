@@ -40,7 +40,17 @@ export class NrfFormService {
 
 }
 
+/**
+ * @ignore
+ */
+export function newNrfFormService() {
+  return new NrfFormService();
+}
+
+/**
+ * Use this to provide form-service to Components that wraps nrfForm and put inputs inside <ng-content>
+ */
 export const NRF_FORM_SERVICE_PROVIDER: Provider = {
   provide: NrfFormService,
-  useFactory: () => (new NrfFormService()),
+  useFactory: newNrfFormService,
 };
