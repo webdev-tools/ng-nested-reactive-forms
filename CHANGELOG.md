@@ -1,3 +1,10 @@
+<a name="6.2.3"></a>
+## <small>6.2.3 (2018-07-06)</small>
+
+* fix: Exporting form-service provider function ([e1da248](https://github.com/webdev-tools/ng-nested-reactive-forms/commit/e1da248))
+
+
+
 <a name="6.2.2"></a>
 ## <small>6.2.2 (2018-07-06)</small>
 
