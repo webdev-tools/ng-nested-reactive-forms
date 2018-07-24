@@ -1,3 +1,10 @@
+<a name="6.2.4"></a>
+## <small>6.2.4 (2018-07-24)</small>
+
+* feat(nested-control): Set the parent form-group to form-control ([ace2520](https://github.com/webdev-tools/ng-nested-reactive-forms/commit/ace2520))
+
+
+
 <a name="6.2.3"></a>
 ## <small>6.2.3 (2018-07-06)</small>
 
