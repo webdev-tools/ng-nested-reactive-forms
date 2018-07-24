@@ -8,7 +8,7 @@
       "name": "Debug NG",
       "type": "chrome",
       "request": "launch",
-      "url": "http://localhost:4200/#",
+      "url": "http://localhost:4201/#",
       "webRoot": "${workspaceFolder}",
       "runtimeExecutable": "${workspaceFolder}\\node_modules\\puppeteer\\.local-chromium\\win64-555668\\chrome-win32\\chrome.exe"
     }

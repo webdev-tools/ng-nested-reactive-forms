@@ -193,6 +193,7 @@ export class NrfNestedControlDirective implements OnInit, OnDestroy {
 
     if (!formControl) {
       formControl = this.getNewFormControl();
+      formControl.setParent(formGroup);
     }
 
     return formControl;

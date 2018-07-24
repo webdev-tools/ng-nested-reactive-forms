@@ -16,7 +16,7 @@
             "outputPath": "dist/ng-nrforms-samples",
             "index": "src/index.html",
             "main": "src/main.ts",
-            "tsConfig": "src/tsconfig.app.json",
+            "tsConfig": "src/tsconfig.json",
             "polyfills": "src/polyfills.ts",
             "assets": [
               "src/assets",
@@ -54,7 +54,8 @@
         "serve": {
           "builder": "@angular-devkit/build-angular:dev-server",
           "options": {
-            "browserTarget": "samples:build"
+            "browserTarget": "samples:build",
+            "port": 4201
           },
           "configurations": {
             "production": {
@@ -89,7 +90,7 @@
           "builder": "@angular-devkit/build-angular:tslint",
           "options": {
             "tsConfig": [
-              "src/tsconfig.app.json",
+              "src/tsconfig.json",
               "src/tsconfig.spec.json"
             ],
             "exclude": [
@@ -133,7 +134,7 @@
         "build": {
           "builder": "@angular-devkit/build-ng-packagr:build",
           "options": {
-            "tsConfig": "projects/ng-nrforms/tsconfig.lib.json",
+            "tsConfig": "projects/ng-nrforms/tsconfig.json",
             "project": "projects/ng-nrforms/ng-package.json"
           },
           "configurations": {
@@ -156,7 +157,7 @@
           "builder": "@angular-devkit/build-angular:tslint",
           "options": {
             "tsConfig": [
-              "projects/ng-nrforms/tsconfig.lib.json",
+              "projects/ng-nrforms/tsconfig.json",
               "projects/ng-nrforms/tsconfig.spec.json"
             ],
             "exclude": [
