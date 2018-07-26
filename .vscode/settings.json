@@ -8,6 +8,18 @@
     "styleext",
     "validators"
   ],
+  "editor.insertSpaces": true,
+  "editor.tabSize": 2,
+  "editor.trimAutoWhitespace": true,
+  "files.eol": "\n",
+  "files.insertFinalNewline": true,
+  "files.trimFinalNewlines": true,
+  "files.trimTrailingWhitespace": true,
+  "html.format.endWithNewline": true,
+  "html.format.indentHandlebars": true,
+  "html.format.maxPreserveNewLines": 2,
+  "html.format.preserveNewLines": true,
+  "html.suggest.angular1": false,
   "htmlhint.options": {
     "alt-require": false,
     "attr-lowercase": false,
@@ -33,48 +45,20 @@
     "tagname-lowercase": true,
     "title-require": false
   },
-  "tslint.jsEnable": true,
-  "html.suggest.angular1": false,
-  "vsicons.associations.folders": [
-    {
-      "icon": "app",
-      "extensions": [
-        "projects"
-      ],
-      "format": "svg"
-    },
-    {
-      "icon": "component",
-      "extensions": [
-        "ng-nrforms"
-      ],
-      "format": "svg"
-    }
-  ],
-  "scss.showErrors": true,
-  "vsicons.presets.angular": true,
-  "files.eol": "\n",
-  "editor.tabSize": 2,
-  "editor.insertSpaces": true,
-  "html.format.maxPreserveNewLines": 2,
-  "html.format.indentHandlebars": true,
-  "html.format.endWithNewline": true,
-  "files.insertFinalNewline": true,
-  "javascript.format.insertSpaceAfterFunctionKeywordForAnonymousFunctions": true,
-  "javascript.format.insertSpaceAfterOpeningAndBeforeClosingNonemptyParenthesis": false,
-  "editor.trimAutoWhitespace": true,
-  "files.trimFinalNewlines": true,
-  "files.trimTrailingWhitespace": true,
   "javascript.format.insertSpaceAfterConstructor": true,
+  "javascript.format.insertSpaceAfterFunctionKeywordForAnonymousFunctions": true,
   "javascript.format.insertSpaceAfterKeywordsInControlFlowStatements": true,
   "javascript.format.insertSpaceAfterOpeningAndBeforeClosingJsxExpressionBraces": true,
   "javascript.format.insertSpaceAfterOpeningAndBeforeClosingNonemptyBraces": true,
   "javascript.format.insertSpaceAfterOpeningAndBeforeClosingNonemptyBrackets": false,
+  "javascript.format.insertSpaceAfterOpeningAndBeforeClosingNonemptyParenthesis": false,
   "javascript.format.insertSpaceAfterSemicolonInForStatements": true,
   "javascript.format.insertSpaceBeforeAndAfterBinaryOperators": true,
   "javascript.format.insertSpaceBeforeFunctionParenthesis": false,
   "javascript.format.placeOpenBraceOnNewLineForControlBlocks": false,
   "javascript.format.placeOpenBraceOnNewLineForFunctions": false,
+  "scss.showErrors": true,
+  "tslint.jsEnable": true,
   "typescript.format.insertSpaceAfterConstructor": true,
   "typescript.format.insertSpaceAfterOpeningAndBeforeClosingJsxExpressionBraces": true,
   "typescript.format.insertSpaceAfterOpeningAndBeforeClosingNonemptyBraces": true,
@@ -86,6 +70,23 @@
   "typescript.format.insertSpaceBeforeFunctionParenthesis": false,
   "typescript.format.placeOpenBraceOnNewLineForControlBlocks": false,
   "typescript.format.placeOpenBraceOnNewLineForFunctions": false,
-  "html.format.preserveNewLines": true,
-  "typescriptHero.imports.removeTrailingIndex": false
+  "typescriptHero.imports.organizeOnSave": true,
+  "typescriptHero.imports.removeTrailingIndex": false,
+  "vsicons.associations.folders": [
+    {
+      "extensions": [
+        "projects"
+      ],
+      "format": "svg",
+      "icon": "app"
+    },
+    {
+      "extensions": [
+        "ng-nrforms"
+      ],
+      "format": "svg",
+      "icon": "component"
+    }
+  ],
+  "vsicons.presets.angular": true
 }

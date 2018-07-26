@@ -1,13 +1,14 @@
 import { Directive, Input, OnDestroy, OnInit, Optional, Output, TemplateRef, ViewContainerRef } from '@angular/core';
-import { FormControl, FormGroup } from '@angular/forms';
+import { FormArray, FormControl, FormGroup } from '@angular/forms';
 import { ReplaySubject } from 'rxjs/internal/ReplaySubject';
 import { takeWhile } from 'rxjs/operators';
 
 import { NrfFormDirective } from '../form/form.directive';
 import { NrfFormService } from '../form/form.service';
 import { NrfControlOptions } from './control-options.component';
-import { NrfModelSetterService } from './model-setter.service';
 import { NrfNestedControlContext } from './nested-control-context.class';
+import { NrfFormHierarchyService } from './services/form-hierarchy.service';
+import { NrfModelSetterService } from './services/model-setter.service';
 
 
 /**
@@ -42,7 +43,7 @@ import { NrfNestedControlContext } from './nested-control-context.class';
 })
 export class NrfNestedControlDirective implements OnInit, OnDestroy {
   isDestroyed = false;
-  parentFormGroup: FormGroup;
+  parentFormGroup: FormGroup | FormArray;
   formControl: FormControl;
 
   /**
@@ -63,6 +64,7 @@ export class NrfNestedControlDirective implements OnInit, OnDestroy {
     private readonly viewContainerRef: ViewContainerRef,
     @Optional() nrfForm: NrfFormDirective,
     @Optional() nrfFormService: NrfFormService,
+    private readonly formHierarchy: NrfFormHierarchyService,
   ) {
     this.formOrService = nrfFormService || nrfForm;
   }
@@ -106,7 +108,17 @@ export class NrfNestedControlDirective implements OnInit, OnDestroy {
     this.ready$.complete();
 
     if (this.parentFormGroup) {
+      this.removeFromParentFormGroup();
+    }
+  }
+
+
+  private removeFromParentFormGroup() {
+    if (this.parentFormGroup instanceof FormGroup) {
       this.parentFormGroup.removeControl(this.nrfModelName);
+    } else {
+      const index = this.parentFormGroup.controls.findIndex((control: any) => this.formControl === control);
+      this.parentFormGroup.removeAt(index);
     }
   }
 
@@ -143,7 +155,7 @@ export class NrfNestedControlDirective implements OnInit, OnDestroy {
   private showViewContent() {
     const context = new NrfNestedControlContext(
       this.formControl,
-      this.parentFormGroup,
+      this.formOrService && this.formOrService.formGroup,
       this,
     );
 
@@ -162,8 +174,13 @@ export class NrfNestedControlDirective implements OnInit, OnDestroy {
 
     this.parentFormGroup = this.getParentFormGroup();
 
-    if (this.parentFormGroup && this.nrfModelName) {
-      setTimeout(() => this.parentFormGroup.addControl(this.nrfModelName, this.formControl));
+    if (this.parentFormGroup) {
+      if (this.parentFormGroup instanceof FormGroup) {
+        this.parentFormGroup.addControl(this.modelPath, this.formControl);
+      } else {
+        const index = this.modelPath.split('.').pop();
+        this.parentFormGroup.insert(0, this.formControl);
+      }
     }
   }
 
@@ -174,12 +191,14 @@ export class NrfNestedControlDirective implements OnInit, OnDestroy {
    *
    * Otherwise a new empty [FormGroup]{@link https://angular.io/api/forms/FormGroup}
    */
-  private getParentFormGroup(): FormGroup {
-    if (this.formOrService) {
-      return this.formOrService.formGroup;
+  private getParentFormGroup(): FormGroup | FormArray {
+    const rootFormGroup = this.formOrService && this.formOrService.formGroup;
+
+    if (!rootFormGroup || !this.modelPath) {
+      return null;
     }
 
-    return null;
+    return this.formHierarchy.getNestedControl(rootFormGroup, this.modelPath);
   }
 
 
@@ -193,7 +212,6 @@ export class NrfNestedControlDirective implements OnInit, OnDestroy {
 
     if (!formControl) {
       formControl = this.getNewFormControl();
-      formControl.setParent(formGroup);
     }
 
     return formControl;

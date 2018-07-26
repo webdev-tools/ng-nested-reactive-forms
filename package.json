@@ -12,7 +12,7 @@
     "postlib:build": "copyfiles README.md LICENSE dist/ng-nrforms",
     "lib:publish": "cd dist/ng-nrforms && npm publish --access public",
     "lib:test": "ng test ng-nrforms --source-map false",
-    "lib:test-watch": "ng test ng-nrforms --watch --browsers Chromium --source-map false --progress true",
+    "lib:test-watch": "ng test ng-nrforms --watch --browsers Chromium --source-map false --progress true --code-coverage false",
     "lib:lint": "ng lint ng-nrforms",
     "sync-lib-version": "node scripts/sync-package-data.js",
     "preversion": "npm run lib:lint && npm run lib:test",
