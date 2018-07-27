@@ -1,3 +1,10 @@
+<a name="6.2.6"></a>
+## <small>6.2.6 (2018-07-27)</small>
+
+* fix(formGroup): Fix generation of nested form-arrays ([e6bbd3d](https://github.com/webdev-tools/ng-nested-reactive-forms/commit/e6bbd3d))
+
+
+
 <a name="6.2.5"></a>
 ## <small>6.2.5 (2018-07-27)</small>
 

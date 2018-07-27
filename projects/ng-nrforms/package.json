@@ -1,6 +1,6 @@
 {
   "name": "@webdev-tools/ng-nested-reactive-forms",
-  "version": "6.2.5",
+  "version": "6.2.6",
   "peerDependencies": {
     "@angular/common": "^6.0.0",
     "@angular/core": "^6.0.0"
