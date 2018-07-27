@@ -76,7 +76,6 @@ describe('NrfFormHierarchyService', () => {
 
     }
 
-    let testComponent: TestInputComponent;
     let fixture: ComponentFixture<TestInputComponent>;
     let inputEl: DebugElement;
     let formEl: DebugElement;
@@ -106,7 +105,6 @@ describe('NrfFormHierarchyService', () => {
 
     function generateComponent() {
       fixture = TestBed.createComponent(TestInputComponent);
-      testComponent = fixture.componentInstance;
 
       fixture.detectChanges();
 

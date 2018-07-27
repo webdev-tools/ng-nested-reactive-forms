@@ -193,7 +193,7 @@ export class NrfNestedControlDirective implements OnInit, OnDestroy {
         this.parentFormGroup.addControl(this.modelPath, this.formControl);
       } else {
         const index = this.modelPath.split('.').pop();
-        this.parentFormGroup.insert(0, this.formControl);
+        this.parentFormGroup.insert(parseInt(index, 10), this.formControl);
       }
     }
   }
