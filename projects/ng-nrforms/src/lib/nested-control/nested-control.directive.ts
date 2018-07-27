@@ -52,6 +52,12 @@ export class NrfNestedControlDirective implements OnInit, OnDestroy {
   modelPath: string;
 
   /**
+   * The last part of the dot-notation path provided on [nrfModelName]{@link nrfModelName} property.
+   * Can be used with formControlName property
+   */
+  controlName: string;
+
+  /**
    * Holds an instance of a NrfForm or a NrfService.
    * If the form is wrapped inside a directive with ng-content, the NrfFormService MUST be provided.
    * Otherwise the nrfForm will be used.
@@ -95,6 +101,7 @@ export class NrfNestedControlDirective implements OnInit, OnDestroy {
    */
   ngOnInit() {
     this.modelPath = this.getModelPathWithoutFirstPart();
+    this.controlName = this.getControlName();
     this.formControl = this.getFormControl();
     this.registerToFormGroup();
     this.subscribeToUpdateEntityValue();
@@ -129,6 +136,13 @@ export class NrfNestedControlDirective implements OnInit, OnDestroy {
   private getModelPathWithoutFirstPart(): string {
     const modelName = this.nrfModelName;
     return modelName && modelName.substr(modelName.indexOf('.') + 1);
+  }
+
+  /**
+   * Returns the last part of the dot-notation path, that indicates the control name itself.
+   */
+  private getControlName(): string {
+    return this.modelPath && this.modelPath.split('.').pop();
   }
 
   /**

@@ -39,7 +39,8 @@ export class NrfFormHierarchyService {
     let control = <FormGroup | FormArray>parentControl.get(path);
 
     if (!control) {
-      const nextPath = pathPieces[index + 1];
+      const nextPath = pathPieces[index + 1] || path;
+
       const isArray = nextPath && !isNaN(<any>nextPath);
       control = isArray ? new FormArray([]) : new FormGroup({});
     }

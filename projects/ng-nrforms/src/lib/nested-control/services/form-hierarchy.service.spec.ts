@@ -1,6 +1,13 @@
+import { Component, DebugElement } from '@angular/core';
+import { async, ComponentFixture, fakeAsync, TestBed, tick } from '@angular/core/testing';
 import { FormArray, FormControl, FormGroup } from '@angular/forms';
+import { By } from '@angular/platform-browser';
 
+import { NrfFormDirective, NrfFormModule } from '../../form/form.module';
+import { NrfModelModule } from '../nested-control.module';
 import { NrfFormHierarchyService } from './form-hierarchy.service';
+
+/* tslint:disable component-selector max-classes-per-file */
 
 describe('NrfFormHierarchyService', () => {
   const formHierarchy = new NrfFormHierarchyService();
@@ -41,5 +48,73 @@ describe('NrfFormHierarchyService', () => {
         },
       ],
     });
+  });
+
+
+  describe('Use inputs with formControlName', () => {
+    @Component({
+      selector: 'test-input',
+      template: `
+        <form nrfForm [nrfEntity]="testEntity">
+          <div
+            *nrfNestedControl="modelPath; let control = formControl; let nrfNestedControl = nrfNestedControl"
+            [formGroup]="control.parent"
+          >
+            <input [formControlName]="nrfNestedControl.controlName" />
+          </div>
+        </form>
+      `,
+    })
+    class TestInputComponent {
+
+      modelPath: string;
+      testEntity: any = {};
+
+      constructor() {
+        this.modelPath = 'testEntity.child.0';
+      }
+
+    }
+
+    let testComponent: TestInputComponent;
+    let fixture: ComponentFixture<TestInputComponent>;
+    let inputEl: DebugElement;
+    let formEl: DebugElement;
+    let nrfForm: NrfFormDirective;
+
+    beforeEach(async(() => {
+      TestBed.configureTestingModule({
+        imports: [NrfFormModule, NrfModelModule],
+        declarations: [TestInputComponent],
+      }).compileComponents();
+    }));
+
+    it('Should set value on correct place when using formControlName', fakeAsync(() => {
+      generateComponent();
+
+      const name = 'John';
+      const input: HTMLInputElement = inputEl.nativeElement;
+
+      input.value = name;
+      inputEl.triggerEventHandler('input', { target: input });
+
+      tick();
+
+      const formData = nrfForm.formData;
+      expect(formData.child[0]).toEqual(name);
+    }));
+
+    function generateComponent() {
+      fixture = TestBed.createComponent(TestInputComponent);
+      testComponent = fixture.componentInstance;
+
+      fixture.detectChanges();
+
+      inputEl = fixture.debugElement.query(By.css('input'));
+      formEl = fixture.debugElement.query(By.css('form'));
+      nrfForm = formEl.context.nrfForm || formEl.injector.get(NrfFormDirective);
+
+      tick();
+    }
   });
 });

@@ -70,6 +70,7 @@
   "typescript.format.insertSpaceBeforeFunctionParenthesis": false,
   "typescript.format.placeOpenBraceOnNewLineForControlBlocks": false,
   "typescript.format.placeOpenBraceOnNewLineForFunctions": false,
+  "typescript.tsdk": "node_modules\\typescript\\lib",
   "typescriptHero.imports.organizeOnSave": true,
   "typescriptHero.imports.removeTrailingIndex": false,
   "vsicons.associations.folders": [
