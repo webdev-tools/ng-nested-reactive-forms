@@ -1,3 +1,12 @@
+<a name="6.2.5"></a>
+## <small>6.2.5 (2018-07-27)</small>
+
+* fix(formGroup): Fix inserting new formControl at correct array position ([2cc2f6e](https://github.com/webdev-tools/ng-nested-reactive-forms/commit/2cc2f6e))
+* feat(formGroup): Created a hierarchy service to generate nested form groups and arrays ([783e077](https://github.com/webdev-tools/ng-nested-reactive-forms/commit/783e077))
+* feat(formGroup): Enabled nested-control to work with formControlName ([02f2f23](https://github.com/webdev-tools/ng-nested-reactive-forms/commit/02f2f23))
+
+
+
 <a name="6.2.4"></a>
 ## <small>6.2.4 (2018-07-24)</small>
 
