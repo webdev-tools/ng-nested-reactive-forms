@@ -52,6 +52,11 @@ export class NrfNestedControlDirective implements OnInit, OnDestroy {
   modelPath: string;
 
   /**
+   * Array from model path split by '.'
+   */
+  private modelPieces: string[];
+
+  /**
    * The last part of the dot-notation path provided on [nrfModelName]{@link nrfModelName} property.
    * Can be used with formControlName property
    */
@@ -101,6 +106,7 @@ export class NrfNestedControlDirective implements OnInit, OnDestroy {
    */
   ngOnInit() {
     this.modelPath = this.getModelPathWithoutFirstPart();
+    this.modelPieces = this.modelPath && this.modelPath.split('.');
     this.controlName = this.getControlName();
     this.formControl = this.getFormControl();
     this.registerToFormGroup();
@@ -142,7 +148,8 @@ export class NrfNestedControlDirective implements OnInit, OnDestroy {
    * Returns the last part of the dot-notation path, that indicates the control name itself.
    */
   private getControlName(): string {
-    return this.modelPath && this.modelPath.split('.').pop();
+    const modelPieces = this.modelPieces;
+    return modelPieces && modelPieces[modelPieces.length - 1];
   }
 
   /**
@@ -192,7 +199,7 @@ export class NrfNestedControlDirective implements OnInit, OnDestroy {
       if (this.parentFormGroup instanceof FormGroup) {
         this.parentFormGroup.addControl(this.modelPath, this.formControl);
       } else {
-        const index = this.modelPath.split('.').pop();
+        const index = this.controlName;
         this.parentFormGroup.insert(parseInt(index, 10), this.formControl);
       }
     }
@@ -212,7 +219,8 @@ export class NrfNestedControlDirective implements OnInit, OnDestroy {
       return null;
     }
 
-    return this.formHierarchy.getNestedControl(rootFormGroup, this.modelPath);
+    const formGroupPath = Array.from(this.modelPieces);
+    return this.formHierarchy.getNestedControl(rootFormGroup, formGroupPath);
   }
 
 

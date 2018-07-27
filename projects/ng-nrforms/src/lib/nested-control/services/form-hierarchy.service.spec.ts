@@ -27,24 +27,22 @@ describe('NrfFormHierarchyService', () => {
     // Child in this case the first element of the Form Array
     const child = formHierarchy.getNestedControl(rootFormGroup, 'test.child.0');
 
-    expect(child.parent instanceof FormArray).toBeTruthy();
+    expect(child instanceof FormArray).toBeTruthy();
   });
 
   it('Should return a parent if the full path points to a formControl', () => {
-    const child = <FormGroup>formHierarchy.getNestedControl(rootFormGroup, 'test.0.child');
+    const child = <FormGroup>formHierarchy.getNestedControl(rootFormGroup, 'test.0.son');
     const formControl = new FormControl();
     child.addControl('son', formControl);
     formControl.setValue('Son value');
 
-    const child2 = <FormGroup>formHierarchy.getNestedControl(rootFormGroup, 'test.0.child.son');
+    const child2 = <FormGroup>formHierarchy.getNestedControl(rootFormGroup, 'test.0.son');
 
     expect(child).toBe(child2);
     expect(rootFormGroup.value).toEqual({
       test: [
         {
-          child: {
-            son: 'Son value',
-          },
+          son: 'Son value',
         },
       ],
     });
@@ -52,6 +50,8 @@ describe('NrfFormHierarchyService', () => {
 
 
   describe('Use inputs with formControlName', () => {
+    let modelPath: string;
+
     @Component({
       selector: 'test-input',
       template: `
@@ -71,7 +71,7 @@ describe('NrfFormHierarchyService', () => {
       testEntity: any = {};
 
       constructor() {
-        this.modelPath = 'testEntity.child.0';
+        this.modelPath = modelPath;
       }
 
     }
@@ -89,6 +89,23 @@ describe('NrfFormHierarchyService', () => {
     }));
 
     it('Should set value on correct place when using formControlName', fakeAsync(() => {
+      modelPath = 'testEntity.first';
+      generateComponent();
+
+      const name = 'Jane';
+      const input: HTMLInputElement = inputEl.nativeElement;
+
+      input.value = name;
+      inputEl.triggerEventHandler('input', { target: input });
+
+      tick();
+
+      const formData = nrfForm.formData;
+      expect(formData.first).toEqual(name);
+    }));
+
+    it('Should set value on correct place when using formControlName on form-array', fakeAsync(() => {
+      modelPath = 'testEntity.second.0';
       generateComponent();
 
       const name = 'John';
@@ -100,7 +117,7 @@ describe('NrfFormHierarchyService', () => {
       tick();
 
       const formData = nrfForm.formData;
-      expect(formData.child[0]).toEqual(name);
+      expect(formData.second[0]).toEqual(name);
     }));
 
     function generateComponent() {

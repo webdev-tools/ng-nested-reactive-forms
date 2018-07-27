@@ -11,13 +11,14 @@ export class NrfFormHierarchyService {
    * Get a nested control if it exists or create the its necessary hierarchy
    *
    * @param rootFormGroup
-   * @param fullPath Dot notation path of the desired control, without the last part, that is the value, not the control.
+   * @param fullPath Dot notation path of the desired control, including the last part, that is the value, not the group.
    */
-  getNestedControl(rootFormGroup: FormGroup | FormArray, fullPath: string) {
+  getNestedControl(rootFormGroup: FormGroup | FormArray, fullPath: string | string[]): FormGroup | FormArray {
     let parentControl = <FormGroup | FormArray>rootFormGroup.get(fullPath);
 
     if (!parentControl) {
-      parentControl = fullPath.split('.').reduce<FormGroup | FormArray>(this.createFormGroupHierarchy, rootFormGroup);
+      const pathPieces = Array.isArray(fullPath) ? fullPath : fullPath.split('.');
+      parentControl = pathPieces.reduce<FormGroup | FormArray>(this.createFormGroupHierarchy, rootFormGroup);
     }
 
     if (parentControl instanceof FormControl) {
@@ -36,6 +37,10 @@ export class NrfFormHierarchyService {
     index: number,
     pathPieces: string[],
   ): FormGroup | FormArray {
+    if (index === (pathPieces.length - 1)) {
+      return parentControl;
+    }
+
     let control = <FormGroup | FormArray>parentControl.get(path);
 
     if (!control) {
@@ -47,8 +52,8 @@ export class NrfFormHierarchyService {
 
     if (parentControl instanceof FormGroup) {
       parentControl.addControl(path, control);
-    } else {
-      parentControl.insert(parseInt(path, 10), control);
+    } else if (parentControl instanceof FormArray) {
+      parentControl.insert(parseInt(path, 10) || 0, control);
     }
 
     return control;
