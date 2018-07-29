@@ -1,0 +1,39 @@
+<div class="component-demo">
+  <h2>
+    {{ demoTitle }}
+  </h2>
+
+  <div class="card">
+    <div class="card-body">
+      <ng-content></ng-content>
+    </div>
+
+    <mat-tab-group class="tabset-code">
+      <mat-tab id="{{component}}-{{demo}}-html">
+        <ng-template mat-tab-label>
+          <small matBadge="T" matBadgeOverlap="false"></small>
+          <span class="ml-2">{{component}}-{{demo}}.html</span>
+        </ng-template>
+
+        <app-code-block [code]="snippets[demo]['markup']" lang="html"></app-code-block>
+      </mat-tab>
+      <mat-tab id="{{component}}-{{demo}}-typescript">
+        <ng-template mat-tab-label>
+          <small matBadge="C" matBadgeOverlap="false"></small>
+          <span class="ml-2">{{component}}-{{demo}}.ts</span>
+        </ng-template>
+
+        <app-code-block [code]="snippets[demo]['code']" lang="typescript"></app-code-block>
+      </mat-tab>
+
+      <mat-tab *ngFor="let file of snippets[demo].others" id="{{component}}-{{demo}}-{{file.name}}">
+        <ng-template mat-tab-label>
+          <small [matBadge]="file.type" matBadgeOverlap="false"></small>
+          <span class="ml-2">{{ file.name }}</span>
+        </ng-template>
+
+        <app-code-block [code]="file.content" [lang]="file.lang"></app-code-block>
+      </mat-tab>
+    </mat-tab-group>
+  </div>
+</div>

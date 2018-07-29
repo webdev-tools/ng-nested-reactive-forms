@@ -1,0 +1,45 @@
+<section fxFlex fxLayout="column">
+  <h2>Using custom nested input components with Angular Forms</h2>
+
+  <main fxFlex fxLayout="row">
+    <form fxFlex nrfForm #myForm="nrfForm" (nrfSubmit)="handleSubmit($event)" [nrfEntity]="testEntity">
+
+      <div fxFlex fxLayout="column">
+        <app-custom-input placeholder="First Name" [required]="true" modelName="testEntity.name"></app-custom-input>
+        <app-custom-input placeholder="Last Name" modelName="testEntity.lastName"></app-custom-input>
+        <app-custom-input placeholder="Address" modelName="testEntity.address" [disabled]="true"></app-custom-input>
+      </div>
+
+      <p>
+        <button mat-raised-button color="primary" type="submit">Submit</button>
+      </p>
+    </form>
+  </main>
+
+  <mat-divider></mat-divider>
+
+  <div fxFlex fxLayout="column">
+    <p>
+      <b>Model Result:</b>
+    </p>
+    <pre>{{ myForm.formData | json }}</pre>
+  </div>
+
+  <div fxFlex fxLayout="column">
+    <p>
+      <b>Original Entity: (Never Changed)</b>
+    </p>
+    <pre>{{ myForm.nrfEntity | json }}</pre>
+  </div>
+
+  <div fxFlex fxLayout="column">
+    <p>
+      <b>Input outside a Form</b>
+    </p>
+  </div>
+
+  <div fxFlex fxLayout="column">
+    <app-custom-input placeholder="First Name" modelName="testEntity.name"></app-custom-input>
+  </div>
+
+</section>

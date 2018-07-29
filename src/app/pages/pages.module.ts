@@ -5,7 +5,10 @@ import { MatButtonModule, MatDividerModule, MatFormFieldModule, MatInputModule }
 
 import { NrFormsModule } from '@webdev-tools/ng-nested-reactive-forms';
 
-import { CustomInputComponent } from './form-sample-page/custom-input.component';
+import { CodeHighlightService } from '../doc-block/code-block/code-highlight.service';
+import { DocBlockModule } from '../doc-block/doc-block.module';
+import { CustomInputComponent } from './form-sample-page/demos/form-simple-demo/custom-input.component';
+import { FormSimpleDemoComponent } from './form-sample-page/demos/form-simple-demo/form-simple-demo.component';
 import { FormSamplePageComponent } from './form-sample-page/form-sample-page.component';
 
 @NgModule({
@@ -17,7 +20,9 @@ import { FormSamplePageComponent } from './form-sample-page/form-sample-page.com
     MatButtonModule,
     MatDividerModule,
     NrFormsModule,
+    DocBlockModule,
   ],
-  declarations: [FormSamplePageComponent, CustomInputComponent],
+  declarations: [FormSamplePageComponent, CustomInputComponent, FormSimpleDemoComponent],
+  providers: [CodeHighlightService],
 })
 export class SamplesPagesModule {}

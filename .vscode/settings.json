@@ -49,5 +49,6 @@
       "icon": "component"
     }
   ],
-  "vsicons.presets.angular": true
+  "vsicons.presets.angular": true,
+  "typescriptHero.imports.organizeSortsByFirstSpecifier": true
 }

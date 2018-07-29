@@ -1,19 +1,30 @@
-import { Component, ViewChild } from '@angular/core';
+import { Component } from '@angular/core';
 
-import { NrfFormDirective, NrfSubmitData } from '@webdev-tools/ng-nested-reactive-forms';
+const DEMO_SNIPPETS = {
+  basic: {
+    code: require('!!raw-loader!./demos/form-simple-demo/form-simple-demo.component.ts'),
+    markup: require('!!raw-loader!./demos/form-simple-demo/form-simple-demo.component.html'),
+    others: [
+      {
+        content: require('!!raw-loader!./demos/form-simple-demo/custom-input.component.html'),
+        type: 'C',
+        name: 'custom-input.component.html',
+        lang: 'html',
+      },
+      {
+        content: require('!!raw-loader!./demos/form-simple-demo/custom-input.component.ts'),
+        type: 'T',
+        name: 'custom-input.component.ts',
+        lang: 'typescript',
+      },
+    ],
+  },
+};
 
 @Component({
   selector: 'app-form-sample-page',
   templateUrl: 'form-sample-page.component.html',
 })
 export class FormSamplePageComponent {
-  testEntity = {
-    address: 'Carnaby Street',
-  };
-
-  @ViewChild(NrfFormDirective) nrfForm;
-
-  handleSubmit($event: NrfSubmitData) {
-    console.log('submitted', $event);
-  }
+  snippets = DEMO_SNIPPETS;
 }
