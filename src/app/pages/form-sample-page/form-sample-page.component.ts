@@ -6,9 +6,7 @@ import { NrfFormDirective, NrfSubmitData } from '@webdev-tools/ng-nested-reactiv
   selector: 'app-form-sample-page',
   templateUrl: 'form-sample-page.component.html',
 })
-
 export class FormSamplePageComponent {
-
   testEntity = {
     address: 'Carnaby Street',
   };
@@ -18,5 +16,4 @@ export class FormSamplePageComponent {
   handleSubmit($event: NrfSubmitData) {
     console.log('submitted', $event);
   }
-
 }

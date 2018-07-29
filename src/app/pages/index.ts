@@ -1,12 +1,12 @@
-import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { NgModule } from '@angular/core';
 import { FlexLayoutModule } from '@angular/flex-layout';
-import { MatFormFieldModule, MatInputModule, MatButtonModule, MatDividerModule } from '@angular/material';
+import { MatButtonModule, MatDividerModule, MatFormFieldModule, MatInputModule } from '@angular/material';
+
 import { NrFormsModule } from '@webdev-tools/ng-nested-reactive-forms';
 
-import { FormSamplePageComponent } from './form-sample-page/form-sample-page.component';
 import { CustomInputComponent } from './form-sample-page/custom-input.component';
-
+import { FormSamplePageComponent } from './form-sample-page/form-sample-page.component';
 
 @NgModule({
   imports: [
@@ -18,11 +18,6 @@ import { CustomInputComponent } from './form-sample-page/custom-input.component'
     MatDividerModule,
     NrFormsModule,
   ],
-  declarations: [
-    FormSamplePageComponent,
-    CustomInputComponent,
-  ],
+  declarations: [FormSamplePageComponent, CustomInputComponent],
 })
-export class SamplesPagesModule {
-
-}
+export class SamplesPagesModule {}
