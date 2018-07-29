@@ -2,17 +2,16 @@ import { Component, DebugElement } from '@angular/core';
 import { async, ComponentFixture, fakeAsync, TestBed, tick } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 
-import { NrfModelModule } from './nested-control.module';
-import { NrfFormModule } from '../form/form.module';
 import { NrfFormDirective } from '../form/form.directive';
+import { NrfFormModule } from '../form/form.module';
 import { NrfNestedControlContext } from './nested-control-context.class';
 import { NrfNestedControlDirective } from './nested-control.directive';
-
+import { NrfModelModule } from './nested-control.module';
 
 let mockTestEntity = {};
 let modelPath = 'testEntity.user.firstName';
 
-/* tslint:disable component-selector */
+/* tslint:disable component-selector ter-padded-blocks */
 @Component({
   template: `
     <form nrfForm [nrfEntity]="testEntity">
@@ -21,13 +20,11 @@ let modelPath = 'testEntity.user.firstName';
   `,
 })
 class TestComponent {
-
   testEntity: any;
 
   constructor() {
     this.testEntity = mockTestEntity;
   }
-
 }
 
 @Component({
@@ -39,15 +36,12 @@ class TestComponent {
   `,
 })
 class TestInputComponent {
-
   modelPath: string;
 
   constructor() {
     this.modelPath = modelPath;
   }
-
 }
-
 
 describe('NrfNestedControlDirective', () => {
   let testComponent: TestComponent;
@@ -61,51 +55,55 @@ describe('NrfNestedControlDirective', () => {
     mockTestEntity = {};
     modelPath = 'testEntity.user.firstName';
 
-    TestBed
-      .configureTestingModule({
-        imports: [NrfFormModule, NrfModelModule],
-        declarations: [TestComponent, TestInputComponent],
-        providers: [],
-      })
-      .compileComponents();
+    TestBed.configureTestingModule({
+      imports: [NrfFormModule, NrfModelModule],
+      declarations: [TestComponent, TestInputComponent],
+      providers: [],
+    }).compileComponents();
   }));
 
-  it('Should set nrfEntity value on input changes', fakeAsync(() => {
-    generateComponent();
-    const name = 'John';
-    const testEntity: any = testComponent.testEntity;
-    const formData = formComponent.formData;
+  it(
+    'Should set nrfEntity value on input changes',
+    fakeAsync(() => {
+      generateComponent();
+      const name = 'John';
+      const testEntity: any = testComponent.testEntity;
+      const formData = formComponent.formData;
 
-    expect(testEntity && testEntity.user && testEntity.user.firstName).toBeFalsy();
+      expect(testEntity && testEntity.user && testEntity.user.firstName).toBeFalsy();
 
-    const input: HTMLInputElement = inputEl.nativeElement;
-    input.value = name;
-    input.dispatchEvent(new Event('input'));
+      const input: HTMLInputElement = inputEl.nativeElement;
+      input.value = name;
+      input.dispatchEvent(new Event('input'));
 
-    fixture.detectChanges();
-    tick();
+      fixture.detectChanges();
+      tick();
 
-    expect(testEntity && testEntity.user && testEntity.user.firstName).toBeFalsy();
-    expect(formData.user.firstName).toEqual(name);
-    expect(input.value).toEqual(name);
-  }));
+      expect(testEntity && testEntity.user && testEntity.user.firstName).toBeFalsy();
+      expect(formData.user.firstName).toEqual(name);
+      expect(input.value).toEqual(name);
+    }),
+  );
 
-  it('Should instantiate the input with the initial value on the nrfEntity', fakeAsync(() => {
-    const firstName = 'Jane';
+  it(
+    'Should instantiate the input with the initial value on the nrfEntity',
+    fakeAsync(() => {
+      const firstName = 'Jane';
 
-    mockTestEntity = {
-      user: {
-        firstName,
-      },
-    };
+      mockTestEntity = {
+        user: {
+          firstName,
+        },
+      };
 
-    generateComponent();
-    tick();
+      generateComponent();
+      tick();
 
-    expect(context.formControl.value).toEqual(firstName);
-    expect(inputEl.nativeElement.value).toEqual(firstName);
-    expect(formComponent.formData.user.firstName).toEqual(firstName);
-  }));
+      expect(context.formControl.value).toEqual(firstName);
+      expect(inputEl.nativeElement.value).toEqual(firstName);
+      expect(formComponent.formData.user.firstName).toEqual(firstName);
+    }),
+  );
 
   it('should emit ready$ event', () => {
     const emitSpy = spyOn(NrfNestedControlDirective.prototype, 'emitReadyState');
@@ -126,19 +124,22 @@ describe('NrfNestedControlDirective', () => {
     fixture.detectChanges();
   });
 
-  it('Should work without model path and outside a form and nrfForm', fakeAsync(() => {
-    modelPath = null;
-    const testInputFixture = TestBed.createComponent<TestInputComponent>(TestInputComponent);
-    testInputFixture.detectChanges();
-    tick();
+  it(
+    'Should work without model path and outside a form and nrfForm',
+    fakeAsync(() => {
+      modelPath = null;
+      const testInputFixture = TestBed.createComponent<TestInputComponent>(TestInputComponent);
+      testInputFixture.detectChanges();
+      tick();
 
-    inputEl = testInputFixture.debugElement.query(By.css('input'));
-    const inputContext: NrfNestedControlContext = inputEl.context;
+      inputEl = testInputFixture.debugElement.query(By.css('input'));
+      const inputContext: NrfNestedControlContext = inputEl.context;
 
-    expect(inputContext.formControl).toBeTruthy();
-    expect(inputContext.formGroup).toBeFalsy();
-    expect(inputContext.nrfNestedControl.modelPath).toBeFalsy();
-  }));
+      expect(inputContext.formControl).toBeTruthy();
+      expect(inputContext.formGroup).toBeFalsy();
+      expect(inputContext.nrfNestedControl.modelPath).toBeFalsy();
+    }),
+  );
 
   function generateComponent() {
     fixture = TestBed.createComponent(TestComponent);

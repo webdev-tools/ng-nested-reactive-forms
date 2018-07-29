@@ -1,9 +1,9 @@
 import { Component, DebugElement } from '@angular/core';
 import { async, ComponentFixture, fakeAsync, TestBed, tick } from '@angular/core/testing';
+import { FormGroup } from '@angular/forms';
 import { By } from '@angular/platform-browser';
 
 import { NrFormsModule } from '../forms.module';
-import { FormGroup } from '@angular/forms';
 import { NrfFormDirective } from './form.directive';
 
 @Component({
@@ -14,9 +14,7 @@ import { NrfFormDirective } from './form.directive';
   `,
 })
 class TestComponent {
-
   handleSubmit = jasmine.createSpy('handleSubmit');
-
 }
 
 @Component({
@@ -27,11 +25,8 @@ class TestComponent {
   `,
 })
 class StructuralComponent {
-
   handleSubmit = jasmine.createSpy('handleSubmit');
-
 }
-
 
 describe('NrfFormDirective', () => {
   let testComponent: TestComponent;
@@ -41,14 +36,10 @@ describe('NrfFormDirective', () => {
   let nrfForm: NrfFormDirective;
 
   beforeEach(async(() => {
-    TestBed
-      .configureTestingModule({
-        imports: [
-          NrFormsModule,
-        ],
-        declarations: [TestComponent, StructuralComponent],
-      })
-      .compileComponents();
+    TestBed.configureTestingModule({
+      imports: [NrFormsModule],
+      declarations: [TestComponent, StructuralComponent],
+    }).compileComponents();
   }));
 
   function createComponent(componentToCreate = TestComponent) {
@@ -66,48 +57,59 @@ describe('NrfFormDirective', () => {
     tick();
   }
 
-  it('should start with an empty formGroup', fakeAsync(() => {
-    createComponent();
+  it(
+    'should start with an empty formGroup',
+    fakeAsync(() => {
+      createComponent();
 
-    const formGroup: FormGroup = nrfForm.formGroup;
-    expect(Object.keys(formGroup.controls).length).toEqual(0);
-    expect(formGroup.valid).toBeTruthy();
-    expect(formGroup.touched).toBeFalsy();
-  }));
+      const formGroup: FormGroup = nrfForm.formGroup;
+      expect(Object.keys(formGroup.controls).length).toEqual(0);
+      expect(formGroup.valid).toBeTruthy();
+      expect(formGroup.touched).toBeFalsy();
+    }),
+  );
 
-  it('should set formData with cloned entity properties', fakeAsync(() => {
-    createComponent();
+  it(
+    'should set formData with cloned entity properties',
+    fakeAsync(() => {
+      createComponent();
 
-    const entity = {
-      name: 'John',
-    };
+      const entity = {
+        name: 'John',
+      };
 
-    nrfForm.nrfEntity = entity;
+      nrfForm.nrfEntity = entity;
 
-    expect(nrfForm.formData.name).toEqual(entity.name);
-  }));
+      expect(nrfForm.formData.name).toEqual(entity.name);
+    }),
+  );
 
-  it('should call the onSubmit handler', fakeAsync(() => {
-    createComponent();
-    submitEl.nativeElement.click();
+  it(
+    'should call the onSubmit handler',
+    fakeAsync(() => {
+      createComponent();
+      submitEl.nativeElement.click();
 
-    fixture.detectChanges();
-    tick();
+      fixture.detectChanges();
+      tick();
 
-    expect(testComponent.handleSubmit).toHaveBeenCalled();
-  }));
+      expect(testComponent.handleSubmit).toHaveBeenCalled();
+    }),
+  );
 
+  it(
+    'should accept structural definition',
+    fakeAsync(() => {
+      createComponent(StructuralComponent);
 
-  it('should accept structural definition', fakeAsync(() => {
-    createComponent(StructuralComponent);
+      nrfForm.nrfSubmit.subscribe(testComponent.handleSubmit);
 
-    nrfForm.nrfSubmit.subscribe(testComponent.handleSubmit);
+      submitEl.nativeElement.click();
 
-    submitEl.nativeElement.click();
+      fixture.detectChanges();
+      tick();
 
-    fixture.detectChanges();
-    tick();
-
-    expect(testComponent.handleSubmit).toHaveBeenCalled();
-  }));
+      expect(testComponent.handleSubmit).toHaveBeenCalled();
+    }),
+  );
 });

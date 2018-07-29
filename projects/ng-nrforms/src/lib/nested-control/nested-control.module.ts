@@ -16,6 +16,7 @@ export {
   NrfFormHierarchyService,
 };
 
+/* tslint:disable ter-padded-blocks */
 
 /**
  * Holds the nrfModel directive implementation

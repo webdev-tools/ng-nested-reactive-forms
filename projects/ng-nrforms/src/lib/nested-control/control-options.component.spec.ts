@@ -3,12 +3,13 @@ import { async, fakeAsync, TestBed } from '@angular/core/testing';
 import { Validators } from '@angular/forms';
 import { By } from '@angular/platform-browser';
 
-import { NrfModelModule } from './nested-control.module';
 import { NrfFormModule } from '../form/form.module';
 import { NrfControlOptionsComponent } from './control-options.component';
+import { NrfModelModule } from './nested-control.module';
+
+/* tslint:disable component-selector */
 
 describe('control-options.component', () => {
-  /* tslint:disable component-selector */
   @Component({
     selector: 'test-component',
     template: ``,
@@ -30,39 +31,38 @@ describe('control-options.component', () => {
   })
   class WrapperComponent {}
 
-
   beforeEach(async(() => {
-    TestBed
-      .configureTestingModule({
-        imports: [NrfFormModule, NrfModelModule],
-        declarations: [TestComponent, WrapperComponent],
-      })
-      .compileComponents();
+    TestBed.configureTestingModule({
+      imports: [NrfFormModule, NrfModelModule],
+      declarations: [TestComponent, WrapperComponent],
+    }).compileComponents();
   }));
 
-  it('Should return a control-options filled', fakeAsync(() => {
-    const fixture = TestBed.createComponent(WrapperComponent);
+  it(
+    'Should return a control-options filled',
+    fakeAsync(() => {
+      const fixture = TestBed.createComponent(WrapperComponent);
 
-    fixture.detectChanges();
+      fixture.detectChanges();
 
-    const testEl: DebugElement = fixture.debugElement.query(By.directive(TestComponent));
-    const testComponent: TestComponent = testEl.componentInstance;
-    const { controlOptions } = testComponent;
-    const validators = [
-      Validators.min,
-      Validators.max,
-      Validators.required,
-      Validators.email,
-      Validators.minLength,
-      Validators.maxLength,
-      Validators.pattern,
-    ];
+      const testEl: DebugElement = fixture.debugElement.query(By.directive(TestComponent));
+      const testComponent: TestComponent = testEl.componentInstance;
+      const { controlOptions } = testComponent;
+      const validators = [
+        Validators.min,
+        Validators.max,
+        Validators.required,
+        Validators.email,
+        Validators.minLength,
+        Validators.maxLength,
+        Validators.pattern,
+      ];
 
-
-    expect(controlOptions).toBeTruthy();
-    expect(controlOptions.updateOn).toEqual('submit');
-    expect(controlOptions.validators.length).toEqual(validators.length);
-    expect((<any[]>controlOptions.validators).every(validator => validators.includes(validator)));
-    expect(controlOptions.disabled).toBeTruthy();
-  }));
+      expect(controlOptions).toBeTruthy();
+      expect(controlOptions.updateOn).toEqual('submit');
+      expect(controlOptions.validators.length).toEqual(validators.length);
+      expect((<any[]>controlOptions.validators).every((validator) => validators.includes(validator)));
+      expect(controlOptions.disabled).toBeTruthy();
+    }),
+  );
 });

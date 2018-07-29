@@ -48,7 +48,6 @@ describe('NrfFormHierarchyService', () => {
     });
   });
 
-
   describe('Use inputs with formControlName', () => {
     let modelPath: string;
 
@@ -66,14 +65,12 @@ describe('NrfFormHierarchyService', () => {
       `,
     })
     class TestInputComponent {
-
       modelPath: string;
       testEntity: any = {};
 
       constructor() {
         this.modelPath = modelPath;
       }
-
     }
 
     let fixture: ComponentFixture<TestInputComponent>;
@@ -88,37 +85,43 @@ describe('NrfFormHierarchyService', () => {
       }).compileComponents();
     }));
 
-    it('Should set value on correct place when using formControlName', fakeAsync(() => {
-      modelPath = 'testEntity.first';
-      generateComponent();
+    it(
+      'Should set value on correct place when using formControlName',
+      fakeAsync(() => {
+        modelPath = 'testEntity.first';
+        generateComponent();
 
-      const name = 'Jane';
-      const input: HTMLInputElement = inputEl.nativeElement;
+        const name = 'Jane';
+        const input: HTMLInputElement = inputEl.nativeElement;
 
-      input.value = name;
-      inputEl.triggerEventHandler('input', { target: input });
+        input.value = name;
+        inputEl.triggerEventHandler('input', { target: input });
 
-      tick();
+        tick();
 
-      const formData = nrfForm.formData;
-      expect(formData.first).toEqual(name);
-    }));
+        const formData = nrfForm.formData;
+        expect(formData.first).toEqual(name);
+      }),
+    );
 
-    it('Should set value on correct place when using formControlName on form-array', fakeAsync(() => {
-      modelPath = 'testEntity.second.0';
-      generateComponent();
+    it(
+      'Should set value on correct place when using formControlName on form-array',
+      fakeAsync(() => {
+        modelPath = 'testEntity.second.0';
+        generateComponent();
 
-      const name = 'John';
-      const input: HTMLInputElement = inputEl.nativeElement;
+        const name = 'John';
+        const input: HTMLInputElement = inputEl.nativeElement;
 
-      input.value = name;
-      inputEl.triggerEventHandler('input', { target: input });
+        input.value = name;
+        inputEl.triggerEventHandler('input', { target: input });
 
-      tick();
+        tick();
 
-      const formData = nrfForm.formData;
-      expect(formData.second[0]).toEqual(name);
-    }));
+        const formData = nrfForm.formData;
+        expect(formData.second[0]).toEqual(name);
+      }),
+    );
 
     function generateComponent() {
       fixture = TestBed.createComponent(TestInputComponent);

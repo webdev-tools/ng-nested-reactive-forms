@@ -1,5 +1,7 @@
 import { Injectable } from '@angular/core';
 
+/* tslint:disable ter-padded-blocks */
+
 /**
  * Class to abstract get and set values from an object or an array
  * using dot-notation string as the path to the property
@@ -7,7 +9,6 @@ import { Injectable } from '@angular/core';
  */
 @Injectable()
 export class NrfModelSetterService {
-
   /**
    * Get a value using a dot-notation string to find the nested property
    *
@@ -41,7 +42,6 @@ export class NrfModelSetterService {
     }
   }
 
-
   /**
    * @ignore
    *
@@ -49,10 +49,9 @@ export class NrfModelSetterService {
    *
    * If the key is empty, the last element of an array is returned
    */
-  private piecesReducer(obj: any[]|any, key: string): any|any[] {
+  private piecesReducer(obj: any[] | any, key: string): any | any[] {
     return key === '' ? obj.slice(-1)[0] : obj[key];
   }
-
 
   /**
    * Set a value using a dot-notation string.
@@ -67,8 +66,9 @@ export class NrfModelSetterService {
    * ```typescript
    * nestedProps.setValue('user.age', 35, { user: { name: 'John Doe' } });
    * ```
-   */// TODO remove the empty key feature, force users to define the desired array key
+   */
   setValue(path: string, value: any, model: object | any[], separator = '.'): void {
+    // TODO remove the empty key feature, force users to define the desired array key
     if (!(path && model)) {
       return null;
     }
@@ -90,12 +90,11 @@ export class NrfModelSetterService {
     }
   }
 
-
   /**
    * Get the final property of the dot notation path.
    * This will be the property that will receive the new value
    */
-  private getTargetPropToSet = (obj: any, key: string, i: number, pathPieces: any): any[]|any => {
+  private getTargetPropToSet = (obj: any, key: string, i: number, pathPieces: any): any[] | any => {
     let nextKey = pathPieces[i + 1];
     const isLast = nextKey == null;
 
@@ -113,8 +112,7 @@ export class NrfModelSetterService {
     }
 
     return prop;
-  }
-
+  };
 
   /**
    * @ignore
@@ -123,7 +121,6 @@ export class NrfModelSetterService {
   private isArrayKey(key: string): boolean {
     return key === '' || !isNaN(parseInt(key, 10));
   }
-
 
   /**
    * Generate the dot-notation path as an Array to iterate over.
@@ -134,5 +131,4 @@ export class NrfModelSetterService {
       .replace(']', '')
       .split(separator);
   }
-
 }

@@ -1,5 +1,6 @@
 import { Directive, Input, OnDestroy, OnInit, Optional, Output, TemplateRef, ViewContainerRef } from '@angular/core';
 import { FormArray, FormControl, FormGroup } from '@angular/forms';
+
 import { ReplaySubject } from 'rxjs/internal/ReplaySubject';
 import { takeWhile } from 'rxjs/operators';
 
@@ -10,6 +11,7 @@ import { NrfNestedControlContext } from './nested-control-context.class';
 import { NrfFormHierarchyService } from './services/form-hierarchy.service';
 import { NrfModelSetterService } from './services/model-setter.service';
 
+/* tslint:disable ter-padded-blocks */
 
 /**
  * This directive control nested inputs and sets values on the Original Model set at {@link NrfFormDirective#nrfEntity}
@@ -115,7 +117,6 @@ export class NrfNestedControlDirective implements OnInit, OnDestroy {
     this.emitReadyState();
   }
 
-
   ngOnDestroy() {
     this.isDestroyed = true;
     this.ready$.complete();
@@ -124,7 +125,6 @@ export class NrfNestedControlDirective implements OnInit, OnDestroy {
       this.removeFromParentFormGroup();
     }
   }
-
 
   private removeFromParentFormGroup() {
     if (this.parentFormGroup instanceof FormGroup) {
@@ -135,7 +135,7 @@ export class NrfNestedControlDirective implements OnInit, OnDestroy {
     }
   }
 
-   /**
+  /**
    * Return the dot notation path of the Entity, without the first part,
    * because it is the Entity itself.
    */
@@ -183,7 +183,6 @@ export class NrfNestedControlDirective implements OnInit, OnDestroy {
     this.viewContainerRef.createEmbeddedView(this.templateRef, context);
   }
 
-
   /**
    * Register this input to its parent [FormGroup]{@link https://angular.io/api/forms/FormGroup}
    * to enable validations and data manipulation
@@ -205,7 +204,6 @@ export class NrfNestedControlDirective implements OnInit, OnDestroy {
     }
   }
 
-
   /**
    * Verify if this input is inside a [NrfFormDirective]{@link NrfFormDirective}
    * and return its [FormGroup]{@link https://angular.io/api/forms/FormGroup}
@@ -223,7 +221,6 @@ export class NrfNestedControlDirective implements OnInit, OnDestroy {
     return this.formHierarchy.getNestedControl(rootFormGroup, formGroupPath);
   }
 
-
   /**
    * Verify if the [FormGroup]{@link https://angular.io/api/forms/FormGroup} has an control with the current name and return it.
    * Otherwise return a new [FormControl]{@link https://angular.io/api/forms/FormControl}
@@ -239,16 +236,14 @@ export class NrfNestedControlDirective implements OnInit, OnDestroy {
     return formControl;
   }
 
-
   /**
    * Subscribe to [valueChanges]{@link https://angular.io/api/forms/AbstractControl#valueChanges} and update the Entity value
    */
   private subscribeToUpdateEntityValue() {
     this.formControl.valueChanges
       .pipe(takeWhile(() => !this.isDestroyed))
-      .subscribe(newValue => this.setModelValue(newValue));
+      .subscribe((newValue) => this.setModelValue(newValue));
   }
-
 
   /**
    * Set the value to the [formData]{@link NrfFormDirective#formData}
@@ -262,5 +257,4 @@ export class NrfNestedControlDirective implements OnInit, OnDestroy {
   emitReadyState() {
     this.ready$.next(this);
   }
-
 }

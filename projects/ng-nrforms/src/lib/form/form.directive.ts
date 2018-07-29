@@ -17,7 +17,7 @@ import { NrfFormContext } from './form-context.class';
 import { NrfSubmitData } from './form-submit-data.class';
 import { NrfFormService } from './form.service';
 
-
+/* tslint:disable: ter-padded-blocks */
 /**
  * A component to abstract the form implementation
  *
@@ -33,7 +33,6 @@ import { NrfFormService } from './form.service';
   exportAs: 'nrfForm',
 })
 export class NrfFormDirective implements OnInit, OnDestroy {
-
   /**
    * @ignore
    */
@@ -41,7 +40,7 @@ export class NrfFormDirective implements OnInit, OnDestroy {
     @Optional() private readonly templateRef: TemplateRef<any>,
     @Optional() private readonly viewContainerRef: ViewContainerRef,
     @Optional() private readonly formService: NrfFormService,
-    private renderer: Renderer2,
+    private readonly renderer: Renderer2,
   ) {
     if (!formService) {
       this.formService = new NrfFormService();
@@ -117,5 +116,4 @@ export class NrfFormDirective implements OnInit, OnDestroy {
 
     this.nrfSubmit.emit(new NrfSubmitData(this, $event));
   }
-
 }

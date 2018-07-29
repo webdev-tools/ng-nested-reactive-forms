@@ -1,16 +1,18 @@
 import { Input, OnInit } from '@angular/core';
 import { AbstractControlOptions, Validators } from '@angular/forms';
 
+/* tslint:disable: ter-padded-blocks */
+
 export interface NrfControlOptions extends AbstractControlOptions {
   disabled: boolean;
 }
+
+// tslint:disable no-input-rename
 
 /**
  * Input wrappers components should extends this class to pass constraints downwards
  */
 export abstract class NrfControlOptionsComponent implements OnInit {
-  // tslint:disable no-input-rename
-
   /**
    * A list of Validators to validate the input and the update-on strategy
    */
@@ -63,7 +65,6 @@ export abstract class NrfControlOptionsComponent implements OnInit {
    */
   @Input('updateOn') updateOn: 'change' | 'blur' | 'submit' = null;
 
-
   /**
    * Cache the validators to enhance the performance
    */
@@ -76,10 +77,11 @@ export abstract class NrfControlOptionsComponent implements OnInit {
    */
   generateControlOptions(): NrfControlOptions {
     return {
-      validators: Object.keys(Validators).filter(key => this[key]).map(key => Validators[key]),
+      validators: Object.keys(Validators)
+        .filter((key) => this[key])
+        .map((key) => Validators[key]),
       updateOn: this.updateOn,
       disabled: this.disabled,
     };
   }
-
 }

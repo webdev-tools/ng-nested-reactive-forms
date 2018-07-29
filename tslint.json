@@ -1,24 +1,13 @@
 {
   "$schema": "http://json.schemastore.org/tslint",
   "extends": [
-    "@webdev-tools/tslint-airbnb-styleguide"
+    "@webdev-tools/tslint-airbnb-styleguide",
+    "tslint-config-prettier"
   ],
   "rulesDirectory": [
     "node_modules/codelyzer"
   ],
   "rules": {
-    "directive-selector": [
-      true,
-      "attribute",
-      ["app", "nrf"],
-      "camelCase"
-    ],
-    "component-selector": [
-      true,
-      "element",
-      ["app", "nrf"],
-      "kebab-case"
-    ],
     "no-output-on-prefix": true,
     "use-input-property-decorator": true,
     "use-output-property-decorator": true,
@@ -31,12 +20,11 @@
     "directive-class-suffix": true,
     "no-unused-variable": true,
 
-
     "ter-padded-blocks": [
       true,
       {
         "blocks": "never",
-        "classes": "always",
+        "classes": "never",
         "switches": "never"
       }
     ],

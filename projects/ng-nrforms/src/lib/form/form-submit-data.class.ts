@@ -1,8 +1,8 @@
 import { FormGroup } from '@angular/forms';
+
 import { NrfFormDirective } from './form.directive';
 
 export class NrfSubmitData {
-
   nrfForm: NrfFormDirective;
   formData: any;
   entity: any;
@@ -16,5 +16,4 @@ export class NrfSubmitData {
     this.entity = nrfForm.nrfEntity;
     this.formGroup = nrfForm.formGroup;
   }
-
 }

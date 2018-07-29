@@ -1,16 +1,16 @@
 import { Injectable } from '@angular/core';
 import { FormArray, FormControl, FormGroup } from '@angular/forms';
 
+/* tslint:disable ter-padded-blocks */
+
 @Injectable()
 /**
  * Controls the Hierarchy of FormGroups and FormArrays
  */
 export class NrfFormHierarchyService {
-
   /**
    * Get a nested control if it exists or create the its necessary hierarchy
    *
-   * @param rootFormGroup
    * @param fullPath Dot notation path of the desired control, including the last part, that is the value, not the group.
    */
   getNestedControl(rootFormGroup: FormGroup | FormArray, fullPath: string | string[]): FormGroup | FormArray {
@@ -37,7 +37,7 @@ export class NrfFormHierarchyService {
     index: number,
     pathPieces: string[],
   ): FormGroup | FormArray {
-    if (index === (pathPieces.length - 1)) {
+    if (index === pathPieces.length - 1) {
       return parentControl;
     }
 
@@ -58,5 +58,4 @@ export class NrfFormHierarchyService {
 
     return control;
   }
-
 }

@@ -23,6 +23,7 @@
   "javascript.format.enable": false,
   "javascript.preferences.quoteStyle": "single",
   "javascript.updateImportsOnFileMove.enabled": "always",
+  "prettier.requireConfig": true,
   "scss.showErrors": true,
   "tsimporter.preferRelative": true,
   "tslint.jsEnable": true,

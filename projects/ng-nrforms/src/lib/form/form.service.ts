@@ -4,10 +4,10 @@ import { FormGroup } from '@angular/forms';
 import { cloneDeep } from '../utils/clone-deep';
 import { NrfSubmitData } from './form-submit-data.class';
 
+/* tslint:disable ter-padded-blocks */
 
 @Injectable()
 export class NrfFormService {
-
   /**
    * Form group will hold all inputs within this form.
    *
@@ -37,7 +37,6 @@ export class NrfFormService {
    * Internal emitter to handle form submit
    */
   readonly submit$ = new EventEmitter<NrfSubmitData>();
-
 }
 
 /**
