@@ -1,3 +1,21 @@
+<a name="7.0.0"></a>
+## 7.0.0 (2018-11-19)
+
+* chore(Angular): Updated to Angular 7.x ([cda1989](https://github.com/webdev-tools/ng-nested-reactive-forms/commit/cda1989))
+* style: Adding read-only to property ([2fe2cec](https://github.com/webdev-tools/ng-nested-reactive-forms/commit/2fe2cec))
+* feat(demo): Created structure to show demo and code ([da1075f](https://github.com/webdev-tools/ng-nested-reactive-forms/commit/da1075f))
+* refactor(config): Trim settings and added suggested extensions ([346544b](https://github.com/webdev-tools/ng-nested-reactive-forms/commit/346544b))
+* refactor(lint): Fix padded-blocks ([1a83d78](https://github.com/webdev-tools/ng-nested-reactive-forms/commit/1a83d78))
+* refactor(lint): Fix padded-blocks on demos ([de8583e](https://github.com/webdev-tools/ng-nested-reactive-forms/commit/de8583e))
+* refactor(tsconfig): Split configuration for better IDE tooling ([9c06b4c](https://github.com/webdev-tools/ng-nested-reactive-forms/commit/9c06b4c))
+
+
+### BREAKING CHANGE
+
+* Angular breaking-changes
+https://github.com/angular/angular/blob/master/CHANGELOG.md
+
+
 <a name="6.2.6"></a>
 ## <small>6.2.6 (2018-07-27)</small>
 
