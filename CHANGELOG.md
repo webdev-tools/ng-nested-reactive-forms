@@ -1,3 +1,10 @@
+<a name="7.0.1"></a>
+## <small>7.0.1 (2018-11-19)</small>
+
+* chore(npm): Fix npm audit errors ([2fe3c2f](https://github.com/webdev-tools/ng-nested-reactive-forms/commit/2fe3c2f))
+
+
+
 <a name="7.0.0"></a>
 ## 7.0.0 (2018-11-19)
 
