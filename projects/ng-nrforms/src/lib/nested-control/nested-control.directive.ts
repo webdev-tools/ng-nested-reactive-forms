@@ -69,7 +69,7 @@ export class NrfNestedControlDirective implements OnInit, OnDestroy {
    * If the form is wrapped inside a directive with ng-content, the NrfFormService MUST be provided.
    * Otherwise the nrfForm will be used.
    */
-  private formOrService: NrfFormDirective | NrfFormService;
+  private readonly formOrService: NrfFormDirective | NrfFormService;
 
   constructor(
     private readonly modelSetter: NrfModelSetterService,
